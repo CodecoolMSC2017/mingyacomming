@@ -10,6 +10,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
+    role TEXT NOT NULL,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT password_not_empty CHECK (password <> '')
 );
@@ -36,10 +37,10 @@ CREATE TABLE coupons_shops (
     FOREIGN KEY (shop_id) REFERENCES shops(id)
 );
 
-INSERT INTO users (email, password) VALUES
-	('user1@user1', 'user1'), -- 1
-	('user2@user2', 'user2'), -- 2
-	('user2@user3', 'user3'); -- 3
+INSERT INTO users (email, password, role) VALUES
+	('user1@user1', 'user1', 'asd'), -- 1
+	('user2@user2', 'user2', 'sad'), -- 2
+	('user2@user3', 'user3', 'lul'); -- 3
 
 INSERT INTO shops (name) VALUES
 	('SPAR'),   -- 1

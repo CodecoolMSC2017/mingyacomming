@@ -1,0 +1,58 @@
+package com.codecool.web.dao.database.impl;
+
+import com.codecool.web.dao.database.UserDatabase;
+import com.codecool.web.model.User;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class UserDao extends AbstractDao implements UserDatabase {
+
+    public UserDao(Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    public User getUser(int id) throws SQLException {
+        String sql = "SELECT * FROM user WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                   return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+                }
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public User getUser(String name, String password) throws SQLException {
+        String sql = "SELECT * FROM user WHERE name = ? AND password = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, password);
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+                }
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public void addUser(String name, String password, String role) throws SQLException {
+        String sql = "INSERT into users (name, password, role) VALUES(?,?,?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, password);
+            ps.setString(3, role);
+            try(ResultSet rs = ps.executeQuery()){
+
+            }
+        }
+    }
+}

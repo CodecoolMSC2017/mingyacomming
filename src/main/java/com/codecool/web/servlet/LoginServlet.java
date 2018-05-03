@@ -1,11 +1,10 @@
 package com.codecool.web.servlet;
 
-import com.codecool.web.dao.UserDao;
-import com.codecool.web.dao.database.DatabaseUserDao;
+import com.codecool.web.dao.database.UserDatabase;
+import com.codecool.web.dao.database.impl.UserDao;
 import com.codecool.web.model.User;
 import com.codecool.web.service.LoginService;
-import com.codecool.web.service.exception.ServiceException;
-import com.codecool.web.service.simple.SimpleLoginService;
+import com.codecool.web.service.impl.SimpleLoginService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,7 @@ public final class LoginServlet extends AbstractServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try (Connection connection = getConnection(req.getServletContext())) {
-            UserDao userDao = new DatabaseUserDao(connection);
+            UserDatabase userDao = new UserDao(connection);
             LoginService loginService = new SimpleLoginService(userDao);
 
             String email = req.getParameter("email");
@@ -28,10 +27,9 @@ public final class LoginServlet extends AbstractServlet {
 
             User user = loginService.loginUser(email, password);
             req.getSession().setAttribute("user", user);
+            req.getRequestDispatcher("../../webapp/userpage.jsp");
+            //sendMessage(resp, HttpServletResponse.SC_OK, user);
 
-            sendMessage(resp, HttpServletResponse.SC_OK, user);
-        } catch (ServiceException ex) {
-            sendMessage(resp, HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         } catch (SQLException ex) {
             handleSqlError(resp, ex);
         }
