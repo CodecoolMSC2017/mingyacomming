@@ -28,7 +28,7 @@ public final class LoginServlet extends AbstractServlet {
 
             User user = loginService.loginUser(email, password);
             req.getSession().setAttribute("user", user);
-            req.getRequestDispatcher("../../webapp/userpage.jsp").forward(req,resp);
+            req.getRequestDispatcher("userpage.jsp").forward(req,resp);
             //sendMessage(resp, HttpServletResponse.SC_OK, user);
 
         } catch (SQLException ex) {
