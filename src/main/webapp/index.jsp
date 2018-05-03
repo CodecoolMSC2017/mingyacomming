@@ -22,7 +22,7 @@
 <body>
 <div id="login-content" class="content">
     <h1>Login</h1>
-    <form id="login-form" onsubmit="return false;">
+    <form id="login-form" action="login" method="POST">
         <input type="text" name="email">
         <input type="password" name="password">
         <button id="login-button">Login</button>

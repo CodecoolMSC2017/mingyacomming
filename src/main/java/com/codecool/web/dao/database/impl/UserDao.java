@@ -16,7 +16,7 @@ public class UserDao extends AbstractDao implements UserDatabase {
 
     @Override
     public User getUser(int id) throws SQLException {
-        String sql = "SELECT * FROM user WHERE id = ?";
+        String sql = "SELECT * FROM users WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
@@ -30,7 +30,7 @@ public class UserDao extends AbstractDao implements UserDatabase {
 
     @Override
     public User getUser(String name, String password) throws SQLException {
-        String sql = "SELECT * FROM user WHERE name = ? AND password = ?";
+        String sql = "SELECT * FROM users WHERE name = ? AND password = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, name);
             ps.setString(2, password);
