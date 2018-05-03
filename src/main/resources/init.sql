@@ -57,6 +57,10 @@ INSERT INTO users (name, password, role) VALUES
 	('user2@user2', 'user2', 'sad'),
 	('user2@user3', 'user3', 'lul');
 
+INSERT INTO task (name, description, user_id) VALUES
+    ('kisfrocs', 'alap dolog', 1),
+    ('nagyfrocs', 'csak ugy pls ne szolj be', 1);
+
 INSERT INTO schedule (name, user_id) VALUES
     ('alap', '1'),
     ('hard', '1');
@@ -69,7 +73,4 @@ INSERT INTO slot (time, day_id, task_id ) VALUES
     (6, 1, 1),
     (7, 1, 2);
 
-INSERT INTO task (name, description, user_id) VALUES
-    ('kisfrocs', 'alap dolog', 1),
-    ('nagyfrocs', 'csak ugy pls ne szolj be', 1);
 
