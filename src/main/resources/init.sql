@@ -2,6 +2,10 @@
     Database initialization script that runs on every web-application redeployment.
 */
 
+DROP TABLE IF EXISTS slot;
+DROP TABLE IF EXISTS day;
+DROP TABLE IF EXISTS schedule;
+DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -13,10 +17,59 @@ CREATE TABLE users (
 	CONSTRAINT password_not_empty CHECK (password <> '')
 );
 
+CREATE TABLE schedule (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE day (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    schedule_id INTEGER,
+    FOREIGN KEY (schedule_id) REFERENCES schedule(id)
+);
+
+CREATE TABLE task (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE slot (
+    id SERIAL PRIMARY KEY,
+    time INTEGER NOT NULL,
+    task_id INTEGER,
+    day_id INTEGER,
+    FOREIGN KEY (task_id) REFERENCES task(id),
+    FOREIGN KEY (day_id) REFERENCES day(id)
+);
+
+
 
 
 INSERT INTO users (name, password, role) VALUES
-	('user1@user1', 'user1', 'asd'), -- 1
-	('user2@user2', 'user2', 'sad'), -- 2
-	('user2@user3', 'user3', 'lul'); -- 3
+	('a', 'a', 'a'),
+	('user1@user1', 'user1', 'asd'),
+	('user2@user2', 'user2', 'sad'),
+	('user2@user3', 'user3', 'lul');
+
+INSERT INTO schedule (name, user_id) VALUES
+    ('alap', '1'),
+    ('hard', '1');
+
+INSERT INTO day (name, schedule_id) VALUES
+    ('hetfu', '1'),
+    ('ketto', '1');
+
+INSERT INTO slot (time, day_id, task_id ) VALUES
+    (6, 1, 1),
+    (7, 1, 2);
+
+INSERT INTO task (name, description, user_id) VALUES
+    ('kisfrocs', 'alap dolog', 1),
+    ('nagyfrocs', 'csak ugy pls ne szolj be', 1);
 
