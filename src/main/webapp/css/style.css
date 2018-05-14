@@ -1,0 +1,21 @@
+:root {
+    --menubarH: 50px;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+
+/* _________________
+  |                 |
+  | Login, Register |
+  |_________________|
+*/
+#login_form, #register_form {
+    width: fit-content;
+}
+
+#login_form, #register_form {
+    text-align: right;
+}
