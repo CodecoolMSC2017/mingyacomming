@@ -1,54 +1,62 @@
-/*
-    Database initialization script that runs on every web-application redeployment.
-*/
-
-DROP TABLE IF EXISTS slot;
-DROP TABLE IF EXISTS day;
-DROP TABLE IF EXISTS schedule;
-DROP TABLE IF EXISTS task;
-DROP TABLE IF EXISTS users;
-
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    role TEXT NOT NULL,
+DROP TABLE IF EXISTS users CASCADE;
+CREATE TABLE users
+(
+    id       SERIAL PRIMARY KEY,
+    name     TEXT   UNIQUE NOT NULL,
+    password TEXT   NOT NULL,
+    role     TEXT   NOT NULL,
 	CONSTRAINT email_not_empty CHECK (name <> ''),
 	CONSTRAINT password_not_empty CHECK (password <> '')
 );
 
-CREATE TABLE schedule (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+DROP TABLE IF EXISTS schedules CASCADE;
+CREATE TABLE schedules
+(
+    id      SERIAL PRIMARY KEY,
+    name    TEXT NOT NULL,
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE day (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+DROP TABLE IF EXISTS days CASCADE;
+CREATE TABLE days
+(
+    id          SERIAL PRIMARY KEY,
+    name        TEXT   NOT NULL,
     schedule_id INTEGER,
     FOREIGN KEY (schedule_id) REFERENCES schedule(id)
 );
 
-CREATE TABLE task (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+DROP TABLE IF EXISTS tasks CASCADE;
+CREATE TABLE tasks
+(
+    id          SERIAL PRIMARY KEY,
+    name        TEXT   NOT NULL,
     description TEXT,
-    user_id INTEGER,
+    user_id     INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE slot (
-    id SERIAL PRIMARY KEY,
-    time INTEGER NOT NULL,
+DROP TABLE IF EXISTS slots CASCADE;
+CREATE TABLE slots
+(
+    id      SERIAL  PRIMARY KEY,
+    time    INTEGER NOT NULL,
     task_id INTEGER,
-    day_id INTEGER,
+    day_id  INTEGER,
     FOREIGN KEY (task_id) REFERENCES task(id),
     FOREIGN KEY (day_id) REFERENCES day(id)
 );
 
-
+DROP TABLE IF EXISTS results CASCADE;
+Create Table results
+(
+    user_id integer,
+    task_id integer,
+    is_done boolean,
+    Foreign Key(user_id) References users(id),
+    Foreign Key(task_id) References tasks(id)
+);
 
 
 INSERT INTO users (name, password, role) VALUES
@@ -57,11 +65,11 @@ INSERT INTO users (name, password, role) VALUES
 	('user2@user2', 'user2', 'sad'),
 	('user2@user3', 'user3', 'lul');
 
-INSERT INTO task (name, description, user_id) VALUES
+INSERT INTO tasks (name, description, user_id) VALUES
     ('kisfrocs', 'alap dolog', 1),
     ('nagyfrocs', 'csak ugy pls ne szolj be', 1);
 
-INSERT INTO schedule (name, user_id) VALUES
+INSERT INTO schedules (name, user_id) VALUES
     ('alap', '1'),
     ('hard', '1');
 
@@ -69,7 +77,7 @@ INSERT INTO day (name, schedule_id) VALUES
     ('hetfu', '1'),
     ('ketto', '1');
 
-INSERT INTO slot (time, day_id, task_id ) VALUES
+INSERT INTO slots (time, day_id, task_id ) VALUES
     (6, 1, 1),
     (7, 1, 2);
 
