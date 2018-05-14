@@ -28,11 +28,11 @@
         <div id="register_form">
             <p>
                 <label> Username </label>
-                <input type="text" id="reg_username_Field">
+                <input type="text" id="reg_username_field">
             </p>
             <p>
                 <label> Password </label>
-                <input type="password" id="reg_password_Field">
+                <input type="password" id="reg_password_field">
             </p>
             <p>
                 <input type="button" id="reg_button" value="Register">
