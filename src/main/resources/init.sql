@@ -24,7 +24,7 @@ CREATE TABLE days
     id          SERIAL PRIMARY KEY,
     name        TEXT   NOT NULL,
     schedule_id INTEGER,
-    FOREIGN KEY (schedule_id) REFERENCES schedule(id)
+    FOREIGN KEY (schedule_id) REFERENCES schedules(id)
 );
 
 DROP TABLE IF EXISTS tasks CASCADE;
@@ -44,8 +44,8 @@ CREATE TABLE slots
     time    INTEGER NOT NULL,
     task_id INTEGER,
     day_id  INTEGER,
-    FOREIGN KEY (task_id) REFERENCES task(id),
-    FOREIGN KEY (day_id) REFERENCES day(id)
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (day_id) REFERENCES days(id)
 );
 
 DROP TABLE IF EXISTS results CASCADE;
@@ -73,7 +73,7 @@ INSERT INTO schedules (name, user_id) VALUES
     ('alap', '1'),
     ('hard', '1');
 
-INSERT INTO day (name, schedule_id) VALUES
+INSERT INTO days (name, schedule_id) VALUES
     ('hetfu', '1'),
     ('ketto', '1');
 
