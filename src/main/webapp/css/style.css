@@ -1,9 +1,117 @@
-:root {
+:root
+{
+    --color_dark: #333;
+    --color_normal: #777;
+    --color_light: #ddd;
+
+    --color_font: var(--color_light);
     --menubarH: 50px;
 }
 
-body {
+body
+{
     font-family: sans-serif;
+    color: var(--color_font);
+    background-color: var(--color_normal);
+}
+
+input[type="button"]
+{
+    background-image: none;
+    background-color: var(--color_font);
+    color: var(--color_dark);
+
+    /* Positions */
+    margin: 5px;
+    padding: 5px;
+    border: 0;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    transition: 200ms;
+}
+input:hover
+{
+    box-shadow: 0 0 10px orange;
+}
+
+
+
+/* __________
+  |          |
+  | Menu-Bar |
+  |__________|
+*/
+#menu_bar
+{
+    background-color: var(--color_dark);
+    /* Positions */
+    position: fixed;
+    margin: 0 auto; padding: 0 auto;
+    top: 0; left: 0; right: 0;
+    height: var(--menubarH);
+}
+
+
+
+/* __________
+  |          |
+  | User-Tab |
+  |__________|
+*/
+#user_tab
+{
+    background-color: var(--color_normal);
+    border-radius: 50%;
+    background-image: url("../images/user.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    /* Positions */
+    position: fixed;
+    text-align: center;
+    margin: 0; padding: 0;
+    top: 2.5px; right: 2.5px;
+    width: 45px;
+    height: 45px;
+
+    transition-duration: 500ms;
+}
+/* Hide everything by default */
+#user_tab > *
+{
+    display: none;
+}
+
+
+/* Effects */
+#user_tab:hover 
+{
+    background-image: none;
+    background-color: var(--color_dark);
+    border-radius: 5px;
+    box-shadow: 0 0 5px orange;
+    
+    /* Positions */
+    padding: 10px;
+    width: 300px;
+    height: 300px;
+}
+#user_tab:hover > *
+{
+    display: block;
+    opacity: 1;
+}
+
+#form_container
+{
+    width: fit-content;
+    margin-top: 60px;
+    align-content: center;
+    align-items: center;
+    padding: 0 auto;
 }
 
 
@@ -12,10 +120,12 @@ body {
   | Login, Register |
   |_________________|
 */
-#login_form, #register_form {
+#login_form, #register_form
+{
     width: fit-content;
-}
-
-#login_form, #register_form {
     text-align: right;
+}
+#register_form
+{
+    display: none;
 }
