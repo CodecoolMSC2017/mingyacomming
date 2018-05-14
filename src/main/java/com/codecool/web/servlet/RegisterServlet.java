@@ -36,14 +36,11 @@ public class RegisterServlet extends AbstractServlet{
             resp.setStatus(204);
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            resp.setStatus(500);
+            handleSqlError(resp, e);
         } catch (UserAlreadyExistException e) {
-            resp.setStatus(400);
-            resp.addHeader("error", "User already exists!");
+            sendMessage(resp, 400, "user already exists");
         } catch (UserNameException e) {
-            resp.setStatus(400);
-            resp.addHeader("error", "invalid username");
+            sendMessage(resp, 400, "user cannot be null");
         }
     }
 }

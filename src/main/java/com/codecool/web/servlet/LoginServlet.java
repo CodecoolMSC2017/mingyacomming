@@ -19,22 +19,22 @@ public final class LoginServlet extends AbstractServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String jsonString = req.getReader().readLine();
+
+        String userName = getJsonParameter("username", jsonString);
+        String password = getJsonParameter("password", jsonString);
+
         try (Connection connection = getConnection(req.getServletContext())) {
             UserDatabase userDao = new UserDao(connection);
             LoginService loginService = new SimpleLoginService(userDao);
 
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
-
-            User user = loginService.loginUser(email, password);
+            User user = loginService.loginUser(userName, password);
             req.getSession().setAttribute("user", user);
-            req.getRequestDispatcher("userpage.jsp").forward(req,resp);
+            resp.setStatus(204);
             //sendMessage(resp, HttpServletResponse.SC_OK, user);
 
         } catch (SQLException ex) {
             handleSqlError(resp, ex);
-        } catch (ServletException e) {
-            e.printStackTrace();
         }
     }
 }
