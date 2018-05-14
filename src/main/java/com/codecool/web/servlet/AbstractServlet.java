@@ -2,6 +2,7 @@ package com.codecool.web.servlet;
 
 import com.codecool.web.dto.MessageDto;
 import com.codecool.web.model.User;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletContext;
@@ -39,4 +40,15 @@ abstract class AbstractServlet extends HttpServlet {
     User getUser(HttpServletRequest req) {
         return (User) req.getSession().getAttribute("user");
     }
+
+    String getJsonParameter(String parameter, String jsonString) throws IOException {
+
+
+
+        JsonNode jsonNode = om.readTree(jsonString);
+
+        return jsonNode.get(parameter).asText();
+    }
 }
+
+

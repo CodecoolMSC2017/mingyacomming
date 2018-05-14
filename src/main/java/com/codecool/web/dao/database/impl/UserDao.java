@@ -61,8 +61,7 @@ public class UserDao extends AbstractDao implements UserDatabase {
             ps.setString(1, name);
             ps.setString(2, password);
             ps.setString(3, role);
-            try(ResultSet rs = ps.executeQuery()){
-            }
+            ps.executeUpdate();
         }
     }
 

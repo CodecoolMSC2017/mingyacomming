@@ -21,9 +21,7 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
             ps.setString(1, task.getName());
             ps.setString(2, task.getDescription());
             ps.setInt(3, task.getUserId());
-            try(ResultSet rs = ps.executeQuery()){
-
-            }
+            ps.executeQuery();
         }
     }
 

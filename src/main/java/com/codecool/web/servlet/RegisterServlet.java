@@ -3,6 +3,8 @@ package com.codecool.web.servlet;
 import com.codecool.web.dao.database.UserDatabase;
 import com.codecool.web.dao.database.impl.TaskDao;
 import com.codecool.web.dao.database.impl.UserDao;
+import com.codecool.web.exceptions.UserAlreadyExistException;
+import com.codecool.web.exceptions.UserNameException;
 import com.codecool.web.service.RegisterService;
 import com.codecool.web.service.impl.SimpleRegisterService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,13 +24,10 @@ public class RegisterServlet extends AbstractServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ObjectMapper om = new ObjectMapper();
+        String jsonString = req.getReader().readLine();
 
-        String json = req.getReader().readLine();
-        JsonNode jsonNode = om.readTree(json);
-
-        String userName = jsonNode.get("username").asText();
-        String password = jsonNode.get("password").asText();
+        String userName = getJsonParameter("username", jsonString);
+        String password = getJsonParameter("password", jsonString);
 
         try (Connection connection = getConnection(req.getServletContext())) {
             UserDatabase ud = new UserDao(connection);
@@ -39,6 +38,12 @@ public class RegisterServlet extends AbstractServlet{
         } catch (SQLException e) {
             e.printStackTrace();
             resp.setStatus(500);
+        } catch (UserAlreadyExistException e) {
+            resp.setStatus(400);
+            resp.addHeader("error", "User already exists!");
+        } catch (UserNameException e) {
+            resp.setStatus(400);
+            resp.addHeader("error", "invalid username");
         }
     }
 }
