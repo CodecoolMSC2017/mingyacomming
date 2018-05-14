@@ -3,15 +3,26 @@ package com.codecool.web.dao.database.impl;
 import com.codecool.web.dao.database.UserDatabase;
 import com.codecool.web.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao extends AbstractDao implements UserDatabase {
 
     public UserDao(Connection connection) {
         super(connection);
+    }
+
+    public List<User> getAllUser() throws SQLException {
+        String sql = "SELECT * FROM users";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            List<User> users = new ArrayList<>();
+            while (resultSet.next()) {
+                users.add(fetchUser(resultSet));
+            }
+            return users;
+        }
     }
 
     @Override
@@ -51,8 +62,15 @@ public class UserDao extends AbstractDao implements UserDatabase {
             ps.setString(2, password);
             ps.setString(3, role);
             try(ResultSet rs = ps.executeQuery()){
-
             }
         }
+    }
+
+    private User fetchUser(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String name = resultSet.getString("name");
+        String password = resultSet.getString("password");
+        String permission = resultSet.getString("role");
+        return new User(id, name, password, permission);
     }
 }
