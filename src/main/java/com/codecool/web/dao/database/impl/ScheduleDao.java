@@ -49,7 +49,7 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Schedule(rs.getInt(1), rs.getString(3),rs.getInt(2));
+                    return new Schedule(rs.getInt(1), rs.getString(2),rs.getInt(3));
                 }
                 return null;
             }

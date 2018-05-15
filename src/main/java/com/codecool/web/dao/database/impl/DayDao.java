@@ -49,7 +49,7 @@ public class DayDao extends AbstractDao implements DayDatabase{
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Day(rs.getInt(1), rs.getString(3),rs.getInt(2));
+                    return new Day(rs.getInt(1), rs.getString(2),rs.getInt(3));
                 }
                 return null;
             }
