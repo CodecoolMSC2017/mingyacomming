@@ -11,7 +11,7 @@ public interface TaskService {
 
     int addTask(int userId, String name, String description) throws SQLException;
 
-    void removeTask(Task task) throws SQLException;
+    void removeTask(User user, Task task) throws SQLException;
 
     List<Task> getUserTasks(int userId) throws SQLException;
 

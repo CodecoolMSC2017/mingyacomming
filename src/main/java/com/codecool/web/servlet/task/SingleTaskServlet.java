@@ -63,12 +63,12 @@ public class SingleTaskServlet extends AbstractServlet {
 
                 TaskService ts = new SimpleTaskService(tdb, udb);
 
-                ts.removeTask(ts.getTask(id));
+                ts.removeTask(getUser(req), ts.getTask(id));
 
                 sendMessage(resp, 200, "deleted");
 
             } catch (SQLException e) {
-                sendMessage(resp, 400, "bad id");
+                sendMessage(resp, 400, "bad id or acces denied");
             }
         }
         catch (NumberFormatException e) {
