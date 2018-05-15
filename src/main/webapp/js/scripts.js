@@ -70,7 +70,7 @@ function loadUserData() {
   
   // Hide the buttons and forms
   document.getElementById("buttons").style.display = "none";
-  document.getElementById("form_container").style.display = "none";
+  document.getElementById("login_form").style.display = "none";
   document.getElementById("user_data").style.display = "block";
   document.getElementById("user_profile_buttons").style.display = "block";
 
@@ -83,7 +83,7 @@ function loadUserData() {
 }
 function deleteUserData() {
   document.getElementById("buttons").style.display = "block";
-  document.getElementById("form_container").style.display = "block";
+  document.getElementById("login_form").style.display = "block";
   document.getElementById("user_data").style.display = "none";
   document.getElementById("user_profile_buttons").style.display = "none"
   document.getElementById("user_data").innerHTML = "";
