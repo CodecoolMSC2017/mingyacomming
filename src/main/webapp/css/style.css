@@ -130,7 +130,7 @@ input:hover, textarea:hover
   | Login, Register |
   |_________________|
 */
-#login_form, #register_form, #task_form
+#login_form, #register_form, #task_form, #schedule_form, #day_form
 {
     width: fit-content;
     text-align: right;
