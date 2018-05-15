@@ -1,37 +1,37 @@
 package com.codecool.web.dao.database.impl;
 
-import com.codecool.web.dao.database.ScheduleDatabase;
-import com.codecool.web.model.Schedule;
+import com.codecool.web.dao.database.DayDatabase;
+import com.codecool.web.model.Day;
+import com.codecool.web.servlet.AbstractServlet;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
+public class DayDao extends AbstractDao implements DayDatabase{
 
-
-    ScheduleDao(Connection connection) {
+    DayDao(Connection connection) {
         super(connection);
     }
 
     @Override
-    public int addSchedule(Schedule schedule) throws SQLException {
-        String sql = "INSERT into schedules (name, user_id) VALUES(?,?)";
+    public int addDay(Day day) throws SQLException {
+        String sql = "INSERT into days (name, user_id) VALUES(?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, schedule.getName());
-            ps.setInt(2, schedule.getUserId());
+            ps.setString(1, day.getName());
+            ps.setInt(2, day.getUser_id());
             ResultSet resultSet = ps.executeQuery();
             return resultSet.getInt("id");
         }
     }
 
     @Override
-    public void removeSchedule(Schedule schedule) throws SQLException {
+    public void removeDay(Day day) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "DELETE FROM schedules WHERE id = ?";
+        String sql = "DELETE FROM days WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-            statement.setInt(1, schedule.getId());
+            statement.setInt(1, day.getId());
             statement.executeUpdate();
             connection.commit();
         } catch (SQLException ex) {
@@ -43,13 +43,13 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     }
 
     @Override
-    public Schedule getSchedule(int id) throws SQLException {
+    public Day getDay(int id) throws SQLException {
         String sql = "SELECT * FROM schedules WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Schedule(rs.getInt(1), rs.getString(3),rs.getInt(2));
+                    return new Day(rs.getInt(1), rs.getString(3),rs.getInt(2));
                 }
                 return null;
             }
@@ -57,35 +57,35 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     }
 
     @Override
-    public List<Schedule> getSchedules() throws SQLException {
-        String sql = "SELECT * FROM schedules";
+    public List<Day> getDays() throws SQLException {
+        String sql = "SELECT * FROM days";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
-            List<Schedule> schedules = new ArrayList<>();
+            List<Day> days = new ArrayList<>();
             while (resultSet.next()) {
-                schedules.add(fetchSchedule(resultSet));
+                days.add(fetchSchedule(resultSet));
             }
-            return schedules;
+            return days;
         }
     }
 
     @Override
-    public List<Schedule> getUserSchedule(int id) throws SQLException {
-        String sql = "SELECT * FROM schedules WHERE user_id = ?";
+    public List<Day> getScheduleDays(int id) throws SQLException {
+        String sql = "SELECT * FROM days WHERE user_id = ?";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
-            List<Schedule> schedules = new ArrayList<>();
+            List<Day> days = new ArrayList<>();
             while (resultSet.next()) {
-                schedules.add(fetchSchedule(resultSet));
+                days.add(fetchSchedule(resultSet));
             }
-            return schedules;
+            return days;
         }
     }
 
-    private Schedule fetchSchedule(ResultSet resultSet) throws SQLException {
+    private Day fetchSchedule(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         int user_id = resultSet.getInt("user_id");
-        return new Schedule(id, name, user_id);
+        return new Day(id, name, user_id);
     }
 }
