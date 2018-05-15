@@ -6,8 +6,6 @@ import com.codecool.web.model.User;
 import com.codecool.web.service.LoginService;
 import com.codecool.web.service.impl.SimpleLoginService;
 import com.codecool.web.servlet.AbstractServlet;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,22 +18,27 @@ public final class LoginServlet extends AbstractServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String jsonString = req.getReader().readLine();
 
-        String userName = getJsonParameter("username", jsonString);
-        String password = getJsonParameter("password", jsonString);
+        if (getUser(req) != null) {
+            sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, "user already logged in");
+        } else {
+            String jsonString = req.getReader().readLine();
 
-        try (Connection connection = getConnection(req.getServletContext())) {
-            UserDatabase userDao = new UserDao(connection);
-            LoginService loginService = new SimpleLoginService(userDao);
+            String userName = getJsonParameter("username", jsonString);
+            String password = getJsonParameter("password", jsonString);
 
-            User user = loginService.loginUser(userName, password);
-            req.getSession().setAttribute("user", user);
-            sendMessage(resp, HttpServletResponse.SC_OK, "succesfull");
+            try (Connection connection = getConnection(req.getServletContext())) {
+                UserDatabase userDao = new UserDao(connection);
+                LoginService loginService = new SimpleLoginService(userDao);
 
-        } catch (SQLException ex) {
-            sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, "login failed");
-            handleSqlError(resp, ex);
+                User user = loginService.loginUser(userName, password);
+                req.getSession().setAttribute("user", user);
+                sendMessage(resp, HttpServletResponse.SC_OK, "succesfull");
+
+            } catch (SQLException ex) {
+                sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, "login failed");
+                handleSqlError(resp, ex);
+            }
         }
     }
 }
