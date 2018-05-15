@@ -13,7 +13,7 @@ public interface TaskService {
 
     void removeTask(Task task) throws SQLException;
 
-    List<Task> getUserTasks(User user) throws SQLException;
+    List<Task> getUserTasks(int userId) throws SQLException;
 
     Task getTask(int id) throws SQLException;
 

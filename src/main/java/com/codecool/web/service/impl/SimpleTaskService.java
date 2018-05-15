@@ -21,8 +21,7 @@ public class SimpleTaskService implements TaskService {
 
     @Override
     public List<Task> getTasks(int userId) throws SQLException {
-        User user = udb.getUser(userId);
-        return tdb.getTasksByUser(user);
+        return tdb.getTasksByUser(userId);
     }
 
     @Override
@@ -35,8 +34,8 @@ public class SimpleTaskService implements TaskService {
         tdb.removeTask(task);
     }
 
-    public List<Task> getUserTasks(User user) throws SQLException {
-        return tdb.getTasksByUser(user);
+    public List<Task> getUserTasks(int userId) throws SQLException {
+        return tdb.getTasksByUser(userId);
     }
 
     public Task getTask(int id) throws SQLException{
