@@ -57,8 +57,9 @@ public class TaskServlet extends AbstractServlet {
 
             TaskService ts = new SimpleTaskService(tdb, udb);
 
+            String message = "users/" + ts.addTask(user.getId(), name, description);
 
-            sendMessage(resp, 204, "users/" + ts.addTask(user.getId(), name, description));
+            sendMessage(resp, HttpServletResponse.SC_OK, message);
 
         } catch (SQLException e) {
             sendMessage(resp, 400, "something went wrong");
