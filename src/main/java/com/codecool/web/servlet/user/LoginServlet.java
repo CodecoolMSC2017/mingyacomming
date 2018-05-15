@@ -36,7 +36,7 @@ public final class LoginServlet extends AbstractServlet {
                 sendMessage(resp, HttpServletResponse.SC_OK, "succesfull");
 
             } catch (SQLException ex) {
-                sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, "login failed");
+                sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
                 handleSqlError(resp, ex);
             }
         }
