@@ -34,7 +34,7 @@ public class RegisterServlet extends AbstractServlet {
             UserDatabase ud = new UserDao(connection);
             RegisterService rs = new SimpleRegisterService(ud);
             rs.register(userName, password);
-            resp.setStatus(204);
+            sendMessage(resp, 200, "user registered");
 
         } catch (SQLException e) {
             handleSqlError(resp, e);

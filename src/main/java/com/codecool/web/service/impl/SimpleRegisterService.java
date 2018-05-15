@@ -21,11 +21,20 @@ public class SimpleRegisterService implements RegisterService{
         if (username.equals("") | username.equals(null)) {
             throw new UserNameException();
         }
-        if (db.getUser(username, password) == null) {
-            db.addUser(username, password, "user");
-            return;
+
+        try {
+            db.getUser(username, password);
+            throw new UserAlreadyExistException();
         }
-        throw new UserAlreadyExistException();
+        catch (SQLException e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage.equals("name or password is wrong")) {
+                db.addUser(username, password, "user");
+            }
+            else {
+                throw new SQLException(e.getMessage());
+            }
+        }
     }
 
 }
