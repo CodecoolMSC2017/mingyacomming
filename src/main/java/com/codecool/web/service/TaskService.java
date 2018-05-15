@@ -15,4 +15,6 @@ public interface TaskService {
 
     List<Task> getUserTasks(User user) throws SQLException;
 
+    public Task getTask(int id) throws SQLException;
+
 }

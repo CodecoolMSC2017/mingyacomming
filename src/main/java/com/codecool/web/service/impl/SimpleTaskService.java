@@ -38,4 +38,8 @@ public class SimpleTaskService implements TaskService {
     public List<Task> getUserTasks(User user) throws SQLException {
         return tdb.getTasksByUser(user);
     }
+
+    public Task getTask(int id) throws SQLException{
+        return tdb.getTask(id);
+    }
 }
