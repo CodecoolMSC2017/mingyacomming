@@ -16,7 +16,7 @@ public class DayDao extends AbstractDao implements DayDatabase{
 
     @Override
     public int addDay(Day day) throws SQLException {
-        String sql = "INSERT into days (name, user_id) VALUES(?,?)";
+        String sql = "INSERT into days (name, schedule_id) VALUES(?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, day.getName());
             ps.setInt(2, day.getUser_id());
@@ -71,7 +71,7 @@ public class DayDao extends AbstractDao implements DayDatabase{
 
     @Override
     public List<Day> getScheduleDays(int id) throws SQLException {
-        String sql = "SELECT * FROM days WHERE user_id = ?";
+        String sql = "SELECT * FROM days WHERE schedule_id = ?";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             List<Day> days = new ArrayList<>();
@@ -85,7 +85,7 @@ public class DayDao extends AbstractDao implements DayDatabase{
     private Day fetchSchedule(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
-        int user_id = resultSet.getInt("user_id");
+        int user_id = resultSet.getInt("schedule_id");
         return new Day(id, name, user_id);
     }
 }
