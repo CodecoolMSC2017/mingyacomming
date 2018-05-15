@@ -63,7 +63,7 @@ public class SingleTaskServlet extends AbstractServlet {
 
                 TaskService ts = new SimpleTaskService(tdb, udb);
 
-                ts.removeTask(tdb.getTask(id));
+                ts.removeTask(ts.getTask(id));
 
                 sendMessage(resp, 200, "deleted");
 
