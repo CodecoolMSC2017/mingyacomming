@@ -30,4 +30,12 @@ public class SimpleTaskService implements TaskService {
         Task task = new Task(userId, name, description);
         tdb.addTask(task);
     }
+
+    public void removeTask(Task task) throws SQLException {
+        tdb.removeTask(task);
+    }
+
+    public List<Task> getUserTasks(User user) throws SQLException {
+        return tdb.getTasksByUser(user);
+    }
 }

@@ -59,7 +59,7 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
 
     @Override
     public List<Task> getTasksByUser(User user) throws SQLException {
-        String sql = "SELECT * FROM tasks";
+        String sql = "SELECT * FROM tasks WHERE user_id = ?";
         List<Task> taskList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(4, user.getId());
