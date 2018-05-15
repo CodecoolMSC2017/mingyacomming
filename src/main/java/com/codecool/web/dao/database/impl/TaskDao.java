@@ -32,6 +32,12 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
     public void removeTask(Task task) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
+        String sql1 = "UPDATE slots task_id = null WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);) {
+            statement.setInt(1, task.getId());
+            statement.executeUpdate();
+            connection.commit();
+        }
         String sql = "DELETE FROM tasks WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setInt(1, task.getId());
@@ -53,9 +59,12 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Task(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+                    return new Task(rs.getInt("id"), rs.getInt("user_id"), rs.getString("name"), rs.getString("description"));
                 }
-                return null;
+                else {
+                    throw new SQLException("no task with that id");
+                }
+
             }
         }
     }

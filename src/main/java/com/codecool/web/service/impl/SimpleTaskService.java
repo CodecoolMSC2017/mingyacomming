@@ -30,8 +30,13 @@ public class SimpleTaskService implements TaskService {
         return tdb.addTask(task);
     }
 
-    public void removeTask(Task task) throws SQLException {
-        tdb.removeTask(task);
+    public void removeTask(User user, Task task) throws SQLException {
+        if (user.getId() == task.getUserId() | user.getRole().equals("admin")) {
+            tdb.removeTask(task);
+        } else {
+            throw new SQLException("Acces denied!");
+        }
+
     }
 
     public List<Task> getUserTasks(int userId) throws SQLException {

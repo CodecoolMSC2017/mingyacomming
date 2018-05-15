@@ -2,6 +2,7 @@ package com.codecool.web.dao.database.impl;
 
 import com.codecool.web.dao.database.SlotDatabase;
 import com.codecool.web.model.Slot;
+import com.codecool.web.model.Task;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -68,6 +69,18 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
             return slots;
         }
     }
+
+    @Override
+    public void addTaskToSlot(Task task) throws SQLException {
+        String sql = "UPDATE slots SET task_id = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(3, task.getId());
+            executeInsert(statement);
+        } catch (SQLException se) {
+            throw se;
+        }
+    }
+
 
     private Slot fetchSchedule(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
