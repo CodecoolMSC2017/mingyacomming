@@ -28,32 +28,12 @@
         </div>
 
         <div id="content">
-            <h1>Tasks</h1>
-
-            <div id="task_form">
-                <h2> Create Task </h2>
-                <p>
-                    <label> Name </label>
-                    <input type="text" id="create_task_name_field">
-                </p>
-                <p>
-                    <label> Description </label>
-                    <textarea rows="4" cols="20" id="create_task_description_field"></textarea>
-                </p>
-                <p>
-                    <input type="button" id="create_task_button" value="CREATE TASK">
-                </p>
-            </div>
-
+            <jsp:include page="tasks_page.jsp"></jsp:include>
+            <jsp:include page="schedules_page.jsp"></jsp:include>
+            <jsp:include page="days_page.jsp"></jsp:include>
         </div>
 
-        <div id="messages">
-            <div class="message"> as</div>
-            <div class="message"> as</div>
-            <div class="message"> as</div>
-            <div class="message"> as</div>
-            <div class="message"> as</div>
-        </div>
+        <div id="messages"> </div>
         <canvas id="canvas"> Not supported! </canvas>
         <div id="game_button"> </div>
     </body>
