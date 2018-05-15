@@ -9,7 +9,7 @@ import java.util.List;
 public interface TaskService {
     List<Task> getTasks(int userId) throws SQLException;
 
-    void addTask(int userId, String name, String description) throws SQLException;
+    int addTask(int userId, String name, String description) throws SQLException;
 
     void removeTask(Task task) throws SQLException;
 

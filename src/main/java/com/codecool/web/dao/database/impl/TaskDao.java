@@ -15,13 +15,14 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
     }
 
     @Override
-    public void addTask(Task task) throws SQLException {
+    public int addTask(Task task) throws SQLException {
         String sql = "INSERT into tasks (name, description, user_id) VALUES(?,?,?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, task.getName());
             ps.setString(2, task.getDescription());
             ps.setInt(3, task.getUserId());
-            ps.executeQuery();
+            ResultSet resultSet = ps.executeQuery();
+            return resultSet.getInt("id");
         }
     }
 

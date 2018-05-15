@@ -26,9 +26,9 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public void addTask(int userId, String name, String description) throws SQLException {
+    public int addTask(int userId, String name, String description) throws SQLException {
         Task task = new Task(userId, name, description);
-        tdb.addTask(task);
+        return tdb.addTask(task);
     }
 
     public void removeTask(Task task) throws SQLException {

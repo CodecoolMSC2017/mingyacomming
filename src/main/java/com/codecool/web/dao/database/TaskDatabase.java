@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TaskDatabase {
 
-    void addTask(Task task) throws SQLException;
+    int addTask(Task task) throws SQLException;
 
     void removeTask(Task task) throws SQLException;
 
