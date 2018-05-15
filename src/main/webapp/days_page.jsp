@@ -2,7 +2,7 @@
     <h1>Days:</h1>
 
     <div id="day_form">
-        <h2> Create Task </h2>
+        <h2> Create Day </h2>
         <p>
             <label> Name </label>
             <input type="text" id="create_day_name_field">

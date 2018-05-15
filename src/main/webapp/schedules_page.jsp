@@ -2,7 +2,7 @@
     <h1>Schedules:</h1>
 
     <div id="schedule_form">
-        <h2> Create Task </h2>
+        <h2> Create Schedule </h2>
         <p>
             <label> Name </label>
             <input type="text" id="create_schedule_name_field">
