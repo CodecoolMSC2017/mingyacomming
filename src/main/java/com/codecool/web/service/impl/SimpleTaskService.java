@@ -41,4 +41,8 @@ public class SimpleTaskService implements TaskService {
     public Task getTask(int id) throws SQLException{
         return tdb.getTask(id);
     }
+
+    public void editTask(Task task) throws SQLException {
+        tdb.updateTask(task);
+    }
 }

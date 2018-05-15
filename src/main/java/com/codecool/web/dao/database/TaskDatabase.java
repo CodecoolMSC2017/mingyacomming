@@ -15,4 +15,6 @@ public interface TaskDatabase {
     Task getTask(int id) throws SQLException;
 
     List<Task> getTasksByUser(int userId) throws SQLException;
+
+    void updateTask(Task task) throws SQLException;
 }

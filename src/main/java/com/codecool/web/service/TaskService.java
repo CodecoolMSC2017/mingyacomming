@@ -17,4 +17,6 @@ public interface TaskService {
 
     Task getTask(int id) throws SQLException;
 
+    void editTask(Task task) throws SQLException;
+
 }
