@@ -32,7 +32,7 @@ public class SimpleRegisterService implements RegisterService{
                 db.addUser(username, password, "user");
             }
             else {
-                throw new SQLException(e.getMessage());
+                throw new SQLException(errorMessage);
             }
         }
     }

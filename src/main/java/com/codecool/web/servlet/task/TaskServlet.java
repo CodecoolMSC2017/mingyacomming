@@ -21,10 +21,7 @@ import java.sql.SQLException;
 public class TaskServlet extends AbstractServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        HttpSession session = req.getSession();
-
-        User user = (User) session.getAttribute("user");
+        User user = getUser(req);
 
         try(Connection connection = getConnection(req.getServletContext())) {
             TaskDatabase tdb = new TaskDao(connection);
@@ -42,9 +39,7 @@ public class TaskServlet extends AbstractServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-
-        User user = (User) session.getAttribute("user");
+        User user = getUser(req);
 
         String jsonString = req.getReader().readLine();
 
@@ -57,7 +52,7 @@ public class TaskServlet extends AbstractServlet {
 
             TaskService ts = new SimpleTaskService(tdb, udb);
 
-            String message = "users/" + ts.addTask(user.getId(), name, description);
+            String message = "tasks/" + ts.addTask(user.getId(), name, description);
 
             sendMessage(resp, HttpServletResponse.SC_OK, message);
 
