@@ -45,24 +45,55 @@ function getRegFields() {
   return regData;
 }
 
+// Logout method(s)
+function logout() {
+  let xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", deleteUserData);
+  xhr.open("GET", `${BASE_URL}/logout`);
+  xhr.send();
+}
 
 // UserTab
 function changeUserTab() {
   const message = JSON.parse(this.responseText);
-  createMessage(message);
+  addMessage(message.messege, this.status);
 
-  if (message.response != 200) {
+  if (this.status != 200) {
     return;
   }
-  console.log("logged in");
-  document.getElementById("login_form").style.display = "none";
+
+  getUserData();
+}
+
+// Loads in the profile data for the user to see
+function loadUserData() {
+  
+  // Hide the buttons and forms
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("form_container").style.display = "none";
+  document.getElementById("user_data").style.display = "block";
+  document.getElementById("user_profile_buttons").style.display = "block";
+
+  const userData = JSON.parse(this.responseText);
+  
+  let usernameE = document.createElement("label");
+  usernameE.textContent = userData.name;
+
+  document.getElementById("user_data").appendChild(usernameE);
+}
+function deleteUserData() {
+  document.getElementById("buttons").style.display = "block";
+  document.getElementById("form_container").style.display = "block";
+  document.getElementById("user_data").style.display = "none";
+  document.getElementById("user_profile_buttons").style.display = "none"
+  document.getElementById("user_data").innerHTML = "";
 }
 
 function getUserData() {
   let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", );
-  xhr.open("POST", `${BASE_URL}/register`);
-  xhr.send(JSON.stringify(regData));
+  xhr.addEventListener("load", loadUserData);
+  xhr.open("GET", `${BASE_URL}/user`);
+  xhr.send();
 }
 
 // Create task method(s)
@@ -91,21 +122,33 @@ function getCreateTaskFields() {
 // Message method(s)
 function checkResp() {
   const message = JSON.parse(this.responseText);
-  console.log(message);
+  addMessage(message.messege, this.status);
 }
 
-function createMessage(message) {
-  console.log(message);
-}
+function addMessage(content, status) {
+  let messageE = document.createElement("div");
 
-function addMessage(content) {
-  
+  if (status >= 200 && status < 300) {
+    messageE.className = "message";
+  } else if (status >= 500) {
+    messageE.className = "message warning";
+  } else {
+    messageE.className = "message error";
+  }
+
+  messageE.textContent = `${status} : ${content}`;
+
+  let messagesE = document.getElementById("messages");
+  messagesE.appendChild(messageE);
+
+  setTimeout(() => { messageE.remove() }, 5000)
 }
 
 // Core
 function init() {
   document.getElementById("log_button").addEventListener("click", login);
   document.getElementById("reg_button").addEventListener("click", register);
+  document.getElementById("logout_button").addEventListener("click", logout);
   document.getElementById("create_task_button").addEventListener("click", createTask);
 
   document.getElementById("log_tab").addEventListener("click", () => {
