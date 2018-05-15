@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SlotDao extends AbstractDao implements SlotDatabase {
 
-    SlotDao(Connection connection) {
+    public SlotDao(Connection connection) {
         super(connection);
     }
 
@@ -21,7 +21,9 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
             ps.setInt(1, slot.getTime());
             ps.setInt(2, slot.getTask_id());
             ps.setInt(3, slot.getDay_id());
-            ResultSet resultSet = ps.executeQuery();
+            ps.executeUpdate();
+            ResultSet resultSet = ps.getGeneratedKeys();
+            resultSet.next();
             return resultSet.getInt("id");
         }
     }

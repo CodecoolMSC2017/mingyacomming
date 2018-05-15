@@ -32,7 +32,7 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
     public void removeTask(Task task) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql1 = "UPDATE slots task_id = null WHERE id = ?";
+        String sql1 = "UPDATE slots set task_id = null WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);) {
             statement.setInt(1, task.getId());
             statement.executeUpdate();
