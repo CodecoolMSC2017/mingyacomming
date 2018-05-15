@@ -38,7 +38,33 @@ public class SingleTaskServlet extends AbstractServlet {
             sendMessage(resp, 200, ts.getTask(user.getId()));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sendMessage(resp, 400, "bad id");
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
+        User user = (User) session.getAttribute("user");
+        String jsonString = req.getReader().readLine();
+
+        String id = getJsonParameter("id", jsonString);
+
+
+
+        try(Connection connection = getConnection(req.getServletContext())) {
+            TaskDatabase tdb = new TaskDao(connection);
+            UserDatabase udb = new UserDao(connection);
+
+            TaskService ts = new SimpleTaskService(tdb, udb);
+
+            ts.removeTask(tdb.getTask(Integer.parseInt(id)));
+
+            sendMessage(resp, 200, "deleted");
+
+        } catch (SQLException e) {
+            sendMessage(resp, 400, "bad id");
         }
     }
 }

@@ -35,7 +35,7 @@ public class TaskServlet extends AbstractServlet {
             sendMessage(resp, 200, ts.getTasks(user.getId()));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sendMessage(resp, 500, "öccázerror");
         }
 
     }
@@ -61,7 +61,7 @@ public class TaskServlet extends AbstractServlet {
             sendMessage(resp, 204, "users/" + ts.addTask(user.getId(), name, description));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sendMessage(resp, 400, "something went wrong");
         }
 
     }
