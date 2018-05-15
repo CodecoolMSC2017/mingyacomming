@@ -49,7 +49,7 @@ public class UserDao extends AbstractDao implements UserDatabase {
                 if (rs.next()) {
                     return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 }
-                return null;
+                throw new SQLException("name or password is wrong");
             }
         }
     }
