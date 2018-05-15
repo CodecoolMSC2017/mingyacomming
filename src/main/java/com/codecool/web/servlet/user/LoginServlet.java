@@ -1,10 +1,11 @@
-package com.codecool.web.servlet;
+package com.codecool.web.servlet.user;
 
 import com.codecool.web.dao.database.UserDatabase;
 import com.codecool.web.dao.database.impl.UserDao;
 import com.codecool.web.model.User;
 import com.codecool.web.service.LoginService;
 import com.codecool.web.service.impl.SimpleLoginService;
+import com.codecool.web.servlet.AbstractServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,10 +31,10 @@ public final class LoginServlet extends AbstractServlet {
 
             User user = loginService.loginUser(userName, password);
             req.getSession().setAttribute("user", user);
-            resp.setStatus(204);
-            //sendMessage(resp, HttpServletResponse.SC_OK, user);
+            sendMessage(resp, HttpServletResponse.SC_OK, "succesfull");
 
         } catch (SQLException ex) {
+            sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, "login failed");
             handleSqlError(resp, ex);
         }
     }
