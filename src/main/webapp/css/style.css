@@ -19,8 +19,14 @@ label
 {
     font-weight: bold;
 }
+input, textarea
+{
+    /* Animations */
+    transition-duration: 200ms;
+}
 input[type="button"]
 {
+    /* Visuals */
     background-image: none;
     background-color: var(--color_font);
     color: var(--color_dark);
@@ -33,11 +39,8 @@ input[type="button"]
     /* Text */
     font-size: 15px;
     font-weight: bold;
-
-    /* Animations */
-    transition: 200ms;
 }
-input:hover
+input:hover, textarea:hover
 {
     box-shadow: 0 0 10px var(--color_light);
 }
@@ -88,6 +91,10 @@ input:hover
     transition-timing-function: ease-in-out;
 }
 /* Hide everything by default */
+#user_tab >
+{
+    margin: 20px;
+}
 #user_tab > *
 {
     display: none;
@@ -127,7 +134,7 @@ input:hover
   | Login, Register |
   |_________________|
 */
-#login_form, #register_form
+#login_form, #register_form, #task_form
 {
     width: fit-content;
     text-align: right;
@@ -135,6 +142,50 @@ input:hover
 #register_form
 {
     display: none;
+}
+textarea
+{
+    vertical-align: middle;
+}
+
+
+/* _________________
+  |                 |
+  | Login, Register |
+  |_________________|
+*/
+#content
+{
+    z-index: 2;
+    background-color: rgba(70, 70, 70, 0.95);
+    margin: 0; padding: 30px;
+    margin-top: 50px;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+
+
+
+/* __________
+  |          |
+  | Messages |
+  |__________|
+*/
+#messages
+{
+    z-index: 4;
+    position: fixed;
+    text-align: right;
+    bottom: 0; right: 0;
+    width: 30vw;
+}
+#message
+{
+    background-color: rgba(102, 15, 15, 0.75);
+    padding: 10px;
+    bottom: 0; right: 0;
+    width: fit-content;
 }
 
 
@@ -144,6 +195,16 @@ input:hover
   | Zombies |
   |_________|
 */
+#game_button
+{
+    z-index: 2;
+    position: fixed;
+    left: 0; bottom: 0;
+    width: var(--menubarH);
+    height: var(--menubarH);
+    border-radius: 50%;
+    background-color: brown;
+}
 #canvas
 {
     z-index: 1;
