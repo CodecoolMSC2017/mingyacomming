@@ -10,7 +10,7 @@ import java.util.List;
 public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
 
 
-    ScheduleDao(Connection connection) {
+    public ScheduleDao(Connection connection) {
         super(connection);
     }
 

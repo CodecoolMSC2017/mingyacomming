@@ -1,14 +1,12 @@
-package com.codecool.web.servlet.task;
+package com.codecool.web.servlet.day;
 
-import com.codecool.web.dao.database.TaskDatabase;
-import com.codecool.web.dao.database.UserDatabase;
-import com.codecool.web.dao.database.impl.TaskDao;
-import com.codecool.web.dao.database.impl.UserDao;
-import com.codecool.web.model.Task;
-import com.codecool.web.model.User;
-import com.codecool.web.service.TaskService;
-import com.codecool.web.service.impl.SimpleTaskService;
+import com.codecool.web.dao.database.DayDatabase;
+import com.codecool.web.dao.database.SlotDatabase;
+import com.codecool.web.dao.database.impl.DayDao;
+import com.codecool.web.service.DayService;
+import com.codecool.web.service.impl.SimpleDayService;
 import com.codecool.web.servlet.AbstractServlet;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +15,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
-@WebServlet("/tasks/*")
-public class SingleTaskServlet extends AbstractServlet {
-
+@WebServlet("/days/*")
+public class SingleDayServlet extends AbstractServlet{
 
     private static int getId(HttpServletRequest req) {
         String uri = req.getRequestURI();
@@ -30,47 +26,40 @@ public class SingleTaskServlet extends AbstractServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         try {
             int id = getId(req);
 
             try(Connection connection = getConnection(req.getServletContext())) {
-                TaskDatabase tdb = new TaskDao(connection);
-                UserDatabase udb = new UserDao(connection);
+                DayDatabase ddb = new DayDao(connection);
 
-                TaskService ts = new SimpleTaskService(tdb, udb);
+                DayService ds = new SimpleDayService(ddb);
 
-                sendMessage(resp, 200, ts.getTask(id));
+                sendMessage(resp, 200, ds.getDay(id));
 
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");
             }
-        }
-
-        catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
             sendMessage(resp, 400, e.getMessage());
         }
-
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         try {
             int id = getId(req);
 
             try(Connection connection = getConnection(req.getServletContext())) {
-                TaskDatabase tdb = new TaskDao(connection);
-                UserDatabase udb = new UserDao(connection);
+                DayDatabase sdb = new DayDao(connection);
 
-                TaskService ts = new SimpleTaskService(tdb, udb);
+                DayService dayService = new SimpleDayService(sdb);
 
-                ts.removeTask(getUser(req), ts.getTask(id));
+                dayService.removeDay(dayService.getDay(id));
 
                 sendMessage(resp, 200, "deleted");
 
             } catch (SQLException e) {
-                sendMessage(resp, 400, "bad id or acces denied");
+                sendMessage(resp, 400, "bad id");
             }
         }
         catch (NumberFormatException e) {
@@ -80,24 +69,20 @@ public class SingleTaskServlet extends AbstractServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = getUser(req);
 
         String jsonString = req.getReader().readLine();
 
         String name = getJsonParameter("name", jsonString);
-        String description = getJsonParameter("description", jsonString);
+        String id = getJsonParameter("id", jsonString);
+        int parseID = Integer.parseInt(id);
+        int parseName = Integer.parseInt(name);
 
         try(Connection connection = getConnection(req.getServletContext())) {
-            TaskDatabase tdb = new TaskDao(connection);
-            UserDatabase udb = new UserDao(connection);
+            DayDatabase ddb = new DayDao(connection);
 
-            TaskService ts = new SimpleTaskService(tdb, udb);
+            DayService slotService = new SimpleDayService(ddb);
 
-            Task task = new Task(user.getId(), name, description);
-
-            ts.editTask(task);
-
-            sendMessage(resp, 200, "task updated succesfully");
+            sendMessage(resp, 200, "succesfully edited");
 
         } catch (SQLException e) {
             sendMessage(resp, 400, "something went wrong");
