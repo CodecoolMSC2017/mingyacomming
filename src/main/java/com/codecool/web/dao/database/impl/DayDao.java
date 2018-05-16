@@ -31,6 +31,20 @@ public class DayDao extends AbstractDao implements DayDatabase{
     public void removeDay(Day day) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
+
+        String slotsql = "DELETE FROM slots WHERE day_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(slotsql, Statement.RETURN_GENERATED_KEYS);) {
+            statement.setInt(1, day.getId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            connection.rollback();
+            throw ex;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
+
+
         String sql = "DELETE FROM days WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setInt(1, day.getId());
