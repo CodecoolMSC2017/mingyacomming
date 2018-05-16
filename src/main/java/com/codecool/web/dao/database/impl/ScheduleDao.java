@@ -1,6 +1,8 @@
 package com.codecool.web.dao.database.impl;
 
+import com.codecool.web.dao.database.DayDatabase;
 import com.codecool.web.dao.database.ScheduleDatabase;
+import com.codecool.web.model.Day;
 import com.codecool.web.model.Schedule;
 
 import java.sql.*;
@@ -31,6 +33,37 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     public void removeSchedule(int scheduleId) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
+
+        DayDatabase ddb = new DayDao(connection);
+        List<Day> days = ddb.getScheduleDays(scheduleId);
+        for(Day day : days) {
+            String slotsql = "DELETE FROM slots WHERE day_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(slotsql, Statement.RETURN_GENERATED_KEYS);) {
+                statement.setInt(1, day.getId());
+                statement.executeUpdate();
+                connection.commit();
+            } catch (SQLException ex) {
+                connection.rollback();
+                throw ex;
+            } finally {
+                connection.setAutoCommit(autoCommit);
+            }
+        }
+
+
+
+        String daysql = "DELETE FROM days WHERE schedule_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(daysql, Statement.RETURN_GENERATED_KEYS);) {
+            statement.setInt(1, scheduleId);
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            connection.rollback();
+            throw ex;
+        } finally {
+            connection.setAutoCommit(autoCommit);
+        }
+
         String sql = "DELETE FROM schedules WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setInt(1, scheduleId);
