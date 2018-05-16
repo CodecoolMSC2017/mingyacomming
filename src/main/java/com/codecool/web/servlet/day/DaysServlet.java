@@ -29,8 +29,8 @@ public class DaysServlet extends AbstractServlet {
             int scheduleId = Integer.parseInt(id);
 
             try (Connection connection = getConnection(req.getServletContext())) {
-                DayDatabase sdb = new DayDao(connection);
-                DayService ds = new SimpleDayService(sdb);
+                DayDatabase ddb = new DayDao(connection);
+                DayService ds = new SimpleDayService(ddb);
 
                 sendMessage(resp, 200, ds.getDay(scheduleId));
 
@@ -54,9 +54,9 @@ public class DaysServlet extends AbstractServlet {
 
 
             try(Connection connection = getConnection(req.getServletContext())) {
-                DayDatabase sdb = new DayDao(connection);
-                DayService ss = new SimpleDayService(sdb);
-                int dayId = ss.addDay(new Day(name, scheduleId));
+                DayDatabase ddb = new DayDao(connection);
+                DayService ds = new SimpleDayService(ddb);
+                int dayId = ds.addDay(new Day(name, scheduleId));
                 String message = "days/" + dayId;
                 sendMessage(resp, 200, message);
 
