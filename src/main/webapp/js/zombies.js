@@ -1,5 +1,6 @@
 let canvas;
 let context;
+let fps;
 
 let gameData = {
   isRunning: true,
@@ -109,12 +110,30 @@ function Particle(x, y) {
 
 // Core
 function update() {
-  requestAnimationFrame(update);
+  startTime = new Date();
+
+  //requestAnimationFrame(update);
   context.fillStyle = "#111";
   context.fillRect(0, 0, canvas.width, canvas.height);
-
+  
   gameData.zombies.forEach(zombie => zombie.update());
   gameData.particles.forEach(particle => particle.update());
+
+  endTime = new Date();
+  let updateTime = endTime - startTime; //in ms
+
+  context.fillStyle = "#fff";
+  context.font = "30px Arial";
+
+  fps.fps = Math.floor(1000 / updateTime);
+  context.fillText(fps.smoothFps, 5, 50);
+
+}
+
+function FPS() {
+  setInterval(() => {
+    this.smoothFps = this.fps;
+  }, 250);
 }
 
 function click(event) {
@@ -138,8 +157,8 @@ function init() {
   for (let i = 0; i < 5; i++) {
     gameData.zombies.push(new Zombie());
   }
-
-  update();
+  fps = new FPS();
+  setInterval(update, 33);
 }
 
 function resizeCanvas() {
