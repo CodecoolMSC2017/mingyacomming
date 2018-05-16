@@ -44,7 +44,9 @@ class SlotDaoTest extends AbstractTest {
     }
 
     @Test
-    void addTaskToSlot() {
-
+    void addTaskToSlot() throws SQLException {
+        assertEquals(1, slotDao.getSlot(1).getTask_id());
+        slotDao.addTaskToSlot(2, 1);
+        assertEquals(2, slotDao.getSlot(1).getTask_id());
     }
 }
