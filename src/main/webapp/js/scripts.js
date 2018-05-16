@@ -190,22 +190,20 @@ function loadTasks() {
 function Task(id, name, description) {
   this.id = id;
   this.name = name;
+  this.description = description;
 
-  this.getElement = function() {
+  this.getElement = function () {
     let taskE = document.createElement("div");
     taskE.className = "task";
-    taskE.setAttribute("id", id);
+    taskE.setAttribute("id", this.id);
 
     let nameE = document.createElement("h2");
-    nameE.textContent = name;
+    nameE.textContent = this.name;
     taskE.appendChild(nameE);
 
     let descriptionE = document.createElement("p");
-    descriptionE.textContent = description;
+    descriptionE.textContent = this.description;
     taskE.appendChild(descriptionE);
-
-    // Event
-    taskE.addEventListener("click", () => {console.log(this)});
 
     return taskE;
   }
@@ -244,7 +242,7 @@ function clearScheduleFields() {
   nameE.value = "";
 }
 
-function getSchedules(callback) {
+function getSchedules() {
   const xhr = new XMLHttpRequest();
   xhr.addEventListener("load", loadSchedules);
   xhr.open("GET", `${BASE_URL}/schedules`);
@@ -258,7 +256,7 @@ function loadSchedules() {
   schedulesE.innerHTML = "";
 
   schedulesData.forEach(scheduleData => {
-    let scheduleE = new Task(
+    let scheduleE = new Schedule(
       scheduleData.id,
       scheduleData.name
     );
@@ -272,14 +270,20 @@ function Schedule(id, name) {
   this.id = id;
   this.name = name;
 
-  this.getElement = function() {
+  this.getElement = function () {
     let scheduleE = document.createElement("div");
-    scheduleE.setAttribute("id", id);
+    scheduleE.setAttribute("id", this.id);
     scheduleE.className = "schedule";
 
     let nameE = document.createElement("h2");
-    nameE.textContent = name;
-    scheduleE.appendChild(scheduleE);
+    nameE.textContent = this.name;
+    scheduleE.appendChild(nameE);
+
+    // Events
+    scheduleE.addEventListener("click", () => {
+      document.getElementById("current_schedule").setAttribute("value", this.id);
+      getDays(this.id);
+    });
 
     return scheduleE;
   }
@@ -294,22 +298,85 @@ function Schedule(id, name) {
 */
 // Sends the day creation request to the servlet
 function createDay() {
-  const dayData = getCreateScheduleFields();
+  const id = document.getElementById("current_schedule").getAttribute("value");
+  const dayData = getDayFields();
 
   let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", checkResp);
-  xhr.open("POST", `${BASE_URL}/days`);
+  xhr.addEventListener("load", getDays);
+  xhr.open("POST", `${BASE_URL}/days?scheduleId=${id}`);
   xhr.send(JSON.stringify(dayData));
 }
 
 // Gets the data from the day form
-function getCreateDayFields() {
+function getDayFields() {
   let dayData = {};
 
   let nameE = document.getElementById("create_day_name_field");
   dayData.name = nameE.value;
 
   return dayData;
+}
+
+function clearDayFields() {
+  let nameE = document.getElementById("create_day_name_field");
+  nameE.value = "";
+}
+
+function getDays() {
+  const id = document.getElementById("current_schedule").getAttribute("value");
+
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", loadDays);
+  xhr.open("GET", `${BASE_URL}/days?scheduleId=${id}`);
+  xhr.send();
+}
+
+function loadDays() {
+  const daysData = JSON.parse(this.responseText);
+  console.log(daysData);
+
+  let daysE = document.getElementById("days");
+  daysE.innerHTML = "";
+
+  if (daysData.length === undefined) {
+    let dayE = new Day(
+      daysData.id,
+      daysData.name
+    );
+
+    daysE.appendChild(dayE.getElement());
+
+  } else {
+
+    for (let i = 0; i < daysData.length; i++) {
+      let dayE = new Day(
+        daysData[i].id,
+        daysData[i].name
+      );
+
+      daysE.appendChild(dayE.getElement());
+    }
+
+  }
+
+  clearDayFields();
+}
+
+function Day(id, name) {
+  this.id = id;
+  this.name = name;
+
+  this.getElement = function () {
+    let dayE = document.createElement("div");
+    dayE.setAttribute("id", this.id);
+    dayE.className = "day";
+
+    let nameE = document.createElement("h2");
+    nameE.textContent = this.name;
+    dayE.appendChild(nameE);
+
+    return dayE;
+  }
 }
 
 
@@ -340,7 +407,7 @@ function addMessage(status, content) {
   let messagesE = document.getElementById("messages");
   messagesE.appendChild(messageE);
 
-  setTimeout(() => { messageE.remove() }, 5000);
+  setTimeout(messageE.remove(), 5000);
 }
 
 
