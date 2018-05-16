@@ -23,7 +23,7 @@ public class DaysServlet extends AbstractServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String jsonString = req.getReader().readLine();
-        String id = getJsonParameter("scheduleId", jsonString);
+        String id = req.getParameter("scheduleId");
 
         try {
             int scheduleId = Integer.parseInt(id);
@@ -46,7 +46,7 @@ public class DaysServlet extends AbstractServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jsonString = req.getReader().readLine();
 
-        String id = getJsonParameter("scheduleId", jsonString);
+        String id = req.getParameter("scheduleId");
         String name = getJsonParameter("name", jsonString);
 
         try {
