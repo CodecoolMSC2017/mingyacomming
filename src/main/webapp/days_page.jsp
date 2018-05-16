@@ -1,6 +1,5 @@
 <div id="days_page">
-    <h1>Days:</h1>
-
+    
     <div id="day_form">
         <h2> Create Day </h2>
         <p>
@@ -11,6 +10,7 @@
             <input type="button" id="create_day_button" value="CREATE DAY">
         </p>
     </div>
-
+    
+    <h1>Days:</h1>
     <div id="days"> days here </div>
 </div>

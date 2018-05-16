@@ -2,7 +2,6 @@
     <h1>Tasks:</h1>
 
     <div id="task_form">
-        <h2> Create Task </h2>
         <p>
             <label> Name </label>
             <input type="text" id="create_task_name_field">
@@ -15,6 +14,7 @@
             <input type="button" id="create_task_button" value="CREATE TASK">
         </p>
     </div>
-
+    
+    <h2> Create Task </h2>
     <div id="tasks"> tasks here </div>
 </div>
