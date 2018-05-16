@@ -28,12 +28,12 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     }
 
     @Override
-    public void removeSchedule(Schedule schedule) throws SQLException {
+    public void removeSchedule(int scheduleId) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
         String sql = "DELETE FROM schedules WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-            statement.setInt(1, schedule.getId());
+            statement.setInt(1, scheduleId);
             statement.executeUpdate();
             connection.commit();
         } catch (SQLException ex) {
@@ -74,13 +74,15 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     @Override
     public List<Schedule> getUserSchedule(int id) throws SQLException {
         String sql = "SELECT * FROM schedules WHERE user_id = ?";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            List<Schedule> schedules = new ArrayList<>();
-            while (resultSet.next()) {
-                schedules.add(fetchSchedule(resultSet));
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                List<Schedule> schedules = new ArrayList<>();
+                while (resultSet.next()) {
+                    schedules.add(fetchSchedule(resultSet));
+                }
+                return schedules;
             }
-            return schedules;
         }
     }
 
