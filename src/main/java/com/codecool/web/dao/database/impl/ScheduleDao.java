@@ -17,10 +17,12 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     @Override
     public int addSchedule(Schedule schedule) throws SQLException {
         String sql = "INSERT into schedules (name, user_id) VALUES(?,?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, schedule.getName());
             ps.setInt(2, schedule.getUserId());
-            ResultSet resultSet = ps.executeQuery();
+            ps.executeUpdate();
+            ResultSet resultSet = ps.getGeneratedKeys();
+            resultSet.next();
             return resultSet.getInt("id");
         }
     }
