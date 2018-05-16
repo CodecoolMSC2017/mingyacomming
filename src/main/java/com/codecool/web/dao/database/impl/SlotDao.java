@@ -17,7 +17,7 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
     @Override
     public int addSlot(Slot slot) throws SQLException {
         String sql = "INSERT into slots (time, task_id, day_id) VALUES(?,?,?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, slot.getTime());
             ps.setInt(2, slot.getTask_id());
             ps.setInt(3, slot.getDay_id());
@@ -47,12 +47,12 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
 
     @Override
     public Slot getSlot(int id) throws SQLException {
-        String sql = "SELECT * FROM schedules WHERE id = ?";
+        String sql = "SELECT * FROM slots WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Slot(rs.getInt(1), rs.getInt(2),rs.getInt(3), rs.getInt(4));
+                    return new Slot(rs.getInt("id"), rs.getInt("time"),rs.getInt("task_id"), rs.getInt("day_id"));
                 }
                 return null;
             }
@@ -62,22 +62,25 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
     @Override
     public List<Slot> getDaySlots(int id) throws SQLException {
         String sql = "SELECT * FROM slots WHERE day_id = ?";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            List<Slot> slots = new ArrayList<>();
-            while (resultSet.next()) {
-                slots.add(fetchSchedule(resultSet));
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try(ResultSet resultSet = statement.executeQuery()){
+                List<Slot> slots = new ArrayList<>();
+                while (resultSet.next()) {
+                    slots.add(fetchSchedule(resultSet));
+                }
+                return slots;
             }
-            return slots;
         }
     }
 
     @Override
-    public void addTaskToSlot(Task task) throws SQLException {
+    public void addTaskToSlot(int taskId, int slotId) throws SQLException {
         String sql = "UPDATE slots SET task_id = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(3, task.getId());
-            executeInsert(statement);
+            statement.setInt(1, taskId);
+            statement.setInt(2, slotId);
+            statement.executeUpdate();
         } catch (SQLException se) {
             throw se;
         }

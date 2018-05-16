@@ -1,5 +1,7 @@
 package com.codecool.web.dao.database.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,16 +19,16 @@ public abstract class AbstractTest {
         return sql;
     }
 
-    public void runInitStript(Connection connection) throws SQLException {
+    public void runInitStript(Connection connection) throws FileNotFoundException, SQLException {
         try(Statement st = connection.createStatement()) {
             st.execute(getQueryString());
         }
     }
 
     public Connection getConnection() throws SQLException {
-        String USER = System.getProperty("dbUser", "postgres");
-        String PASS = System.getProperty("dbPass", "admin");
-        String DB_URL = System.getProperty("dbUrl", "jdbc:postgresql://localhost:5432/mingyagyuvok");
+        String USER = System.getProperty("dbUser");
+        String PASS = System.getProperty("dbPass");
+        String DB_URL = System.getProperty("dbUrl");
         return DriverManager.getConnection(DB_URL, USER, PASS);
     }
 }

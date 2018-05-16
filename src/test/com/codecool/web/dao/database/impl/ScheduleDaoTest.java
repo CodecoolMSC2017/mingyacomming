@@ -3,9 +3,15 @@ package com.codecool.web.dao.database.impl;
 import com.codecool.web.model.Schedule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScheduleDaoTest extends AbstractTest {
