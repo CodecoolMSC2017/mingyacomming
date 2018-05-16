@@ -9,7 +9,7 @@ public interface ScheduleDatabase {
 
     int addSchedule(Schedule schedule) throws SQLException;
 
-    void removeSchedule(Schedule schedule) throws SQLException;
+    void removeSchedule(int id) throws SQLException;
 
     Schedule getSchedule(int id) throws SQLException;
 
