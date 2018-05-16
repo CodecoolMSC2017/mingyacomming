@@ -22,7 +22,7 @@ label
 input, textarea
 {
     /* Animations */
-    transition-duration: 200ms;
+    transition-duration: 200ms; 
 }
 input[type="button"]
 {
@@ -63,6 +63,11 @@ input:hover, textarea:hover
     height: var(--menubarH);
 }
 
+#menu_bar > h1
+{
+    transform: translateY(-50%);
+}
+
 
 
 /* __________
@@ -84,11 +89,11 @@ input:hover, textarea:hover
     text-align: center;
     margin: 0; padding: 0;
     top: 2.5px; right: 2.5px;
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
 
     transform: perspective(1000px);
-    transition-duration: 500ms;
+    transition-duration: 200ms;
     transition-timing-function: ease-in-out;
 }
 /* Hide everything by default */
@@ -109,8 +114,8 @@ input:hover, textarea:hover
     
     /* Positions */
     padding: 25px;
-    width: fit-content; min-width: 300px;
-    height: fit-content; min-height: 200px;
+    width: 300px;
+    height: 400px;
 }
 #user_tab:hover > *
 {
@@ -167,7 +172,7 @@ textarea
     grid-template-columns: 25% 25% 25% 25%;
 }
 
-.task, .schedule, #day
+.task, .schedule, .day
 {
     background-color: var(--color_normal);
     box-shadow: 0 0 2px black;
@@ -181,7 +186,7 @@ textarea
 
     transition-duration: 300ms;
 }
-.task:hover, .schedule:hover, .day
+.task:hover, .schedule:hover, .day:hover
 {
   transform: perspective(1000px) scale(1.5);
 }
