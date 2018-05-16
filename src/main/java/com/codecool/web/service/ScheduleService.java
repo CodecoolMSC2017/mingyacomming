@@ -10,7 +10,7 @@ public interface ScheduleService {
 
     int addSchedule(Schedule schedule) throws SQLException;
 
-    void removeSchedule(Schedule schedule) throws SQLException;
+    void removeSchedule(int scheduleId) throws SQLException;
 
     Schedule getSchedule(int id) throws SQLException;
 

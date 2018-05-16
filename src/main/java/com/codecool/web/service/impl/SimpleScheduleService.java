@@ -22,8 +22,8 @@ public class SimpleScheduleService implements ScheduleService{
     }
 
     @Override
-    public void removeSchedule(Schedule schedule) throws SQLException {
-        db.removeSchedule(schedule);
+    public void removeSchedule(int scheduleId) throws SQLException {
+        db.removeSchedule(scheduleId);
     }
 
     @Override
