@@ -3,8 +3,6 @@ package com.codecool.web.dao.database.impl;
 import com.codecool.web.model.Slot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 

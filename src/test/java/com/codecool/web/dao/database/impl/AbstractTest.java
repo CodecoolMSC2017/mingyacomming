@@ -1,7 +1,5 @@
 package com.codecool.web.dao.database.impl;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
