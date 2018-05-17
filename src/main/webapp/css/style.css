@@ -2,7 +2,7 @@
 {
     --color_dark: #333;
     --color_normal: #777;
-    --color_light: #ddd;
+    --color_light: #fff;
 
     --color_font: var(--color_light);
     --menubarH: 50px;
@@ -168,7 +168,7 @@ textarea
     position: absolute;
 }
 
-#tasks_page, #schedules_page, #days_page, #tabs, #current_schedule, #current_day
+#tasks_page, #schedules_page, #days_page, #slots_page, #tabs, #current_schedule, #current_day
 {
     display: none;
 }
@@ -179,7 +179,12 @@ textarea
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
 }
-
+#slots
+{
+    margin: 25px 100px 25px 100px;
+    display: grid;
+    width: 50%;
+}
 .task, .schedule, .day
 {
     background-color: var(--color_normal);
@@ -197,7 +202,21 @@ textarea
 
 .task:hover, .schedule:hover, .day:hover
 {
-  transform: perspective(1000px) scale(1.5);
+    transform: perspective(1000px) scale(1.5);
+}
+
+.slot
+{
+    background-color: var(--color_normal);
+    box-shadow: 0 0 2px black;
+
+    display: inline;
+    margin: 0; padding: 5px;
+
+    text-align: center;
+    word-break: break-word;
+
+    transition-duration: 300ms;
 }
 
 .task:hover h2, .schedule:hover h2, .day:hover h2

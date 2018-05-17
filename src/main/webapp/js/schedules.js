@@ -65,6 +65,7 @@ function switchToSchedulesPage() {
   document.getElementById("tasks_page").style.display = "none";
   document.getElementById("schedules_page").style.display = "block";
   document.getElementById("days_page").style.display = "none";
+  document.getElementById("slots_page").style.display = "none";
 
   document.getElementById("current_schedule").style.display = "none";
   document.getElementById("current_day").style.display = "none";
