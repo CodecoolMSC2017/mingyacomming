@@ -144,8 +144,23 @@ function editTask(taskId) {
 
 function sendEditTask(taskId) {
   const task = {};
-  task.name = document.getElementById("editName").value;
-  task.description = document.getElementById("editDescription").value;
+  const editNameEl = document.getElementById("editName");
+  const editDescriptionEl = document.getElementById("editDescription");
+  task.name = editNameEl.value;
+  task.description = editDescriptionEl.value;
+  if (task.name === "" && task.description === "") {
+    getTasks();
+    return;
+  }
+
+  if (task.name === "") {
+    task.name = editNameEl.placeholder;
+  }
+
+  if (task.description === "") {
+    task.description = editDescriptionEl.placeholder;
+  }
+
   const xhr = new XMLHttpRequest();
   xhr.addEventListener("load", getTasks);
   xhr.open("PUT", `${BASE_URL}/tasks/${taskId}`);

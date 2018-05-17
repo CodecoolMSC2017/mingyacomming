@@ -138,7 +138,14 @@ function editSchedule(scheduleId) {
 
 function sendEditSchedule(scheduleId) {
   const schedule = {};
-  schedule.name = document.getElementById("editElement").value;
+  const editEl = document.getElementById("editElement");
+  schedule.name = editEl.value;
+
+  if (schedule.name === "") {
+    getSchedules();
+    return;
+  }
+
   const xhr = new XMLHttpRequest();
   xhr.addEventListener("load", getSchedules);
   xhr.open("PUT", `${BASE_URL}/schedules/${scheduleId}`);
