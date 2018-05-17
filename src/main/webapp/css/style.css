@@ -39,6 +39,8 @@ input[type="button"]
     /* Text */
     font-size: 15px;
     font-weight: bold;
+
+    cursor: pointer;
 }
 input:hover, textarea:hover
 {
@@ -165,6 +167,12 @@ textarea
     height: fit-content; min-height: 100vh;
     position: absolute;
 }
+
+#tasks_page, #schedules_page, #days_page, #tabs, #current_schedule, #current_day
+{
+    display: none;
+}
+
 #tasks, #schedules, #days
 {
     margin: 25px 100px 25px 100px;
@@ -186,9 +194,27 @@ textarea
 
     transition-duration: 300ms;
 }
+
 .task:hover, .schedule:hover, .day:hover
 {
   transform: perspective(1000px) scale(1.5);
+  cursor: pointer;
+}
+
+#tabs label
+{
+    display: block;
+    float: left;
+    border-radius: 5px;
+    background-color: var(--color_dark);
+    margin: 20px; padding: 5px;
+    transition-duration: 300ms;
+}
+#tabs label:hover
+{
+    text-shadow: 0 0 5px black;
+    transform: perspective(1000px) translateZ(300px);
+    cursor: pointer;
 }
 
 /* __________
