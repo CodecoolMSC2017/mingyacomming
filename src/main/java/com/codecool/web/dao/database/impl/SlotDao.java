@@ -86,6 +86,20 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
         }
     }
 
+    @Override
+    public void updateSlot(int id, int time) throws SQLException {
+        String sql = "UPDATE slots SET time = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.setInt(2, time);
+            statement.setInt(3, getSlot(id).getTask_id());
+            statement.setInt(4, getSlot(id).getDay_id());
+            executeInsert(statement);
+        } catch (SQLException se) {
+            throw se;
+        }
+    }
+
 
     private Slot fetchSchedule(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");

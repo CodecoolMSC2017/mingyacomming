@@ -32,6 +32,11 @@ public class SimpleSlotService implements SlotService {
     }
 
     @Override
+    public void updateSlot(int id, int time) throws SQLException {
+        db.updateSlot(id, time);
+    }
+
+    @Override
     public List<Slot> getDaySlots(int id) throws SQLException {
         return db.getDaySlots(id);
     }

@@ -83,7 +83,7 @@ public class SingleSlotServlet extends AbstractServlet{
 
             SlotService slotService = new SimpleSlotService(sdb);
 
-
+            slotService.updateSlot(parseID, parseTime);
 
             sendMessage(resp, 200, "succesfully edited");
 
