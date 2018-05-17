@@ -39,4 +39,6 @@ public class SimpleDayService implements DayService{
     public List<Day> getScheduleDays(int id) throws SQLException {
         return db.getScheduleDays(id);
     }
+
+
 }

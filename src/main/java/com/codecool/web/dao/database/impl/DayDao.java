@@ -106,4 +106,16 @@ public class DayDao extends AbstractDao implements DayDatabase{
         int user_id = resultSet.getInt("schedule_id");
         return new Day(id, name, user_id);
     }
+
+    public void updateDays(int id, String name) throws SQLException {
+        String sql = "UPDATE days SET name = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.setString(2, name);
+            statement.setInt(3, getDay(id).getSchedule_id());
+            executeInsert(statement);
+        } catch (SQLException se) {
+            throw se;
+        }
+    }
 }
