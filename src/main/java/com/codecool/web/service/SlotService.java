@@ -13,7 +13,7 @@ public interface SlotService {
 
     Slot getSlot(int id) throws SQLException;
 
-    void updateSlot(int id, int time) throws SQLException;
+    void updateSlot(Slot slot) throws SQLException;
 
     List<Slot> getDaySlots(int id) throws SQLException;
 }

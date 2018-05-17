@@ -2,6 +2,7 @@ package com.codecool.web.servlet.slot;
 
 import com.codecool.web.dao.database.SlotDatabase;
 import com.codecool.web.dao.database.impl.SlotDao;
+import com.codecool.web.model.Slot;
 import com.codecool.web.service.SlotService;
 import com.codecool.web.service.impl.SimpleSlotService;
 import com.codecool.web.servlet.AbstractServlet;
@@ -72,18 +73,18 @@ public class SingleSlotServlet extends AbstractServlet{
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jsonString = req.getReader().readLine();
+        int id = Integer.parseInt(req.getParameter("id"));
 
-        String time = getJsonParameter("time", jsonString);
-        String id = getJsonParameter("id", jsonString);
-        int parseID = Integer.parseInt(id);
-        int parseTime = Integer.parseInt(time);
+        int time = Integer.parseInt(getJsonParameter("time", jsonString));
+        int task_id = Integer.parseInt(getJsonParameter("taskId", jsonString));
+        int day_id = Integer.parseInt(getJsonParameter("dayId", jsonString));
 
         try(Connection connection = getConnection(req.getServletContext())) {
             SlotDatabase sdb = new SlotDao(connection);
 
             SlotService slotService = new SimpleSlotService(sdb);
 
-            slotService.updateSlot(parseID, parseTime);
+            slotService.updateSlot(new Slot(id, time, task_id, day_id));
 
             sendMessage(resp, 200, "Slot updated succesfully");
 
