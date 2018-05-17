@@ -106,7 +106,7 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
 
     @Override
     public List<Schedule> getUserSchedule(int id) throws SQLException {
-        String sql = "SELECT * FROM schedules WHERE user_id = ?";
+        String sql = "SELECT * FROM schedules WHERE user_id = ? ORDER BY id ASC";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try(ResultSet resultSet = statement.executeQuery()) {
