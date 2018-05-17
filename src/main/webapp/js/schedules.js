@@ -20,6 +20,8 @@ function deleteSchedule(scheduleId) {
   xhr.send();
 }
 
+
+
 // Gets the data from the schedule form
 function getScheduleFields() {
   let scheduleData = {};
@@ -83,11 +85,19 @@ function Schedule(id, name) {
     nameE.textContent = this.name;
     scheduleE.appendChild(nameE);
 
+
+
     // Events
     nameE.addEventListener("click", () => {
       document.getElementById("current_schedule").setAttribute("value", this.id);
       switchToDaysPage(this.id);
     });
+
+    let editE= document.createElement("i");
+    editE.textContent = "edit";
+
+    editE.addEventListener("click", ()=> editSchedule(this.id));
+    scheduleE.appendChild(editE);
 
     let deleteE = document.createElement("i");
     deleteE.textContent = "Remove";
@@ -96,6 +106,39 @@ function Schedule(id, name) {
 
     return scheduleE;
   }
+}
+
+function editSchedule(scheduleId) {
+  const scheduleEl = document.getElementById(scheduleId);
+  const name = scheduleEl.getElementsByTagName("h2")[0].innerHTML;
+  scheduleEl.textContent = "";
+
+  const formEl = document.createElement("form");
+  scheduleEl.appendChild(formEl);
+
+  const inputNameEl = document.createElement("input");
+  formEl.appendChild(inputNameEl);
+
+  inputNameEl.setAttribute("type", "text");
+  inputNameEl.setAttribute("placeholder", name);
+  inputNameEl.setAttribute("size", "10");
+  inputNameEl.setAttribute("id", "editElement");
+
+  const editE = document.createElement("i");
+  editE.innerHTML = "edit";
+  formEl.appendChild(editE);
+
+  editE.addEventListener("click", ()=> sendEditSchedule(scheduleId));
+
+}
+
+function sendEditSchedule(scheduleId) {
+  const schedule = {};
+  schedule.name = document.getElementById("editElement").value;
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", getSchedules);
+  xhr.open("PUT", `${BASE_URL}/schedules/${scheduleId}`);
+  xhr.send(JSON.stringify(schedule));
 }
 
 
