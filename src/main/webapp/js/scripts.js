@@ -73,15 +73,14 @@ function logout() {
 // UserTab
 function changeUserTab() {
   const message = JSON.parse(this.responseText);
-  addMessage(this.status, message.messege);
 
   if (this.status != 200) {
+    addMessage(this.status, message.messege);
     return;
   }
 
   getUserData(loadUserData);
-  getTasks(loadTasks);
-  getSchedules(loadSchedules);
+  switchToTasksPage();
 }
 
 
@@ -108,13 +107,15 @@ function hideUserData() {
   document.getElementById("login_form").style.display = "none";
   document.getElementById("user_data").style.display = "block";
   document.getElementById("user_profile_buttons").style.display = "block";
+  document.getElementById("tabs").style.display = "block";
 }
 
 function deleteUserData() {
   document.getElementById("buttons").style.display = "block";
   document.getElementById("login_form").style.display = "block";
   document.getElementById("user_data").style.display = "none";
-  document.getElementById("user_profile_buttons").style.display = "none"
+  document.getElementById("user_profile_buttons").style.display = "none";
+  document.getElementById("tabs").style.display = "none";
   document.getElementById("user_data").innerHTML = "";
 }
 
@@ -185,6 +186,17 @@ function loadTasks() {
   });
 
   clearTaskFields();
+}
+
+function switchToTasksPage() {
+  document.getElementById("tasks_page").style.display = "block";
+  document.getElementById("schedules_page").style.display = "none";
+  document.getElementById("days_page").style.display = "none";
+
+  document.getElementById("current_schedule").style.display = "none";
+  document.getElementById("current_day").style.display = "none";
+
+  getTasks(loadTasks);
 }
 
 function Task(id, name, description) {
@@ -266,6 +278,17 @@ function loadSchedules() {
   clearScheduleFields();
 }
 
+function switchToSchedulesPage() {
+  document.getElementById("tasks_page").style.display = "none";
+  document.getElementById("schedules_page").style.display = "block";
+  document.getElementById("days_page").style.display = "none";
+
+  document.getElementById("current_schedule").style.display = "none";
+  document.getElementById("current_day").style.display = "none";
+
+  getSchedules(loadSchedules);
+}
+
 function Schedule(id, name) {
   this.id = id;
   this.name = name;
@@ -282,7 +305,7 @@ function Schedule(id, name) {
     // Events
     scheduleE.addEventListener("click", () => {
       document.getElementById("current_schedule").setAttribute("value", this.id);
-      getDays(this.id);
+      switchToDaysPage(this.id);
     });
 
     return scheduleE;
@@ -338,28 +361,27 @@ function loadDays() {
   let daysE = document.getElementById("days");
   daysE.innerHTML = "";
 
-  if (daysData.length === undefined) {
+  daysData.forEach(dayData => {
     let dayE = new Day(
-      daysData.id,
-      daysData.name
+      dayData.id,
+      dayData.name
     );
 
     daysE.appendChild(dayE.getElement());
-
-  } else {
-
-    for (let i = 0; i < daysData.length; i++) {
-      let dayE = new Day(
-        daysData[i].id,
-        daysData[i].name
-      );
-
-      daysE.appendChild(dayE.getElement());
-    }
-
-  }
+  });
 
   clearDayFields();
+}
+
+function switchToDaysPage(scheduleId) {
+  document.getElementById("tasks_page").style.display = "none";
+  document.getElementById("schedules_page").style.display = "none";
+  document.getElementById("days_page").style.display = "block";
+
+  console.log("hello");
+  document.getElementById("current_schedule").style.display = "inline";
+
+  getDays(scheduleId);
 }
 
 function Day(id, name) {
@@ -426,6 +448,12 @@ function init() {
   document.getElementById("create_task_button").addEventListener("click", createTask);
   document.getElementById("create_schedule_button").addEventListener("click", createSchedule);
   document.getElementById("create_day_button").addEventListener("click", createDay);
+
+  document.getElementById("my_tasks").addEventListener("click", switchToTasksPage);
+  document.getElementById("my_schedules").addEventListener("click", switchToSchedulesPage);
+  document.getElementById("current_schedule").addEventListener("click", () => {
+    switchToDaysPage(this.getAttribute("value"));
+  });
 
   document.getElementById("log_tab").addEventListener("click", () => {
     document.getElementById("login_form").style.display = "block";
