@@ -94,15 +94,15 @@ function Task(id, name, description) {
     descriptionE.textContent = this.description;
     taskE.appendChild(descriptionE);
 
-    let deleteE = document.createElement("i");
-    deleteE.className = "fa fa-remove";
-    deleteE.addEventListener("click", () => deleteTask(this.id));
-    taskE.appendChild(deleteE);
-
     let editEl = document.createElement("i");
     editEl.className = "fa fa-cog";
     editEl.addEventListener("click", ()=> editTask(this.id));
     taskE.appendChild(editEl);
+
+    let deleteE = document.createElement("i");
+    deleteE.className = "fa fa-remove";
+    deleteE.addEventListener("click", () => deleteTask(this.id));
+    taskE.appendChild(deleteE);
 
     return taskE;
   }

@@ -143,6 +143,12 @@ input:hover, textarea:hover
     text-align: right;
     display: inline-block;
 }
+#task_form, #schedule_form, #day_form
+{
+    background-color: var(--color_dark);
+    border: 1px solid black;
+    margin: 20px; padding: 20px;
+}
 #register_form, #user_data, #user_profile_buttons
 {
     display: none;
@@ -161,7 +167,7 @@ textarea
 #content
 {
     z-index: 2;
-    background-color: rgba(70, 70, 70, 0.90);
+    background-color: rgba(70, 70, 70, 0.85);
     margin: 0; padding: 0;
     margin-top: 50px;
     width: 100%;
@@ -204,6 +210,14 @@ textarea
 {
     cursor: pointer;
 }
+.task h2, .schedule h2, .day h2
+{
+    transition-duration: 300ms;
+}
+.task h2:hover, .schedule h2:hover, .day h2:hover
+{
+    transform: perspective(1000px) translateZ(100px);
+}
 
 .task p
 {
@@ -232,10 +246,12 @@ textarea
     
     display: inline;
     margin: 0; padding: 5px;
+    min-height: 20px;
     
     text-align: center;
     word-break: break-word;
     
+    transform: perspective(1000px) translateZ(0px);
     transition-duration: 300ms;
 }
 
@@ -257,7 +273,9 @@ textarea
 #tabs label
 {
     display: inline-block;
-    border-radius: 5px;
+    border: 3px solid var(--color_normal);
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px;
     background-color: var(--color_dark);
     margin: 20px; padding: 5px;
     transition-duration: 300ms;
