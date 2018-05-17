@@ -161,7 +161,7 @@ textarea
 #content
 {
     z-index: 2;
-    background-color: rgba(70, 70, 70, 0.97);
+    background-color: rgba(70, 70, 70, 0.90);
     margin: 0; padding: 0;
     margin-top: 50px;
     width: 100%;
@@ -180,24 +180,18 @@ textarea
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
 }
-#slots
-{
-    margin: 25px 100px 25px 100px;
-    display: grid;
-    width: 50%;
-}
 .task, .schedule, .day
 {
     background-color: var(--color_normal);
     box-shadow: 0 0 2px black;
-
+    
     display: inline;
     border-radius: 5px;
     margin: 10px; padding: 5px;
-
+    
     text-align: center;
     word-break: break-word;
-
+    
     transition-duration: 300ms;
 }
 
@@ -217,18 +211,42 @@ textarea
     border: 1px solid var(--color_light);
 }
 
+#slots
+{
+    margin: 25px 10px 25px 100px;
+    float: left;
+    display: grid;
+    width: 40%;
+}
+#available_tasks
+{
+    margin: 25px 100px 25px 10px;
+    float: left;
+    display: grid;
+    width: 40%;
+}
 .slot
 {
     background-color: var(--color_normal);
     box-shadow: 0 0 2px black;
-
+    
     display: inline;
     margin: 0; padding: 5px;
-
+    
     text-align: center;
     word-break: break-word;
-
+    
     transition-duration: 300ms;
+}
+
+.slot p
+{
+    margin: 0;
+}
+
+.slot:hover
+{
+    transform: perspective(1000px) translateZ(100px);
 }
 
 .task i, .schedule i, .day i
