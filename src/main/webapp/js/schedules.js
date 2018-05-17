@@ -7,10 +7,17 @@
 function createSchedule() {
   const scheduleData = getScheduleFields();
 
-  let xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.addEventListener("load", getSchedules);
   xhr.open("POST", `${BASE_URL}/schedules`);
   xhr.send(JSON.stringify(scheduleData));
+}
+
+function deleteSchedule(scheduleId) {
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", getSchedules);
+  xhr.open("DELETE", `${BASE_URL}/schedules/${scheduleId}`);
+  xhr.send();
 }
 
 // Gets the data from the schedule form
@@ -81,6 +88,11 @@ function Schedule(id, name) {
       document.getElementById("current_schedule").setAttribute("value", this.id);
       switchToDaysPage(this.id);
     });
+
+    let deleteE = document.createElement("i");
+    deleteE.textContent = "Remove";
+    deleteE.addEventListener("click", () => deleteSchedule(this.id));
+    scheduleE.appendChild(deleteE);
 
     return scheduleE;
   }
