@@ -67,4 +67,25 @@ public class SingleScheduleServlet extends AbstractServlet{
             sendMessage(resp, 400, e.getMessage());
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        String jsonString = req.getReader().readLine();
+
+        String name = getJsonParameter("name", jsonString);
+
+        try(Connection connection = getConnection(req.getServletContext())) {
+            ScheduleDatabase sdb = new ScheduleDao(connection);
+
+            ScheduleService scheduleService = new SimpleScheduleService(sdb);
+
+            scheduleService.updateSchedule(name, id);
+
+            sendMessage(resp, 200, "Schedule updated succesfully");
+
+        } catch (SQLException e) {
+            sendMessage(resp, 400, "something went wrong");
+        }
+    }
 }
