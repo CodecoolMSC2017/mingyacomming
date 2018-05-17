@@ -34,7 +34,7 @@ public class SingleDayServlet extends AbstractServlet{
 
                 DayService ds = new SimpleDayService(ddb);
 
-                sendMessage(resp, 200, ds.getDay(id));
+                sendMessage(resp, 200, ds.getScheduleDays(id));
 
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");

@@ -31,7 +31,9 @@ public class DaysServlet extends AbstractServlet {
                 DayDatabase ddb = new DayDao(connection);
                 DayService ds = new SimpleDayService(ddb);
 
-                sendMessage(resp, 200, ds.getDay(scheduleId));
+                int newid = Integer.parseInt(id);
+
+                sendMessage(resp, 200, ds.getScheduleDays(newid));
 
             } catch (SQLException e) {
                 sendMessage(resp, 500, "sqlserver is down");
