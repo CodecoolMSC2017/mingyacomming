@@ -41,6 +41,7 @@
             <jsp:include page="tasks_page.jsp"></jsp:include>
             <jsp:include page="schedules_page.jsp"></jsp:include>
             <jsp:include page="days_page.jsp"></jsp:include>
+            <jsp:include page="slots_page.jsp"></jsp:include>
         </div>
 
         <div id="messages"> </div>
