@@ -1,6 +1,7 @@
 package com.codecool.web.dao.database;
 
 import com.codecool.web.model.Slot;
+import com.codecool.web.model.SlotTask;
 import com.codecool.web.model.Task;
 
 import java.sql.SQLException;
@@ -17,6 +18,8 @@ public interface SlotDatabase {
     List<Slot> getDaySlots(int id) throws SQLException;
 
     void updateSlot(Slot slot) throws SQLException;
+
+    List<SlotTask> getSlotTask(int id) throws SQLException;
 
     void addTaskToSlot(int taskId, int slotId) throws SQLException;
 }

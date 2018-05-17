@@ -2,6 +2,7 @@ package com.codecool.web.dao.database.impl;
 
 import com.codecool.web.dao.database.SlotDatabase;
 import com.codecool.web.model.Slot;
+import com.codecool.web.model.SlotTask;
 import com.codecool.web.model.Task;
 
 import java.sql.*;
@@ -97,6 +98,21 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
             executeInsert(statement);
         } catch (SQLException se) {
             throw se;
+        }
+    }
+
+    public List<SlotTask> getSlotTask(int id) throws SQLException {
+        String sql = "Select s.id, s.time, s.task_id, s.day_id, t.name, t.description, t.user_id \n" +
+                "                From slots as s Inner Join tasks as t ON s.task_id = t.id WHERE day_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try(ResultSet rs = ps.executeQuery()) {
+                List<SlotTask> slotTasks = new ArrayList<>();
+                while (rs.next()) {
+                    slotTasks.add(new SlotTask(new Task(rs.getInt("user_id"), rs.getString("name"), rs.getString("description")), new Slot(rs.getInt("id"), rs.getInt("time"),rs.getInt("task_id"), rs.getInt("task_id"))));
+                }
+                return slotTasks;
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.codecool.web.service.impl;
 
 import com.codecool.web.dao.database.SlotDatabase;
 import com.codecool.web.model.Slot;
+import com.codecool.web.model.SlotTask;
 import com.codecool.web.service.SlotService;
 
 import java.sql.SQLException;
@@ -34,6 +35,11 @@ public class SimpleSlotService implements SlotService {
     @Override
     public void updateSlot(Slot slot) throws SQLException {
         db.updateSlot(slot);
+    }
+
+    @Override
+    public List<SlotTask> getSlotTask(int id) throws SQLException {
+        return db.getSlotTask(id);
     }
 
     @Override

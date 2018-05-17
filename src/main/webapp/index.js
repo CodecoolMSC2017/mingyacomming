@@ -4,6 +4,10 @@ const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
 const INTERNAL_SERVER_ERROR = 500;
 
+H  3
+K  4
+Sz 3
+
 let loginContentDivEl;
 let profileContentDivEl;
 let couponContentDivEl;
