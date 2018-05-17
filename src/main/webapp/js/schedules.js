@@ -94,7 +94,7 @@ function Schedule(id, name) {
     });
 
     let editE= document.createElement("i");
-    editE.textContent = "edit";
+    editE.className = "fa fa-cog";
 
     editE.addEventListener("click", ()=> editSchedule(this.id));
     scheduleE.appendChild(editE);
@@ -125,7 +125,7 @@ function editSchedule(scheduleId) {
   inputNameEl.setAttribute("id", "editElement");
 
   const editE = document.createElement("i");
-  editE.innerHTML = "edit";
+  editE.className = "fa fa-check";
   formEl.appendChild(editE);
 
   editE.addEventListener("click", ()=> sendEditSchedule(scheduleId));

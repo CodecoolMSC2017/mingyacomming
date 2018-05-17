@@ -236,6 +236,29 @@ textarea
     color: red;
 }
 
+.fa-cog {
+    transform: scale(2);
+    transition-duration: 200ms;
+    margin: 2em;
+}
+
+.fa-cog:hover {
+    transform: scale(3);
+    color: green;
+}
+
+.fa-check {
+    transform: scale(2);
+    transition-duration: 200ms;
+    margin: 2em;
+}
+
+.fa-check:hover {
+    transform: scale(3);
+    color: green;
+}
+
+
 /* __________
   |          |
   | Messages |
