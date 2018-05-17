@@ -17,7 +17,7 @@ function createDay() {
 function deleteDay(dayId) {
   const xhr = new XMLHttpRequest();
   xhr.addEventListener("load", getDays);
-  xhr.open("DELTE", `${BASE_URL}/days/${dayId}`);
+  xhr.open("DELETE", `${BASE_URL}/days/${dayId}`);
   xhr.send();
 }
 
