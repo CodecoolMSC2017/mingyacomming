@@ -44,7 +44,7 @@ public class DayDao extends AbstractDao implements DayDatabase{
             connection.setAutoCommit(autoCommit);
         }
 
-
+        connection.setAutoCommit(false);
         String sql = "DELETE FROM days WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setInt(1, day.getId());

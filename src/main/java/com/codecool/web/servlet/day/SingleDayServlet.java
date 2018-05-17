@@ -70,10 +70,8 @@ public class SingleDayServlet extends AbstractServlet{
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String jsonString = req.getReader().readLine();
-
-        String name = getJsonParameter("name", jsonString);
-        String id = getJsonParameter("id", jsonString);
+        String name = req.getParameter("name");
+        String id = req.getParameter("id");
         int parseID = Integer.parseInt(id);
         int parseName = Integer.parseInt(name);
 

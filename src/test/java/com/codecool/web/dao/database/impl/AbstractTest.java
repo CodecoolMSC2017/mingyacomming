@@ -9,7 +9,7 @@ import java.util.Scanner;
 public abstract class AbstractTest {
 
     private String getQueryString() {
-        Scanner scanner = new Scanner(AbstractTest.class.getResourceAsStream("/init.sql"));
+        Scanner scanner = new Scanner(AbstractTest.class.getResourceAsStream("/testInit.sql"));
         String sql = "";
         while (scanner.hasNext()) {
             sql += scanner.nextLine();
