@@ -95,7 +95,7 @@ function Task(id, name, description) {
     taskE.appendChild(descriptionE);
 
     let deleteE = document.createElement("i");
-    deleteE.textContent = "Remove";
+    deleteE.className = "fa fa-remove";
     deleteE.addEventListener("click", () => deleteTask(this.id));
     taskE.appendChild(deleteE);
 

@@ -90,7 +90,7 @@ function Schedule(id, name) {
     });
 
     let deleteE = document.createElement("i");
-    deleteE.textContent = "Remove";
+    deleteE.className = "fa fa-remove";
     deleteE.addEventListener("click", () => deleteSchedule(this.id));
     scheduleE.appendChild(deleteE);
 

@@ -93,7 +93,7 @@ function Day(id, name) {
     });
 
     let deleteE = document.createElement("i");
-    deleteE.textContent = "Remove";
+    deleteE.className = "fa fa-remove";
     deleteE.addEventListener("click", () => deleteDay(this.id));
     dayE.appendChild(deleteE);
 
