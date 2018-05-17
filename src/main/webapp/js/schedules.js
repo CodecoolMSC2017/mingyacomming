@@ -100,7 +100,7 @@ function Schedule(id, name) {
     scheduleE.appendChild(editE);
 
     let deleteE = document.createElement("i");
-    deleteE.textContent = "Remove";
+    deleteE.className = "fa fa-remove";
     deleteE.addEventListener("click", () => deleteSchedule(this.id));
     scheduleE.appendChild(deleteE);
 

@@ -198,7 +198,15 @@ textarea
 .task:hover, .schedule:hover, .day:hover
 {
   transform: perspective(1000px) scale(1.5);
-  cursor: pointer;
+}
+
+.task:hover h2, .schedule:hover h2, .day:hover h2
+{
+    cursor: pointer;
+}
+.task i, .schedule i, .day i
+{
+    cursor: pointer;
 }
 
 #tabs label
@@ -215,6 +223,17 @@ textarea
     text-shadow: 0 0 5px black;
     transform: perspective(1000px) translateZ(300px);
     cursor: pointer;
+}
+/* Font icon colors */
+.fa-remove
+{
+    transform: scale(2);
+    transition-duration: 200ms;
+}
+.fa-remove:hover
+{
+    transform: scale(3);
+    color: red;
 }
 
 /* __________

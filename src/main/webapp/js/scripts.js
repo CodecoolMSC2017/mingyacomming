@@ -178,7 +178,10 @@ function init() {
   document.getElementById("my_tasks").addEventListener("click", switchToTasksPage);
   document.getElementById("my_schedules").addEventListener("click", switchToSchedulesPage);
   document.getElementById("current_schedule").addEventListener("click", () => {
-    switchToDaysPage(this.getElement.getAttribute("value"));
+    switchToDaysPage(document.getElementById("current_schedule").getAttribute("value"));
+  });
+  document.getElementById("current_day").addEventListener("click", () => {
+    switchToSlotsPage(document.getElementById("current_day").getAttribute("value"));
   });
 
   document.getElementById("log_tab").addEventListener("click", () => {
