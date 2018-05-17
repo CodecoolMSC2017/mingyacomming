@@ -35,7 +35,7 @@ public class SingleSlotServlet extends AbstractServlet{
 
                 SlotService ts = new SimpleSlotService(sdb);
 
-                sendMessage(resp, 200, ts.getSlot(id));
+                sendMessage(resp, 200, ts.getDaySlots(id));
 
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");
