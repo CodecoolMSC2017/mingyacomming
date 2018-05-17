@@ -52,4 +52,13 @@ class ScheduleDaoTest extends AbstractTest {
         assertEquals(2, scheduleDao.getUserSchedule(1).size());
         assertEquals("hard", scheduleDao.getUserSchedule(1).get(1).getName());
     }
+
+    @Test
+    void updateSchedule() throws SQLException {
+        Schedule schedule = scheduleDao.getSchedule(1);
+        String originalName = schedule.getName();
+        scheduleDao.updateSchedule("alma", 1);
+        assertEquals("alma", scheduleDao.getSchedule(1).getName());
+
+    }
 }

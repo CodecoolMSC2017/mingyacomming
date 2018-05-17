@@ -63,7 +63,7 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
         } finally {
             connection.setAutoCommit(autoCommit);
         }
-
+        connection.setAutoCommit(false);
         String sql = "DELETE FROM schedules WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setInt(1, scheduleId);
@@ -123,12 +123,9 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     public void updateSchedule(String name, int id) throws SQLException {
         String sql = "UPDATE schedules SET name = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            statement.setString(2, name);
-            statement.setInt(3, getSchedule(id).getUserId());
+            statement.setInt(2, id);
+            statement.setString(1, name);
             executeInsert(statement);
-        } catch (SQLException se) {
-            throw se;
         }
     }
 
