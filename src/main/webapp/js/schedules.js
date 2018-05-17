@@ -65,6 +65,7 @@ function switchToSchedulesPage() {
   document.getElementById("tasks_page").style.display = "none";
   document.getElementById("schedules_page").style.display = "block";
   document.getElementById("days_page").style.display = "none";
+  document.getElementById("slots_page").style.display = "none";
 
   document.getElementById("current_schedule").style.display = "none";
   document.getElementById("current_day").style.display = "none";
@@ -89,7 +90,9 @@ function Schedule(id, name) {
 
     // Events
     nameE.addEventListener("click", () => {
-      document.getElementById("current_schedule").setAttribute("value", this.id);
+      let currentScheduleE = document.getElementById("current_schedule");
+      currentScheduleE.setAttribute("value", this.id);
+      currentScheduleE.textContent = "Schedule: " + this.name;
       switchToDaysPage(this.id);
     });
 
