@@ -52,11 +52,19 @@ class DayDaoTest extends AbstractTest {
 
     }
 
-
-
     @Test
     void getScheduleDays() throws SQLException {
         assertEquals(2, dayDao.getScheduleDays(1).size());
         assertEquals("hetfu", dayDao.getScheduleDays(1).get(0).getName());
+    }
+
+    @Test
+    void  updateDay() throws SQLException {
+        Day day = dayDao.getDay(1);
+        Day newDay = new Day(day.getId(), "pirosbetu", 2);
+        dayDao.updateDays(newDay);
+        Day updatedDay = dayDao.getDay(1);
+        assertEquals("pirosbetu", updatedDay.getName());
+        assertEquals(2, updatedDay.getSchedule_id());
     }
 }
