@@ -99,9 +99,59 @@ function Task(id, name, description) {
     deleteE.addEventListener("click", () => deleteTask(this.id));
     taskE.appendChild(deleteE);
 
+    let editEl = document.createElement("i");
+    editEl.className = "fa fa-cog";
+    editEl.addEventListener("click", ()=> editTask(this.id));
+    taskE.appendChild(editEl);
+
     return taskE;
   }
 }
+
+function editTask(taskId) {
+  const tasksEl = document.getElementById("tasks");
+  const taskEl = tasksEl.querySelector("div[id='" + taskId + "']");
+  const name = taskEl.querySelector("h2").innerHTML;
+  const description = taskEl.querySelector("p").innerHTML;
+  taskEl.textContent = "";
+
+  const formEl = document.createElement("form");
+  taskEl.appendChild(formEl);
+
+  const inputNameEl = document.createElement("input");
+  formEl.appendChild(inputNameEl);
+
+  inputNameEl.setAttribute("type", "text");
+  inputNameEl.setAttribute("placeholder", name);
+  inputNameEl.setAttribute("size", "10");
+  inputNameEl.setAttribute("id", "editName");
+
+  const inputDescriptionEl = document.createElement("input");
+  formEl.appendChild(inputDescriptionEl);
+
+  inputDescriptionEl.setAttribute("type", "text");
+  inputDescriptionEl.setAttribute("placeholder", description);
+  inputDescriptionEl.setAttribute("size", "10");
+  inputDescriptionEl.setAttribute("id", "editDescription");
+
+  const editE = document.createElement("i");
+  editE.className = "fa fa-check";
+  formEl.appendChild(editE);
+
+  editE.addEventListener("click", ()=> sendEditTask(taskId));
+
+}
+
+function sendEditTask(taskId) {
+  const task = {};
+  task.name = document.getElementById("editName").value;
+  task.description = document.getElementById("editDescription").value;
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", getTasks);
+  xhr.open("PUT", `${BASE_URL}/tasks/${taskId}`);
+  xhr.send(JSON.stringify(task));
+}
+
 
 
 

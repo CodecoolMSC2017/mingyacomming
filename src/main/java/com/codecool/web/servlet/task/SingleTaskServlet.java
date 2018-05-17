@@ -86,6 +86,7 @@ public class SingleTaskServlet extends AbstractServlet {
 
         String name = getJsonParameter("name", jsonString);
         String description = getJsonParameter("description", jsonString);
+        int id = getId(req);
 
         try(Connection connection = getConnection(req.getServletContext())) {
             TaskDatabase tdb = new TaskDao(connection);
@@ -93,7 +94,7 @@ public class SingleTaskServlet extends AbstractServlet {
 
             TaskService ts = new SimpleTaskService(tdb, udb);
 
-            Task task = new Task(user.getId(), name, description);
+            Task task = new Task(id, 0, name, description);
 
             ts.editTask(task);
 

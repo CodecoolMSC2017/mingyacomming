@@ -71,7 +71,7 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
 
     @Override
     public List<Task> getTasksByUser(int id) throws SQLException {
-        String sql = "SELECT * FROM tasks WHERE user_id = ?";
+        String sql = "SELECT * FROM tasks WHERE user_id = ? order by id";
         List<Task> taskList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -90,11 +90,10 @@ public class TaskDao extends AbstractDao implements TaskDatabase{
     public void updateTask(Task task) throws SQLException {
         String sql = "UPDATE tasks SET name = ?, description = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, task.getId());
-            statement.setString(2, task.getName());
-            statement.setString(3, task.getDescription());
-            statement.setInt(4, task.getUserId());
-            executeInsert(statement);
+            statement.setString(1, task.getName());
+            statement.setString(2, task.getDescription());
+            statement.setInt(3, task.getId());
+            statement.executeUpdate();
         } catch (SQLException se) {
             throw se;
         }
