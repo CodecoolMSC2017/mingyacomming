@@ -109,8 +109,8 @@ function Schedule(id, name) {
 }
 
 function editSchedule(scheduleId) {
-  const scheduleEl = document.getElementById(scheduleId);
-  const name = scheduleEl.getElementsByTagName("h2")[0].innerHTML;
+  const scheduleEl = document.querySelector("div[id='" + scheduleId + "']");
+  const name = scheduleEl.querySelector("h2").innerHTML;
   scheduleEl.textContent = "";
 
   const formEl = document.createElement("form");
