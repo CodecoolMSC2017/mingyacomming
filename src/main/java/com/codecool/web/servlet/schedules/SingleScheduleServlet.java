@@ -70,7 +70,7 @@ public class SingleScheduleServlet extends AbstractServlet{
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
+        int id = getId(req);
         String jsonString = req.getReader().readLine();
 
         String name = getJsonParameter("name", jsonString);
