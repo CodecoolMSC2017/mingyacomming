@@ -101,15 +101,16 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
         }
     }
 
-    public SlotTask getSlotTask() throws SQLException {
+    public List<SlotTask> getSlotTask() throws SQLException {
         String sql = "Select s.id, s.time, s.task_id, s.day_id, t.name, t.description, t.user_id\n" +
                 "From slots as s Inner Join tasks as t ON s.task_id = t.id";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             try(ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new SlotTask(new Task(rs.getInt("user_id"), rs.getString("name"), rs.getString("description")), new Slot(rs.getInt("id"), rs.getInt("time"),rs.getInt("task_id"), rs.getInt("task_id")));
+                List<SlotTask> slotTasks = new ArrayList<>();
+                while (rs.next()) {
+                    slotTasks.add(new SlotTask(new Task(rs.getInt("user_id"), rs.getString("name"), rs.getString("description")), new Slot(rs.getInt("id"), rs.getInt("time"),rs.getInt("task_id"), rs.getInt("task_id"))));
                 }
-                return null;
+                return slotTasks;
             }
         }
     }

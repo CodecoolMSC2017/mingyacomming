@@ -19,7 +19,7 @@ public interface SlotDatabase {
 
     void updateSlot(Slot slot) throws SQLException;
 
-    SlotTask getSlotTask() throws SQLException;
+    List<SlotTask> getSlotTask() throws SQLException;
 
     void addTaskToSlot(int taskId, int slotId) throws SQLException;
 }

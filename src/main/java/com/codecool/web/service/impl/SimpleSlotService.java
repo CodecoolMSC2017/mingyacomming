@@ -38,7 +38,7 @@ public class SimpleSlotService implements SlotService {
     }
 
     @Override
-    public SlotTask getSlotTask() throws SQLException {
+    public List<SlotTask> getSlotTask() throws SQLException {
         return db.getSlotTask();
     }
 

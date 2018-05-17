@@ -16,7 +16,7 @@ public interface SlotService {
 
     void updateSlot(Slot slot) throws SQLException;
 
-    SlotTask getSlotTask() throws SQLException;
+    List<SlotTask> getSlotTask() throws SQLException;
 
     List<Slot> getDaySlots(int id) throws SQLException;
 }
