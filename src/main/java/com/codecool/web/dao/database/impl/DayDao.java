@@ -113,11 +113,11 @@ public class DayDao extends AbstractDao implements DayDatabase{
         String name = day.getName();
         int scheduleId = day.getSchedule_id();
 
-        String sql = "UPDATE days SET name = ? WHERE id = ?";
+        String sql = "UPDATE days SET name = ?, schedule_id = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            statement.setString(2, name);
-            statement.setInt(3, scheduleId);
+            statement.setString(1, name);
+            statement.setInt(2, scheduleId);
+            statement.setInt(3, id);
 
             executeInsert(statement);
         } catch (SQLException se) {

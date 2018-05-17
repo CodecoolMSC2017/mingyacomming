@@ -52,4 +52,15 @@ class SlotDaoTest extends AbstractTest {
         slotDao.addTaskToSlot(2, 1);
         assertEquals(2, slotDao.getSlot(1).getTask_id());
     }
+
+    @Test
+    void updateSlot() throws SQLException {
+        Slot slot = slotDao.getSlot(1);
+        Slot newSlot = new Slot(slot.getId(), 24, 2, 2);
+        slotDao.updateSlot(newSlot);
+        Slot updatedSlot = slotDao.getSlot(1);
+        assertEquals(24, updatedSlot.getTime());
+        assertEquals(2, updatedSlot.getTask_id());
+        assertEquals(2, updatedSlot.getDay_id());
+    }
 }
