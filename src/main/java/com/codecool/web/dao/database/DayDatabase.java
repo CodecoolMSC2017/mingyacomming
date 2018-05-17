@@ -17,5 +17,5 @@ public interface DayDatabase {
 
     List<Day> getScheduleDays(int id) throws SQLException;
 
-    public void updateDays (int id, String name) throws SQLException;
+    public void updateDays (Day day) throws SQLException;
 }
