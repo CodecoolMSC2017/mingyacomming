@@ -47,7 +47,7 @@ public class SlotsServlet extends AbstractServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jsonString = req.getReader().readLine();
 
-        String id = getJsonParameter("dayId", jsonString);
+        String id = req.getParameter("dayId");
         String time = getJsonParameter("time", jsonString);
         String task = getJsonParameter("taskId", jsonString);
 
