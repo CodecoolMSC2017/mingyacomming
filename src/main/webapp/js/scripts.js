@@ -116,6 +116,11 @@ function deleteUserData() {
   document.getElementById("user_data").style.display = "none";
   document.getElementById("user_profile_buttons").style.display = "none";
   document.getElementById("tabs").style.display = "none";
+
+  document.getElementById("tasks_page").style.display = "none";
+  document.getElementById("schedules_page").style.display = "none";
+  document.getElementById("days_page").style.display = "none";
+
   document.getElementById("user_data").innerHTML = "";
 }
 
