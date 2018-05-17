@@ -141,6 +141,7 @@ input:hover, textarea:hover
 {
     width: fit-content;
     text-align: right;
+    display: inline-block;
 }
 #register_form, #user_data, #user_profile_buttons
 {
@@ -205,6 +206,17 @@ textarea
     transform: perspective(1000px) scale(1.5);
 }
 
+.task:hover h2, .schedule:hover h2, .day:hover h2
+{
+    cursor: pointer;
+}
+
+.task p
+{
+    padding: 5px;
+    border: 1px solid var(--color_light);
+}
+
 .slot
 {
     background-color: var(--color_normal);
@@ -219,10 +231,6 @@ textarea
     transition-duration: 300ms;
 }
 
-.task:hover h2, .schedule:hover h2, .day:hover h2
-{
-    cursor: pointer;
-}
 .task i, .schedule i, .day i
 {
     cursor: pointer;
@@ -230,8 +238,7 @@ textarea
 
 #tabs label
 {
-    display: block;
-    float: left;
+    display: inline-block;
     border-radius: 5px;
     background-color: var(--color_dark);
     margin: 20px; padding: 5px;
