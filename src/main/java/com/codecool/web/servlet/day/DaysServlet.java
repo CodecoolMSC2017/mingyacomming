@@ -22,7 +22,6 @@ public class DaysServlet extends AbstractServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String jsonString = req.getReader().readLine();
         String id = req.getParameter("scheduleId");
 
         try {
