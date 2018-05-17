@@ -42,7 +42,14 @@ class DayDaoTest extends AbstractTest {
     }
 
     @Test
-    void removeDay() {
+    void removeDay() throws SQLException {
+        assertEquals(2, dayDao.getDays().size());
+        assertEquals("ketto",dayDao.getDays().get(1).getName());
+        Day day = dayDao.getDay(1);
+        dayDao.removeDay(day);
+        assertEquals(1, dayDao.getDays().size());
+        assertEquals("ketto",dayDao.getDays().get(0).getName());
+
     }
 
 

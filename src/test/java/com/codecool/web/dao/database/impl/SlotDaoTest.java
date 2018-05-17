@@ -27,7 +27,12 @@ class SlotDaoTest extends AbstractTest {
     }
 
     @Test
-    void removeSlot() {
+    void removeSlot() throws SQLException {
+        assertEquals(2, slotDao.getDaySlots(1).size());
+        Slot slot = slotDao.getSlot(1);
+        slotDao.removeSlot(slot);
+        assertEquals(null, slotDao.getSlot(1));
+        assertEquals(1, slotDao.getDaySlots(1).size());
     }
 
     @Test
