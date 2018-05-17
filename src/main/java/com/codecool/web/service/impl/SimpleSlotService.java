@@ -38,8 +38,8 @@ public class SimpleSlotService implements SlotService {
     }
 
     @Override
-    public List<SlotTask> getSlotTask() throws SQLException {
-        return db.getSlotTask();
+    public List<SlotTask> getSlotTask(int id) throws SQLException {
+        return db.getSlotTask(id);
     }
 
     @Override

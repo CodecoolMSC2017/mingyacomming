@@ -29,7 +29,7 @@ public class SlotsServlet extends AbstractServlet {
                 SlotDatabase sdb = new SlotDao(connection);
                 SlotService ss = new SimpleSlotService(sdb);
 
-                sendMessage(resp, 200, ss.getSlotTask());
+                sendMessage(resp, 200, ss.getSlotTask(id));
 
             } catch (SQLException e) {
                 sendMessage(resp, 500, "sqlserver is down");
