@@ -103,7 +103,7 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
 
     public List<SlotTask> getSlotTask(int id) throws SQLException {
         String sql = "Select s.id, s.time, s.task_id, s.day_id, t.name, t.description, t.user_id\n" +
-                "From slots as s Inner Join tasks as t ON s.task_id = t.id WHERE id = ?";
+                "From slots as s Inner Join tasks as t ON s.task_id = t.id WHERE day_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
