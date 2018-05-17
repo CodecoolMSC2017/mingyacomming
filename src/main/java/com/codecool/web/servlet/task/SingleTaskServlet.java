@@ -97,7 +97,7 @@ public class SingleTaskServlet extends AbstractServlet {
 
             ts.editTask(task);
 
-            sendMessage(resp, 200, "task updated succesfully");
+            sendMessage(resp, 200, "Task updated succesfully");
 
         } catch (SQLException e) {
             sendMessage(resp, 400, "something went wrong");

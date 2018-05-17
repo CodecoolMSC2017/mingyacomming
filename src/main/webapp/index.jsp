@@ -28,10 +28,12 @@
         </div>
 
         <div id="content">
-            <label id="home">Home</label>
-            <label id="current_schedule"> > Schedules</label>
-            <label id="current_day"> > Days </label>
-            <label id="current_task"> > Tasks </label>
+            <div id="tabs">
+                <label id="my_tasks">My Tasks</label>
+                <label id="my_schedules"> > My Schedules</label>
+                <label id="current_schedule"> > Schedule </label>
+                <label id="current_day"> > Day </label>
+            </div>
             <jsp:include page="tasks_page.jsp"></jsp:include>
             <jsp:include page="schedules_page.jsp"></jsp:include>
             <jsp:include page="days_page.jsp"></jsp:include>
