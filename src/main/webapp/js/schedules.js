@@ -109,7 +109,8 @@ function Schedule(id, name) {
 }
 
 function editSchedule(scheduleId) {
-  const scheduleEl = document.querySelector("div[id='" + scheduleId + "']");
+  const schedulesEl = document.getElementById("schedules");
+  const scheduleEl = schedulesEl.querySelector("div[id='" + scheduleId + "']");
   const name = scheduleEl.querySelector("h2").innerHTML;
   scheduleEl.textContent = "";
 
