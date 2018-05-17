@@ -85,7 +85,7 @@ public class SingleSlotServlet extends AbstractServlet{
 
             slotService.updateSlot(parseID, parseTime);
 
-            sendMessage(resp, 200, "succesfully edited");
+            sendMessage(resp, 200, "Slot updated succesfully");
 
         } catch (SQLException e) {
             sendMessage(resp, 400, "something went wrong");

@@ -37,7 +37,14 @@ public class SimpleScheduleService implements ScheduleService{
     }
 
     @Override
+    public void updateSchedule(String name, int id) throws SQLException {
+        db.updateSchedule(name, id);
+    }
+
+    @Override
     public List<Schedule> getUserSchedules(User user) throws SQLException {
         return db.getUserSchedule(user.getId());
     }
+
+
 }

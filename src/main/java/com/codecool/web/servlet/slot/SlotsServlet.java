@@ -21,18 +21,15 @@ public class SlotsServlet extends AbstractServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String jsonString = req.getReader().readLine();
-
-        String id = getJsonParameter("dayId", jsonString);
+        int id = Integer.parseInt(req.getParameter("dayId"));
 
         try {
-            int dayId = Integer.parseInt(id);
 
             try(Connection connection = getConnection(req.getServletContext())) {
                 SlotDatabase sdb = new SlotDao(connection);
                 SlotService ss = new SimpleSlotService(sdb);
 
-                sendMessage(resp, 200, ss.getDaySlots(dayId));
+                sendMessage(resp, 200, ss.getDaySlots(id));
 
             } catch (SQLException e) {
                 sendMessage(resp, 500, "sqlserver is down");
