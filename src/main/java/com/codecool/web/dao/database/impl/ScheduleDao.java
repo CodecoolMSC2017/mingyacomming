@@ -37,20 +37,8 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
         DayDatabase ddb = new DayDao(connection);
         List<Day> days = ddb.getScheduleDays(scheduleId);
         for(Day day : days) {
-            String slotsql = "DELETE FROM slots WHERE day_id = ?";
-            try (PreparedStatement statement = connection.prepareStatement(slotsql, Statement.RETURN_GENERATED_KEYS);) {
-                statement.setInt(1, day.getId());
-                statement.executeUpdate();
-                connection.commit();
-            } catch (SQLException ex) {
-                connection.rollback();
-                throw ex;
-            } finally {
-                connection.setAutoCommit(autoCommit);
-            }
+            ddb.removeDay(day);
         }
-
-
 
         String daysql = "DELETE FROM days WHERE schedule_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(daysql, Statement.RETURN_GENERATED_KEYS);) {

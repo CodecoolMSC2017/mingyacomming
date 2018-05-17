@@ -34,6 +34,7 @@ class ScheduleDaoTest extends AbstractTest {
         scheduleDao.removeSchedule(3);
         assertEquals(2, scheduleDao.getSchedules().size());
         assertEquals("hard", scheduleDao.getSchedule(2).getName());
+        scheduleDao.removeSchedule(1);
     }
 
     @Test
