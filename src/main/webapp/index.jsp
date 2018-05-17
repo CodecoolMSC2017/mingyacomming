@@ -35,7 +35,7 @@
         <div id="content">
             <div id="tabs">
                 <label id="my_tasks">My Tasks</label>
-                <label id="my_schedules"> > My Schedules</label>
+                <label id="my_schedules"> My Schedules</label>
                 <label id="current_schedule"> > Schedule </label>
                 <label id="current_day"> > Day </label>
             </div>

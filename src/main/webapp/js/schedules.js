@@ -90,7 +90,9 @@ function Schedule(id, name) {
 
     // Events
     nameE.addEventListener("click", () => {
-      document.getElementById("current_schedule").setAttribute("value", this.id);
+      let currentScheduleE = document.getElementById("current_schedule");
+      currentScheduleE.setAttribute("value", this.id);
+      currentScheduleE.textContent = "Schedule: " + this.name;
       switchToDaysPage(this.id);
     });
 

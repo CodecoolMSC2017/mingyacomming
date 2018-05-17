@@ -90,7 +90,9 @@ function Day(id, name) {
 
     // Events
     nameE.addEventListener("click", () => {
-      document.getElementById("current_day").setAttribute("value", this.id);
+      let currentDayE = document.getElementById("current_day");
+      currentDayE.setAttribute("value", this.id);
+      currentDayE.textContent = "Day: " + this.name;
       switchToSlotsPage(this.id);
     });
 
