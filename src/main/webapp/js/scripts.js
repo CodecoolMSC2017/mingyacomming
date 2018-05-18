@@ -120,6 +120,7 @@ function deleteUserData() {
   document.getElementById("tasks_page").style.display = "none";
   document.getElementById("schedules_page").style.display = "none";
   document.getElementById("days_page").style.display = "none";
+  document.getElementById("slots_page").style.display = "none";
 
   document.getElementById("user_data").innerHTML = "";
 }

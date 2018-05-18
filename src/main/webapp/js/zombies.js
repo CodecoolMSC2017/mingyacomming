@@ -169,7 +169,7 @@ function init() {
   }
 
   // Background
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 150; i++) {
     gameData.stars.push({
       x: random(0, canvas.width),
       y: random(0, canvas.height)

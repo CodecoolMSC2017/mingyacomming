@@ -301,7 +301,7 @@ textarea
 .fa-cog {
     transform: scale(2);
     transition-duration: 200ms;
-    margin: 2em;
+    margin: 0 2em 0 2em;
 }
 
 .fa-cog:hover {
@@ -312,7 +312,7 @@ textarea
 .fa-check {
     transform: scale(2);
     transition-duration: 200ms;
-    margin: 2em;
+    margin: 0 2em 0 2em;
 }
 
 .fa-check:hover {
