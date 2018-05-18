@@ -6,7 +6,8 @@ let gameData = {
   isRunning: true,
   mouse: {},
   zombies: [],
-  particles: []
+  particles: [],
+  stars: []
 };
 let image = new Image();
 image.src = "images/zombie.gif_c200";
@@ -110,17 +111,26 @@ function Particle(x, y) {
 
 // Core
 function update() {
+  requestAnimationFrame(update);
+  
   startTime = new Date();
 
-  //requestAnimationFrame(update);
   context.fillStyle = "#111";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  
+  gameData.stars.forEach(star => {
+    context.beginPath();
+    context.arc(star.x, star.y, 1, 1, (Math.PI / 180) * 100, false);
+    context.closePath();
+    context.fillStyle = "#fff";
+    context.strokeStyle = "#fff";
+    context.fill();
+    context.stroke();
+  });
   gameData.zombies.forEach(zombie => zombie.update());
   gameData.particles.forEach(particle => particle.update());
 
   endTime = new Date();
-  let updateTime = endTime - startTime; //in ms
+  let updateTime = endTime - startTime;
 
   context.fillStyle = "#fff";
   context.font = "30px Arial";
@@ -133,7 +143,7 @@ function update() {
 function FPS() {
   setInterval(() => {
     this.smoothFps = this.fps;
-  }, 250);
+  }, 200);
 }
 
 function click(event) {
@@ -157,8 +167,19 @@ function init() {
   for (let i = 0; i < 5; i++) {
     gameData.zombies.push(new Zombie());
   }
+
+  // Background
+  for (let i = 0; i < 150; i++) {
+    gameData.stars.push({
+      x: random(0, canvas.width),
+      y: random(0, canvas.height)
+    });
+  }
+
+
   fps = new FPS();
-  setInterval(update, 33);
+  //setInterval(update, 33);
+  update();
 }
 
 function resizeCanvas() {

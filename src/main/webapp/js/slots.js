@@ -111,7 +111,7 @@ function Slot(id, time, task_id, task_name, task_description) {
 
     let dataE = document.createElement("p");
     dataE.style.display = "inline";
-    dataE.textContent = `${this.time} - ${this.task.description} : ${this.task.name} `;
+    dataE.textContent = `${this.time} - ${this.task.name} - ${this.task.description} `;
     slotE.appendChild(dataE);
 
     let deleteE = document.createElement("i");
