@@ -95,6 +95,7 @@ function changeUserTab() {
 function loadUserData() {
 
   hideUserData();
+  switchToSchedulesPage();
 
   const userData = JSON.parse(this.responseText);
 
@@ -166,6 +167,12 @@ function addMessage(status, content) {
 }
 
 
+data = {
+  time: 0,
+  taskId: 0,
+  dayId: 0
+}
+
 
 /* _________
   |         |
@@ -173,6 +180,8 @@ function addMessage(status, content) {
   |_________|
 */
 function init() {
+  getUserData();
+
   // Setup event listeners
   document.getElementById("log_button").addEventListener("click", login);
   document.getElementById("reg_button").addEventListener("click", register);
