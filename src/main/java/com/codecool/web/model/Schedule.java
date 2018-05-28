@@ -8,6 +8,7 @@ public class Schedule {
     private String name;
     private int userId;
     private List<Day> days;
+    private boolean isPublic;
 
     public Schedule(int id, String name, int userId) {
         this.id = id;
@@ -20,6 +21,10 @@ public class Schedule {
         this.name = name;
         this.userId = userId;
         days = new ArrayList<>();
+    }
+
+    public boolean getPublic() {
+        return isPublic;
     }
 
     public int getId() {
