@@ -93,16 +93,26 @@ function changeUserTab() {
   |___________________|
 */
 function loadUserData() {
+  const userData = JSON.parse(this.responseText);
+
+  if (userData == null) {
+    return;
+  }
 
   hideUserData();
   switchToSchedulesPage();
 
-  const userData = JSON.parse(this.responseText);
+  const userDataE = document.getElementById("user_data");
+
+  let roleE = document.createElement("label");
+  roleE.style.display = "block";
+  roleE.textContent = userData.role;
+  userDataE.appendChild(roleE);
 
   let usernameE = document.createElement("label");
+  usernameE.style.display = "block";
   usernameE.textContent = userData.name;
-
-  document.getElementById("user_data").appendChild(usernameE);
+  userDataE.appendChild(usernameE);
 }
 
 function hideUserData() {
