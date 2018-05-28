@@ -19,5 +19,6 @@ public interface ScheduleDatabase {
 
     List<Schedule> getUserSchedule(int id) throws SQLException;
 
+    List<Schedule> getAllSchedules() throws SQLException;
 
 }

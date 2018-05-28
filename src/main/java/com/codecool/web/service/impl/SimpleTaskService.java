@@ -20,8 +20,11 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public List<Task> getTasks(int userId) throws SQLException {
-        return tdb.getTasksByUser(userId);
+    public List<Task> getTasks(User user) throws SQLException {
+        if (user.getRole().equals("admin")) {
+            return tdb.getAllTasks();
+        }
+        return tdb.getTasksByUser(user.getId());
     }
 
     @Override

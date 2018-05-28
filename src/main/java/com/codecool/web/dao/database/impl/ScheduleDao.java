@@ -108,6 +108,20 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     }
 
     @Override
+    public List<Schedule> getAllSchedules() throws SQLException {
+        String sql = "SELECT * FROM schedules";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            try(ResultSet resultSet = statement.executeQuery()) {
+                List<Schedule> schedules = new ArrayList<>();
+                while (resultSet.next()) {
+                    schedules.add(fetchSchedule(resultSet));
+                }
+                return schedules;
+            }
+        }
+    }
+
+    @Override
     public void updateSchedule(String name, int id) throws SQLException {
         String sql = "UPDATE schedules SET name = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
