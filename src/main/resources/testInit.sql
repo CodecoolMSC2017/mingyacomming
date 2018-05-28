@@ -44,6 +44,7 @@ CREATE TABLE slots
     time    INTEGER NOT NULL,
     task_id INTEGER,
     day_id  INTEGER,
+    is_checked BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (task_id) REFERENCES tasks(id),
     FOREIGN KEY (day_id) REFERENCES days(id)
 );
@@ -77,8 +78,8 @@ INSERT INTO days (name, schedule_id) VALUES
     ('hetfu', '1'),
     ('ketto', '1');
 
-INSERT INTO slots (time, day_id, task_id ) VALUES
-    (6, 1, 1),
-    (7, 1, 2);
+INSERT INTO slots (time, day_id, task_id, is_checked) VALUES
+    (6, 1, 1, false),
+    (7, 1, 2, false);
 
 
