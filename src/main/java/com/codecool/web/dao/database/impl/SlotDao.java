@@ -17,11 +17,12 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
 
     @Override
     public int addSlot(Slot slot) throws SQLException {
-        String sql = "INSERT into slots (time, task_id, day_id) VALUES(?,?,?)";
+        String sql = "INSERT into slots (time, task_id, day_id, is_checked) VALUES(?,?,?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, slot.getTime());
             ps.setInt(2, slot.getTask_id());
             ps.setInt(3, slot.getDay_id());
+            ps.setBoolean(4, false);
             ps.executeUpdate();
             ResultSet resultSet = ps.getGeneratedKeys();
             resultSet.next();
@@ -68,7 +69,7 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
             try(ResultSet resultSet = statement.executeQuery()){
                 List<Slot> slots = new ArrayList<>();
                 while (resultSet.next()) {
-                    slots.add(fetchSchedule(resultSet));
+                    slots.add(fetchSlot(resultSet));
                 }
                 return slots;
             }
@@ -89,12 +90,13 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
 
     @Override
     public void updateSlot(Slot slot) throws SQLException {
-        String sql = "UPDATE slots SET time = ?, task_id = ?, day_id =? WHERE id = ?";
+        String sql = "UPDATE slots SET time = ?, task_id = ?, day_id = ?, is_checked = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, slot.getTime());
             statement.setInt(2, slot.getTask_id());
             statement.setInt(3, slot.getDay_id());
-            statement.setInt(4, slot.getId());
+            statement.setBoolean(4, slot.getChecked());
+            statement.setInt(5, slot.getId());
             executeInsert(statement);
         } catch (SQLException se) {
             throw se;
@@ -109,7 +111,7 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
             try(ResultSet rs = ps.executeQuery()) {
                 List<SlotTask> slotTasks = new ArrayList<>();
                 while (rs.next()) {
-                    slotTasks.add(new SlotTask(new Task(rs.getInt("user_id"), rs.getString("name"), rs.getString("description")), new Slot(rs.getInt("id"), rs.getInt("time"),rs.getInt("task_id"), rs.getInt("task_id"))));
+                    slotTasks.add(new SlotTask(new Task(rs.getInt("user_id"), rs.getString("name"), rs.getString("description")), fetchSlot(rs)));
                 }
                 return slotTasks;
             }
@@ -117,11 +119,12 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
     }
 
 
-    private Slot fetchSchedule(ResultSet resultSet) throws SQLException {
+    private Slot fetchSlot(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         int time = resultSet.getInt("time");
         int task_id = resultSet.getInt("task_id");
         int day_id = resultSet.getInt("day_id");
-        return new Slot(id, time, task_id, day_id);
+        boolean isChecked = resultSet.getBoolean("is_checked");
+        return new Slot(id, time, task_id, day_id, isChecked);
     }
 }
