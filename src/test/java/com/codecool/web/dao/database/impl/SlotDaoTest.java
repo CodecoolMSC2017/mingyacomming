@@ -21,7 +21,7 @@ class SlotDaoTest extends AbstractTest {
 
     @Test
     void addSlot() throws SQLException {
-        Slot slot = new Slot(0, 20, 1, 1);
+        Slot slot = new Slot(0, 20, 1, 1, false);
         int id = slotDao.addSlot(slot);
         assertEquals(id,slotDao.getSlot(id).getId());
     }
@@ -56,7 +56,7 @@ class SlotDaoTest extends AbstractTest {
     @Test
     void updateSlot() throws SQLException {
         Slot slot = slotDao.getSlot(1);
-        Slot newSlot = new Slot(slot.getId(), 24, 2, 2);
+        Slot newSlot = new Slot(slot.getId(), 24, 2, 2,false);
         slotDao.updateSlot(newSlot);
         Slot updatedSlot = slotDao.getSlot(1);
         assertEquals(24, updatedSlot.getTime());
