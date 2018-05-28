@@ -18,10 +18,11 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
 
     @Override
     public int addSchedule(Schedule schedule) throws SQLException {
-        String sql = "INSERT into schedules (name, user_id) VALUES(?,?)";
+        String sql = "INSERT into schedules (name, user_id, is_public) VALUES(?,?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, schedule.getName());
             ps.setInt(2, schedule.getUserId());
+            ps.setBoolean(2, schedule.getPublic());
             ps.executeUpdate();
             ResultSet resultSet = ps.getGeneratedKeys();
             resultSet.next();
@@ -72,7 +73,7 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Schedule(rs.getInt(1), rs.getString(2),rs.getInt(3));
+                    return fetchSchedule(rs);
                 }
                 return null;
             }
@@ -122,11 +123,13 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
     }
 
     @Override
-    public void updateSchedule(String name, int id) throws SQLException {
-        String sql = "UPDATE schedules SET name = ? WHERE id = ?";
+    public void updateSchedule(Schedule schedule) throws SQLException {
+        String sql = "UPDATE schedules SET name = ?, is_public = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(2, id);
-            statement.setString(1, name);
+            statement.setInt(3, schedule.getId());
+            statement.setString(1, schedule.getName());
+            statement.setBoolean(2, schedule.getPublic());
+
             executeInsert(statement);
         }
     }
@@ -135,6 +138,7 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         int user_id = resultSet.getInt("user_id");
-        return new Schedule(id, name, user_id);
+        boolean isPublic = resultSet.getBoolean("is_public");
+        return new Schedule(id, name, user_id, isPublic);
     }
 }
