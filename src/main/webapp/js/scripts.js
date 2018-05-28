@@ -93,15 +93,26 @@ function changeUserTab() {
   |___________________|
 */
 function loadUserData() {
-
-  hideUserData();
-
   const userData = JSON.parse(this.responseText);
 
-  let usernameE = document.createElement("label");
-  usernameE.textContent = userData.name;
+  if (userData == null) {
+    return;
+  }
 
-  document.getElementById("user_data").appendChild(usernameE);
+  hideUserData();
+  switchToSchedulesPage();
+
+  const userDataE = document.getElementById("user_data");
+
+  let roleE = document.createElement("label");
+  roleE.style.display = "block";
+  roleE.textContent = userData.role;
+  userDataE.appendChild(roleE);
+
+  let usernameE = document.createElement("label");
+  usernameE.style.display = "block";
+  usernameE.textContent = userData.name;
+  userDataE.appendChild(usernameE);
 }
 
 function hideUserData() {
@@ -166,6 +177,12 @@ function addMessage(status, content) {
 }
 
 
+data = {
+  time: 0,
+  taskId: 0,
+  dayId: 0
+}
+
 
 /* _________
   |         |
@@ -173,6 +190,8 @@ function addMessage(status, content) {
   |_________|
 */
 function init() {
+  getUserData();
+
   // Setup event listeners
   document.getElementById("log_button").addEventListener("click", login);
   document.getElementById("reg_button").addEventListener("click", register);
