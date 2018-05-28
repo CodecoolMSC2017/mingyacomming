@@ -1,5 +1,11 @@
 const BASE_URL = "http://localhost:8080/mingyacomming";
 
+function Request(type, url, data, after) {
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", after);
+  xhr.open(type, `${BASE_URL}${url}`);
+  xhr.send(data);
+}
 
 
 /* _________________
@@ -8,12 +14,10 @@ const BASE_URL = "http://localhost:8080/mingyacomming";
   |_________________|
 */
 function login() {
-  const logData = getLogFields();
-
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", changeUserTab);
-  xhr.open("POST", `${BASE_URL}/login`);
-  xhr.send(JSON.stringify(logData));
+  new Request("POST", "/login",
+    JSON.stringify(getLogFields()),
+    changeUserTab
+  );
 }
 
 function getLogFields() {
@@ -36,12 +40,10 @@ function getLogFields() {
   |____________________|
 */
 function register() {
-  const regData = getRegFields();
-
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", checkResp);
-  xhr.open("POST", `${BASE_URL}/register`);
-  xhr.send(JSON.stringify(regData));
+  new Request("POST", "/register",
+    JSON.stringify(getRegFields()),
+    null
+  );
 }
 
 function getRegFields() {
@@ -64,10 +66,10 @@ function getRegFields() {
   |__________________|
 */
 function logout() {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", deleteUserData);
-  xhr.open("GET", `${BASE_URL}/logout`);
-  xhr.send();
+  new Request("GET", "/logout",
+    null,
+    deleteUserData
+  );
 }
 
 // UserTab
@@ -79,7 +81,7 @@ function changeUserTab() {
     return;
   }
 
-  getUserData(loadUserData);
+  getUserData();
   switchToTasksPage();
 }
 
@@ -93,6 +95,7 @@ function changeUserTab() {
 function loadUserData() {
 
   hideUserData();
+  switchToSchedulesPage();
 
   const userData = JSON.parse(this.responseText);
 
@@ -125,11 +128,11 @@ function deleteUserData() {
   document.getElementById("user_data").innerHTML = "";
 }
 
-function getUserData(callback) {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", callback);
-  xhr.open("GET", `${BASE_URL}/user`);
-  xhr.send();
+function getUserData() {
+  new Request("GET", "/user",
+    null,
+    loadUserData
+  );
 }
 
 
@@ -164,6 +167,12 @@ function addMessage(status, content) {
 }
 
 
+data = {
+  time: 0,
+  taskId: 0,
+  dayId: 0
+}
+
 
 /* _________
   |         |
@@ -171,6 +180,8 @@ function addMessage(status, content) {
   |_________|
 */
 function init() {
+  getUserData();
+
   // Setup event listeners
   document.getElementById("log_button").addEventListener("click", login);
   document.getElementById("reg_button").addEventListener("click", register);

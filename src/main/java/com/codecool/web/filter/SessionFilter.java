@@ -9,7 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/protected/*")
+@WebFilter(urlPatterns = {"/user", "/tasks", "/tasks/*",
+                            "/schedules", "/schedules/*",
+                            "/slots", "/slots/*",
+                            "/days", "/days/*"
+})
+
 public final class SessionFilter implements Filter {
 
     @Override
@@ -23,6 +28,7 @@ public final class SessionFilter implements Filter {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         if (user == null) {
+            resp.sendRedirect("/mingyacomming");
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             chain.doFilter(req, resp);

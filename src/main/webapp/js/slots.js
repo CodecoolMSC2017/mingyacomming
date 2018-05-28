@@ -5,28 +5,26 @@ function createSlot(slot_time) {
     taskId: DragTask.currentlyDraggedTask.id,
   };
 
-  console.log(slotData);
-
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getSlots);
-  xhr.open("POST", `${BASE_URL}/slots?dayId=${slotData.dayId}`);
-  xhr.send(JSON.stringify(slotData));
+  new Request("POST", `/slots?dayId=${slotData.dayId}`,
+    JSON.stringify(slotData),
+    getSlots
+  );
 }
 
 function deleteSlot(slotId) {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getSlots);
-  xhr.open("DELETE", `${BASE_URL}/slots/${slotId}`);
-  xhr.send();
+  new Request("DELETE", `/slots/${slotId}`,
+    null,
+    getSlots
+  );
 }
 
 function getSlots() {
   const dayId = document.getElementById("current_day").getAttribute("value");
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", loadSlots);
-  xhr.open("GET", `${BASE_URL}/slots?dayId=${dayId}`);
-  xhr.send();
+  new Request("GET", `/slots?dayId=${dayId}`,
+    null,
+    loadSlots
+  );
 }
 
 function loadSlots() {
@@ -63,10 +61,10 @@ function loadSlots() {
 
 // Available slots
 function getAvailableTasks() {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", loadAvailableTasks);
-  xhr.open("GET", `${BASE_URL}/tasks`);
-  xhr.send();
+  new Request("GET", `/tasks`,
+    null,
+    loadAvailableTasks
+  );
 }
 
 function loadAvailableTasks() {
@@ -178,7 +176,6 @@ function DragTask(id, name, description) {
     taskE.draggable = true;
 
     taskE.addEventListener("dragstart", event => {
-      console.log("Dragged");
       DragTask.currentlyDraggedTask = this;
     });
 

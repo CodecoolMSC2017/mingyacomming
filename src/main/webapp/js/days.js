@@ -8,17 +8,17 @@ function createDay() {
   const id = document.getElementById("current_schedule").getAttribute("value");
   const dayData = getDayFields();
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getDays);
-  xhr.open("POST", `${BASE_URL}/days?scheduleId=${id}`);
-  xhr.send(JSON.stringify(dayData));
+  new Request("POST", `/days?scheduleId=${id}`,
+    JSON.stringify(dayData),
+    getDays
+  );
 }
 
 function deleteDay(dayId) {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getDays);
-  xhr.open("DELETE", `${BASE_URL}/days/${dayId}`);
-  xhr.send();
+  new Request("DELETE", `/days/${dayId}`,
+    null,
+    getDays
+  );
 }
 
 // Gets the data from the day form
@@ -39,10 +39,10 @@ function clearDayFields() {
 function getDays() {
   const id = document.getElementById("current_schedule").getAttribute("value");
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", loadDays);
-  xhr.open("GET", `${BASE_URL}/days?scheduleId=${id}`);
-  xhr.send();
+  new Request("GET", `/days?scheduleId=${id}`,
+    null,
+    loadDays
+  );
 }
 
 function loadDays() {
@@ -61,6 +61,51 @@ function loadDays() {
   });
 
   clearDayFields();
+}
+
+function editDay(dayId) {
+  const daysEl = document.getElementById("days");
+  const dayEl = daysEl.querySelector("div[id='" + dayId + "']");
+  const name = dayEl.querySelector("h2").innerHTML;
+  dayEl.textContent = "";
+
+  const formEl = document.createElement("form");
+  dayEl.appendChild(formEl);
+
+  const inputNameEl = document.createElement("input");
+  formEl.appendChild(inputNameEl);
+
+  inputNameEl.setAttribute("type", "text");
+  inputNameEl.setAttribute("placeholder", name);
+  inputNameEl.setAttribute("size", "10");
+  inputNameEl.setAttribute("id", "editName");
+
+  const editE = document.createElement("i");
+  editE.className = "fa fa-check";
+  formEl.appendChild(editE);
+
+  editE.addEventListener("click", () => sendEditDay(dayId));
+
+}
+
+function sendEditDay(dayId) {
+  const day = {};
+  const editNameEl = document.getElementById("editName");
+  day.name = editNameEl.value;
+
+  if (day.name === "") {
+    getDays();
+    return;
+  }
+
+  if (day.name === "") {
+    day.name = editNameEl.placeholder;
+  }
+
+  new Request("PUT", `/day/${dayId}`,
+    JSON.stringify(day),
+    getDays
+  );
 }
 
 function switchToDaysPage(scheduleId) {
@@ -95,6 +140,11 @@ function Day(id, name) {
       currentDayE.textContent = "Day: " + this.name;
       switchToSlotsPage(this.id);
     });
+
+    let editE = document.createElement("i");
+    editE.className = "fa fa-cog";
+    editE.addEventListener("click", () => editDay(this.id));
+    dayE.appendChild(editE);
 
     let deleteE = document.createElement("i");
     deleteE.className = "fa fa-remove";

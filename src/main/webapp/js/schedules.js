@@ -5,19 +5,17 @@
 */
 // Sends the schedule creation request to the servlet
 function createSchedule() {
-  const scheduleData = getScheduleFields();
-
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getSchedules);
-  xhr.open("POST", `${BASE_URL}/schedules`);
-  xhr.send(JSON.stringify(scheduleData));
+  new Request("POST", "/schedules",
+    JSON.stringify(getScheduleFields()),
+    getSchedules
+  );
 }
 
 function deleteSchedule(scheduleId) {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getSchedules);
-  xhr.open("DELETE", `${BASE_URL}/schedules/${scheduleId}`);
-  xhr.send();
+  new Request("DELETE", `/schedules/${scheduleId}`,
+    null,
+    getSchedules
+  );
 }
 
 
@@ -38,10 +36,10 @@ function clearScheduleFields() {
 }
 
 function getSchedules() {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", loadSchedules);
-  xhr.open("GET", `${BASE_URL}/schedules`);
-  xhr.send();
+  new Request("GET", "/schedules",
+    null,
+    loadSchedules
+  );
 }
 
 function loadSchedules() {
@@ -96,10 +94,10 @@ function Schedule(id, name) {
       switchToDaysPage(this.id);
     });
 
-    let editE= document.createElement("i");
+    let editE = document.createElement("i");
     editE.className = "fa fa-cog";
 
-    editE.addEventListener("click", ()=> editSchedule(this.id));
+    editE.addEventListener("click", () => editSchedule(this.id));
     scheduleE.appendChild(editE);
 
     let deleteE = document.createElement("i");
@@ -132,7 +130,7 @@ function editSchedule(scheduleId) {
   editE.className = "fa fa-check";
   formEl.appendChild(editE);
 
-  editE.addEventListener("click", ()=> sendEditSchedule(scheduleId));
+  editE.addEventListener("click", () => sendEditSchedule(scheduleId));
 
 }
 
@@ -146,10 +144,10 @@ function sendEditSchedule(scheduleId) {
     return;
   }
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getSchedules);
-  xhr.open("PUT", `${BASE_URL}/schedules/${scheduleId}`);
-  xhr.send(JSON.stringify(schedule));
+  new Request("PUT", `schedules/${scheduleId}`,
+    JSON.stringify(schedule),
+    getSchedules
+  );
 }
 
 
