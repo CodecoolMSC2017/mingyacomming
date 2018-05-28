@@ -5,19 +5,17 @@
 */
 // Sends the task creation request to the servlet
 function createTask() {
-  const taskData = getTaskFields();
-
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getTasks);
-  xhr.open("POST", `${BASE_URL}/tasks`);
-  xhr.send(JSON.stringify(taskData));
+  new Request("POST", "/tasks",
+    JSON.stringify(getTaskFields()),
+    getTasks
+  );
 }
 
 function deleteTask(taskId) {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getTasks);
-  xhr.open("DELETE", `${BASE_URL}/tasks/${taskId}`);
-  xhr.send();
+  new Reguest("DELETE", `/tasks/${taskID}`,
+    null,
+    getTasks
+  );
 }
 
 // Gets the data from the task from
@@ -42,10 +40,10 @@ function clearTaskFields() {
 }
 
 function getTasks() {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", loadTasks);
-  xhr.open("GET", `${BASE_URL}/tasks`);
-  xhr.send();
+  new Request("GET", "/tasks",
+    null,
+    loadTasks
+  );
 }
 
 function loadTasks() {
@@ -96,7 +94,7 @@ function Task(id, name, description) {
 
     let editEl = document.createElement("i");
     editEl.className = "fa fa-cog";
-    editEl.addEventListener("click", ()=> editTask(this.id));
+    editEl.addEventListener("click", () => editTask(this.id));
     taskE.appendChild(editEl);
 
     let deleteE = document.createElement("i");
@@ -138,7 +136,7 @@ function editTask(taskId) {
   editE.className = "fa fa-check";
   formEl.appendChild(editE);
 
-  editE.addEventListener("click", ()=> sendEditTask(taskId));
+  editE.addEventListener("click", () => sendEditTask(taskId));
 
 }
 
@@ -161,10 +159,10 @@ function sendEditTask(taskId) {
     task.description = editDescriptionEl.placeholder;
   }
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getTasks);
-  xhr.open("PUT", `${BASE_URL}/tasks/${taskId}`);
-  xhr.send(JSON.stringify(task));
+  new Reguest("PUT", `/tasks/${taskId}`,
+    JSON.stringify(task),
+    getTasks
+  );
 }
 
 

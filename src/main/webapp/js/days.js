@@ -8,17 +8,17 @@ function createDay() {
   const id = document.getElementById("current_schedule").getAttribute("value");
   const dayData = getDayFields();
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getDays);
-  xhr.open("POST", `${BASE_URL}/days?scheduleId=${id}`);
-  xhr.send(JSON.stringify(dayData));
+  new Request("POST", `/days?scheduleId=${id}`,
+    JSON.stringify(dayData),
+    getDays
+  );
 }
 
 function deleteDay(dayId) {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", getDays);
-  xhr.open("DELETE", `${BASE_URL}/days/${dayId}`);
-  xhr.send();
+  new Request("DELETE", `/days/${dayId}`,
+    null,
+    getDays
+  );
 }
 
 // Gets the data from the day form
@@ -39,10 +39,10 @@ function clearDayFields() {
 function getDays() {
   const id = document.getElementById("current_schedule").getAttribute("value");
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", loadDays);
-  xhr.open("GET", `${BASE_URL}/days?scheduleId=${id}`);
-  xhr.send();
+  new Request("GET", `/days?scheduleId=${id}`,
+    null,
+    loadDays
+  );
 }
 
 function loadDays() {
