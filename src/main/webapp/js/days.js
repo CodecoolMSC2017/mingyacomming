@@ -63,6 +63,51 @@ function loadDays() {
   clearDayFields();
 }
 
+function editDay(dayId) {
+  const daysEl = document.getElementById("days");
+  const dayEl = daysEl.querySelector("div[id='" + dayId + "']");
+  const name = dayEl.querySelector("h2").innerHTML;
+  dayEl.textContent = "";
+
+  const formEl = document.createElement("form");
+  dayEl.appendChild(formEl);
+
+  const inputNameEl = document.createElement("input");
+  formEl.appendChild(inputNameEl);
+
+  inputNameEl.setAttribute("type", "text");
+  inputNameEl.setAttribute("placeholder", name);
+  inputNameEl.setAttribute("size", "10");
+  inputNameEl.setAttribute("id", "editName");
+
+  const editE = document.createElement("i");
+  editE.className = "fa fa-check";
+  formEl.appendChild(editE);
+
+  editE.addEventListener("click", () => sendEditDay(dayId));
+
+}
+
+function sendEditDay(dayId) {
+  const day = {};
+  const editNameEl = document.getElementById("editName");
+  day.name = editNameEl.value;
+
+  if (day.name === "") {
+    getDays();
+    return;
+  }
+
+  if (day.name === "") {
+    day.name = editNameEl.placeholder;
+  }
+
+  new Request("PUT", `/day/${dayId}`,
+    JSON.stringify(day),
+    getDays
+  );
+}
+
 function switchToDaysPage(scheduleId) {
   document.getElementById("tasks_page").style.display = "none";
   document.getElementById("schedules_page").style.display = "none";
@@ -95,6 +140,11 @@ function Day(id, name) {
       currentDayE.textContent = "Day: " + this.name;
       switchToSlotsPage(this.id);
     });
+
+    let editE = document.createElement("i");
+    editE.className = "fa fa-cog";
+    editE.addEventListener("click", () => editDay(this.id));
+    dayE.appendChild(editE);
 
     let deleteE = document.createElement("i");
     deleteE.className = "fa fa-remove";
