@@ -178,7 +178,6 @@ function DragTask(id, name, description) {
     taskE.draggable = true;
 
     taskE.addEventListener("dragstart", event => {
-      console.log("Dragged");
       DragTask.currentlyDraggedTask = this;
     });
 
