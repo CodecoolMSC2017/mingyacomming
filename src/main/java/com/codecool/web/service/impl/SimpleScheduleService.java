@@ -37,8 +37,8 @@ public class SimpleScheduleService implements ScheduleService{
     }
 
     @Override
-    public void updateSchedule(String name, int id) throws SQLException {
-        db.updateSchedule(name, id);
+    public void updateSchedule(Schedule schedule) throws SQLException {
+        db.updateSchedule(schedule);
     }
 
     @Override

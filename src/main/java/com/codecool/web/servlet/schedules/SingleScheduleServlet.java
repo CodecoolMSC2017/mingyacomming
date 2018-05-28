@@ -2,6 +2,7 @@ package com.codecool.web.servlet.schedules;
 
 import com.codecool.web.dao.database.ScheduleDatabase;
 import com.codecool.web.dao.database.impl.ScheduleDao;
+import com.codecool.web.model.Schedule;
 import com.codecool.web.service.ScheduleService;
 import com.codecool.web.service.impl.SimpleScheduleService;
 import com.codecool.web.servlet.AbstractServlet;
@@ -74,13 +75,14 @@ public class SingleScheduleServlet extends AbstractServlet{
         String jsonString = req.getReader().readLine();
 
         String name = getJsonParameter("name", jsonString);
+        boolean isPublic = Boolean.parseBoolean(getJsonParameter("isPublic", jsonString));
 
         try(Connection connection = getConnection(req.getServletContext())) {
             ScheduleDatabase sdb = new ScheduleDao(connection);
 
             ScheduleService scheduleService = new SimpleScheduleService(sdb);
 
-            scheduleService.updateSchedule(name, id);
+            scheduleService.updateSchedule(new Schedule(name, id, isPublic));
 
             sendMessage(resp, 200, "Schedule updated succesfully");
 

@@ -47,7 +47,7 @@ public class SchedulesServlet extends AbstractServlet{
 
             ScheduleService ss = new SimpleScheduleService(sdb);
 
-            String message = "schedules/" + ss.addSchedule(new Schedule(name, user.getId()));
+            String message = "schedules/" + ss.addSchedule(new Schedule(name, user.getId(), false));
 
             sendMessage(resp, HttpServletResponse.SC_OK, message);
 
