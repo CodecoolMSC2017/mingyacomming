@@ -116,8 +116,8 @@ input:hover, textarea:hover
     
     /* Positions */
     padding: 25px;
-    width: 300px;
-    height: 400px;
+    width: fit-content;
+    height: fit-content;
 }
 #user_tab:hover > *
 {
@@ -186,19 +186,29 @@ textarea
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
 }
+#tasks
+{
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
 .task, .schedule, .day
 {
     background-color: var(--color_normal);
-    box-shadow: 0 0 2px black;
+    box-shadow: 0 0 0 5px var(--color_dark), 0 0 0 10px var(--color_normal);
     
     display: inline;
     border-radius: 5px;
-    margin: 10px; padding: 5px;
+    margin: 20px; padding: 5px;
     
     text-align: center;
     word-break: break-word;
     
     transition-duration: 300ms;
+}
+.task
+{
+    padding-bottom: 40px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
 }
 
 .task:hover, .schedule:hover, .day:hover
