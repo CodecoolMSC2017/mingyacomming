@@ -29,7 +29,7 @@ public class TaskServlet extends AbstractServlet {
 
             TaskService ts = new SimpleTaskService(tdb, udb);
 
-            sendMessage(resp, 200, ts.getTasks(user.getId()));
+            sendMessage(resp, 200, ts.getTasks(user));
 
         } catch (SQLException e) {
             sendMessage(resp, 500, "öccázerror");

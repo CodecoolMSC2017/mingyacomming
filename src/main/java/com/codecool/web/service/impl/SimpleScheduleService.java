@@ -32,7 +32,10 @@ public class SimpleScheduleService implements ScheduleService{
     }
 
     @Override
-    public List<Schedule> getSchedules() throws SQLException {
+    public List<Schedule> getSchedules(User user) throws SQLException {
+        if (user.getRole().equals("admin")) {
+            return db.getAllSchedules();
+        }
         return db.getSchedules();
     }
 

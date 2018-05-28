@@ -14,7 +14,7 @@ public interface ScheduleService {
 
     Schedule getSchedule(int id) throws SQLException;
 
-    List<Schedule> getSchedules() throws SQLException;
+    List<Schedule> getSchedules(User user) throws SQLException;
 
     void updateSchedule(String name, int id) throws SQLException;
 
