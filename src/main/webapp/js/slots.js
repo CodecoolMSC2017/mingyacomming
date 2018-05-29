@@ -18,6 +18,19 @@ function deleteSlot(slotId) {
   );
 }
 
+function changeSlot(time, slotId) {
+  let changeData = {
+    time: time,
+    taskId: DragTask.currentlyDraggedTask.id,
+    dayId: document.querySelector("#current_day").getAttribute("value")
+  };
+
+  new Request("PUT", `/slots/?id=${slotId}`,
+    JSON.stringify(changeData),
+    getSlots
+  );
+}
+
 function getSlots() {
   const dayId = document.getElementById("current_day").getAttribute("value");
 
@@ -106,17 +119,42 @@ function Slot(id, time, task_id, task_name, task_description) {
     let slotE = document.createElement("div");
     slotE.className = "slot";
     slotE.setAttribute("time", this.time);
-
-    let dataE = document.createElement("p");
-    dataE.style.display = "inline";
-    dataE.textContent = `${this.time} - ${this.task.name} - ${this.task.description} `;
-    slotE.appendChild(dataE);
+    slotE.setAttribute("data", ` - ${this.task.name} - ${this.task.description}`);
 
     let deleteE = document.createElement("i");
     deleteE.className = "fa fa-remove";
     deleteE.style.marginLeft = "5px";
     deleteE.addEventListener("click", () => deleteSlot(this.id));
     slotE.appendChild(deleteE);
+
+    let checkE = document.createElement("i");
+    checkE.className = "fa fa-circle-o";
+    checkE.style.marginLeft = "5px";
+    checkE.addEventListener("click", () => console.log("Checked"));
+    slotE.appendChild(checkE);
+
+    // Events
+    slotE.addEventListener("dragover", event => {
+      event.preventDefault();
+    });
+
+    slotE.addEventListener("dragenter", event => {
+      if (event.target.className == "slot") {
+        slotE.style.backgroundColor = "#f55";
+        slotE.style.transform = "perspective(1000px) translateZ(100px)";
+      }
+    });
+
+    slotE.addEventListener("dragleave", event => {
+      if (event.target.className == "slot") {
+        slotE.style.backgroundColor = "#777";
+        slotE.style.transform = "perspective(1000px) translateZ(0px)";
+      }
+    });
+
+    slotE.addEventListener("drop", event => {
+      changeSlot(this.time, this.id);
+    });
 
     return slotE;
   }
@@ -167,10 +205,7 @@ function DragTask(id, name, description) {
     let taskE = document.createElement("div");
     taskE.className = "slot";
     taskE.setAttribute("id", this.id);
-
-    let dataE = document.createElement("p");
-    dataE.textContent = `${this.name} : ${this.description}`;
-    taskE.appendChild(dataE);
+    taskE.setAttribute("data", `${this.name} - ${this.description}`);
 
     // Events
     taskE.draggable = true;
