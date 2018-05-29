@@ -193,7 +193,7 @@ textarea
 .task, .schedule, .day
 {
     background-color: var(--color_normal);
-    box-shadow: 0 0 0 5px var(--color_dark), 0 0 0 10px var(--color_normal);
+    box-shadow: 0 0 0 3px var(--color_dark), 0 0 0 6px var(--color_normal);
     
     display: inline;
     border-radius: 5px;
@@ -203,6 +203,14 @@ textarea
     word-break: break-word;
     
     transition-duration: 300ms;
+}
+.schedule
+{
+    box-shadow:
+        0 0 0 3px var(--color_dark),
+        0 0 0 6px var(--color_normal),
+        0 0 0 9px var(--color_dark),
+        0 0 0 12px var(--color_normal);
 }
 .task
 {
@@ -265,9 +273,22 @@ textarea
     transition-duration: 300ms;
 }
 
-.slot p
+.slot::before
 {
-    margin: 0;
+    content: attr(time);
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+}
+.slot::after
+{
+    content: attr(data);
+    float: left;
+}
+
+.slot i
+{
+    float: right;
 }
 
 .slot:hover
@@ -297,38 +318,32 @@ textarea
     cursor: pointer;
 }
 /* Font icon colors */
-.fa-remove
+.fa
 {
     transform: scale(2);
+    margin: auto 1em;
     transition-duration: 200ms;
 }
-.fa-remove:hover
+.fa:hover
 {
     transform: scale(3);
+}
+.fa-remove:hover {
     color: red;
 }
-
-.fa-cog {
-    transform: scale(2);
-    transition-duration: 200ms;
-    margin: 0 2em 0 2em;
-}
-
 .fa-cog:hover {
-    transform: scale(3);
     color: green;
 }
-
-.fa-check {
-    transform: scale(2);
-    transition-duration: 200ms;
-    margin: 0 2em 0 2em;
-}
-
 .fa-check:hover {
-    transform: scale(3);
     color: green;
 }
+.fa-circle-o:hover {
+    color: cyan;
+}
+.fa-check-circle-o:hover {
+    color: green;
+}
+
 
 
 /* __________
