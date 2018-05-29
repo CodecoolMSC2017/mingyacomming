@@ -22,10 +22,11 @@ function changeSlot(time, slotId) {
   let changeData = {
     time: time,
     taskId: DragTask.currentlyDraggedTask.id,
-    dayId: document.querySelector("#current_day").getAttribute("value")
+    dayId: document.querySelector("#current_day").getAttribute("value"),
+    isChecked: false
   };
 
-  new Request("PUT", `/slots/?id=${slotId}`,
+  new Request("PUT", `/slots/${slotId}`,
     JSON.stringify(changeData),
     getSlots
   );
@@ -37,6 +38,20 @@ function getSlots() {
   new Request("GET", `/slots?dayId=${dayId}`,
     null,
     loadSlots
+  );
+}
+
+function checkSlot(slot) {
+  const newData = {
+    time: slot.time,
+    taskId: slot.task.id,
+    dayId: document.getElementById("current_day").getAttribute("value"),
+    isChecked: !slot.is_checked
+  };
+
+  new Request("PUT", `/slots/${slot.id}`,
+    JSON.stringify(newData),
+    getSlots
   );
 }
 
@@ -60,6 +75,7 @@ function loadSlots() {
       let slot = new Slot(
         slotData.slot.id,
         slotData.slot.time,
+        slotData.slot.checked,
         slotData.task.id,
         slotData.task.name,
         slotData.task.description
@@ -110,9 +126,10 @@ function switchToSlotsPage(dayId) {
 }
 
 // Classes
-function Slot(id, time, task_id, task_name, task_description) {
+function Slot(id, time, is_checked, task_id, task_name, task_description) {
   this.id = id;
   this.time = time;
+  this.is_checked = is_checked;
   this.task = new Task(task_id, task_name, task_description);
 
   this.getElement = function () {
@@ -128,9 +145,9 @@ function Slot(id, time, task_id, task_name, task_description) {
     slotE.appendChild(deleteE);
 
     let checkE = document.createElement("i");
-    checkE.className = "fa fa-circle-o";
+    checkE.className = this.is_checked ? "fa fa-check-circle-o" : "fa fa-circle-o";
     checkE.style.marginLeft = "5px";
-    checkE.addEventListener("click", () => console.log("Checked"));
+    checkE.addEventListener("click", () => checkSlot(this));
     slotE.appendChild(checkE);
 
     // Events
@@ -140,7 +157,7 @@ function Slot(id, time, task_id, task_name, task_description) {
 
     slotE.addEventListener("dragenter", event => {
       if (event.target.className == "slot") {
-        slotE.style.backgroundColor = "#f55";
+        slotE.style.backgroundColor = "#f96d00";
         slotE.style.transform = "perspective(1000px) translateZ(100px)";
       }
     });
