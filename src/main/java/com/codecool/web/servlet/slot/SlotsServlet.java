@@ -32,10 +32,12 @@ public class SlotsServlet extends AbstractServlet {
                 sendMessage(resp, 200, ss.getSlotTask(id));
 
             } catch (SQLException e) {
+                e.printStackTrace();
                 sendMessage(resp, 500, "sqlserver is down");
             }
         }
         catch (NumberFormatException e) {
+            e.printStackTrace();
             sendMessage(resp, 400, "error in dayID");
         }
     }
