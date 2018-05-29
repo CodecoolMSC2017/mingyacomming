@@ -168,15 +168,10 @@ function sendEditSchedule(scheduleId) {
   }
   schedule.isPublic = ispublic.checked;
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', getSchedules);
-  xhr.open('PUT', `schedules/${scheduleId}`);
-  xhr.send(JSON.stringify(schedule));
-
-  /*new Request("PUT", `schedules/${scheduleId}`,
+  new Request("PUT", `/schedules/${scheduleId}`,
     JSON.stringify(schedule),
     getSchedules
-  );*/
+  );
 }
 
 
