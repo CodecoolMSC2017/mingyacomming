@@ -22,7 +22,7 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, schedule.getName());
             ps.setInt(2, schedule.getUserId());
-            ps.setBoolean(2, schedule.getPublic());
+            ps.setBoolean(3, schedule.getPublic());
             ps.executeUpdate();
             ResultSet resultSet = ps.getGeneratedKeys();
             resultSet.next();
@@ -124,13 +124,19 @@ public class ScheduleDao extends AbstractDao implements ScheduleDatabase {
 
     @Override
     public void updateSchedule(Schedule schedule) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
         String sql = "UPDATE schedules SET name = ?, is_public = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(3, schedule.getId());
             statement.setString(1, schedule.getName());
             statement.setBoolean(2, schedule.getPublic());
-
+            statement.setInt(3, schedule.getId());
             executeInsert(statement);
+        } catch (SQLException se) {
+            connection.rollback();
+            throw se;
+        } finally {
+            connection.setAutoCommit(autoCommit);
         }
     }
 

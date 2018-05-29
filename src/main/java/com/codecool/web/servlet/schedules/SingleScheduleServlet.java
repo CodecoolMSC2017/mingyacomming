@@ -75,14 +75,15 @@ public class SingleScheduleServlet extends AbstractServlet{
         String jsonString = req.getReader().readLine();
 
         String name = getJsonParameter("name", jsonString);
-        boolean isPublic = Boolean.parseBoolean(getJsonParameter("isPublic", jsonString));
+        //boolean isPublic = Boolean.parseBoolean(getJsonParameter("isPublic", jsonString));
 
         try(Connection connection = getConnection(req.getServletContext())) {
             ScheduleDatabase sdb = new ScheduleDao(connection);
 
             ScheduleService scheduleService = new SimpleScheduleService(sdb);
+            Schedule schedule = scheduleService.getSchedule(id);
 
-            scheduleService.updateSchedule(new Schedule(name, id, isPublic));
+            scheduleService.updateSchedule(new Schedule(id, name, schedule.getUserId(), false));
 
             sendMessage(resp, 200, "Schedule updated succesfully");
 

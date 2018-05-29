@@ -23,13 +23,13 @@ class ScheduleDaoTest extends AbstractTest {
 
     @Test
     void addSchedule() throws SQLException {
-        Schedule schedule = new Schedule("test", 1);
+        Schedule schedule = new Schedule("test", 1, false);
         scheduleDao.addSchedule(schedule);
     }
 
     @Test
     void removeSchedule() throws SQLException {
-        Schedule schedule = new Schedule("test", 1);
+        Schedule schedule = new Schedule("test", 1, false);
         scheduleDao.addSchedule(schedule);
         scheduleDao.removeSchedule(3);
         assertEquals(2, scheduleDao.getSchedules().size());
@@ -58,7 +58,7 @@ class ScheduleDaoTest extends AbstractTest {
     void updateSchedule() throws SQLException {
         Schedule schedule = scheduleDao.getSchedule(1);
         String originalName = schedule.getName();
-        scheduleDao.updateSchedule("alma", 1);
+        scheduleDao.updateSchedule(new Schedule(schedule.getId(),"alma", 1, false));
         assertEquals("alma", scheduleDao.getSchedule(1).getName());
 
     }
