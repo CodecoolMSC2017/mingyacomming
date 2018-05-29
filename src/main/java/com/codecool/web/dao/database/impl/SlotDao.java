@@ -90,6 +90,8 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
 
     @Override
     public void updateSlot(Slot slot) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
         String sql = "UPDATE slots SET time = ?, task_id = ?, day_id = ?, is_checked = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, slot.getTime());
@@ -99,12 +101,15 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
             statement.setInt(5, slot.getId());
             executeInsert(statement);
         } catch (SQLException se) {
+            connection.rollback();
             throw se;
+        } finally {
+            connection.setAutoCommit(autoCommit);
         }
     }
 
     public List<SlotTask> getSlotTask(int id) throws SQLException {
-        String sql = "Select s.id, s.time, s.task_id, s.day_id, t.name, t.description, t.user_id \n" +
+        String sql = "Select s.id, s.time, s.task_id, s.day_id, s.is_checked, t.name, t.description, t.user_id \n" +
                 "                From slots as s Inner Join tasks as t ON s.task_id = t.id WHERE day_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
