@@ -27,6 +27,14 @@ public class Slot {
         return isChecked;
     }
 
+    public void setDay_id(int day_id) {
+        this.day_id = day_id;
+    }
+
+    public void setTask_id(int task_id) {
+        this.task_id = task_id;
+    }
+
     public void setChecked(Boolean checked) {
         isChecked = checked;
     }

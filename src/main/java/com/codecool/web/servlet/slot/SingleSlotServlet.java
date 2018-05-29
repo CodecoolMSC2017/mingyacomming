@@ -84,8 +84,13 @@ public class SingleSlotServlet extends AbstractServlet{
             SlotDatabase sdb = new SlotDao(connection);
 
             SlotService slotService = new SimpleSlotService(sdb);
+            Slot slot = slotService.getSlot(id);
+            slot.setChecked(isChecked);
+            slot.setTime(time);
+            slot.setDay_id(day_id);
+            slot.setTask_id(task_id);
 
-            slotService.updateSlot(new Slot(id, time, task_id, day_id, isChecked));
+            slotService.updateSlot(slot);
 
             sendMessage(resp, 200, "Slot updated succesfully");
 
