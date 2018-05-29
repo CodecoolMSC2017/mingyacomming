@@ -52,9 +52,9 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
         String sql = "SELECT * FROM slots WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Slot(rs.getInt("id"), rs.getInt("time"),rs.getInt("task_id"), rs.getInt("day_id"));
+                    return new Slot(rs.getInt("id"), rs.getInt("time"), rs.getInt("task_id"), rs.getInt("day_id"));
                 }
                 return null;
             }
@@ -66,7 +66,7 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
         String sql = "SELECT * FROM slots WHERE day_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
-            try(ResultSet resultSet = statement.executeQuery()){
+            try (ResultSet resultSet = statement.executeQuery()) {
                 List<Slot> slots = new ArrayList<>();
                 while (resultSet.next()) {
                     slots.add(fetchSlot(resultSet));
@@ -113,10 +113,13 @@ public class SlotDao extends AbstractDao implements SlotDatabase {
                 "                From slots as s Inner Join tasks as t ON s.task_id = t.id WHERE day_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 List<SlotTask> slotTasks = new ArrayList<>();
                 while (rs.next()) {
-                    slotTasks.add(new SlotTask(new Task(rs.getInt("user_id"), rs.getString("name"), rs.getString("description")), fetchSlot(rs)));
+                    slotTasks.add(new SlotTask(
+                            new Task(rs.getInt("task_id"), rs.getInt("user_id"), rs.getString("name"), rs.getString("description")),
+                            fetchSlot(rs)
+                    ));
                 }
                 return slotTasks;
             }
