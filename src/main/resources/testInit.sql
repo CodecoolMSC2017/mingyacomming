@@ -15,6 +15,7 @@ CREATE TABLE schedules
     id      SERIAL PRIMARY KEY,
     name    TEXT NOT NULL,
     user_id INTEGER,
+    is_public BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -44,6 +45,7 @@ CREATE TABLE slots
     time    INTEGER NOT NULL,
     task_id INTEGER,
     day_id  INTEGER,
+    is_checked BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (task_id) REFERENCES tasks(id),
     FOREIGN KEY (day_id) REFERENCES days(id)
 );
@@ -69,16 +71,16 @@ INSERT INTO tasks (name, description, user_id) VALUES
     ('kisfrocs', 'alap dolog', 1),
     ('nagyfrocs', 'csak ugy pls ne szolj be', 1);
 
-INSERT INTO schedules (name, user_id) VALUES
-    ('alap', '1'),
-    ('hard', '1');
+INSERT INTO schedules (name, user_id, is_public) VALUES
+    ('alap', '1', false),
+    ('hard', '1', false);
 
 INSERT INTO days (name, schedule_id) VALUES
     ('hetfu', '1'),
     ('ketto', '1');
 
-INSERT INTO slots (time, day_id, task_id ) VALUES
-    (6, 1, 1),
-    (7, 1, 2);
+INSERT INTO slots (time, day_id, task_id, is_checked) VALUES
+    (6, 1, 1, false),
+    (7, 1, 2, false);
 
 

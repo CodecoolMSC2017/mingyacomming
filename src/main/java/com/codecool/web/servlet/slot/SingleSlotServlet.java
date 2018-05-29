@@ -78,13 +78,14 @@ public class SingleSlotServlet extends AbstractServlet{
         int time = Integer.parseInt(getJsonParameter("time", jsonString));
         int task_id = Integer.parseInt(getJsonParameter("taskId", jsonString));
         int day_id = Integer.parseInt(getJsonParameter("dayId", jsonString));
+        boolean isChecked = Boolean.parseBoolean(getJsonParameter("isChecked", jsonString));
 
         try(Connection connection = getConnection(req.getServletContext())) {
             SlotDatabase sdb = new SlotDao(connection);
 
             SlotService slotService = new SimpleSlotService(sdb);
 
-            slotService.updateSlot(new Slot(id, time, task_id, day_id));
+            slotService.updateSlot(new Slot(id, time, task_id, day_id, isChecked));
 
             sendMessage(resp, 200, "Slot updated succesfully");
 
