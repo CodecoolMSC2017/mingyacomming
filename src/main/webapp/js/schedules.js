@@ -108,7 +108,7 @@ function Schedule(id, name, isPublic) {
     scheduleE.appendChild(editE);
 
     let deleteE = document.createElement("i");
-    deleteE.className = "fa fa-remove";
+    deleteE.className = "fa fa-trash-alt";
     deleteE.addEventListener("click", () => deleteSchedule(this.id));
     scheduleE.appendChild(deleteE);
 

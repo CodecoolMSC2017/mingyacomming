@@ -139,7 +139,7 @@ function Slot(id, time, is_checked, task_id, task_name, task_description) {
     slotE.setAttribute("data", ` - ${this.task.name} - ${this.task.description}`);
 
     let deleteE = document.createElement("i");
-    deleteE.className = "fa fa-remove";
+    deleteE.className = "fa fa-trash-alt";
     deleteE.style.marginLeft = "5px";
     deleteE.addEventListener("click", () => deleteSlot(this.id));
     slotE.appendChild(deleteE);

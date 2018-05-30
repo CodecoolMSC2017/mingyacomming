@@ -147,7 +147,7 @@ function Day(id, name) {
     dayE.appendChild(editE);
 
     let deleteE = document.createElement("i");
-    deleteE.className = "fa fa-remove";
+    deleteE.className = "fa fa-trash-alt";
     deleteE.addEventListener("click", () => deleteDay(this.id));
     dayE.appendChild(deleteE);
 
