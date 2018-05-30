@@ -62,7 +62,8 @@ Create Table results
 
 
 INSERT INTO users (name, password, role) VALUES
-	('a', 'a', 'a'),
+	('a', 'a', 'admin'),
+    ('u', 'u', 'user'),
 	('user1@user1', 'user1', 'asd'),
 	('user2@user2', 'user2', 'sad'),
 	('user2@user3', 'user3', 'lul');

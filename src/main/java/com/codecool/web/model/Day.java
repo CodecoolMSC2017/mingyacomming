@@ -8,7 +8,6 @@ public class Day {
     private int id;
     private int schedule_id;
     private String name;
-    private List<Slot> slots = new ArrayList<>();
 
     public Day(int id, String name, int schedule_id) {
         this.id = id;
@@ -37,7 +36,4 @@ public class Day {
         return schedule_id;
     }
 
-    public List<Slot> getSlots() {
-        return slots;
-    }
 }

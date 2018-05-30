@@ -73,13 +73,12 @@ public class SingleSlotServlet extends AbstractServlet{
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jsonString = req.getReader().readLine();
-        int id = Integer.parseInt(req.getParameter("id"));
+        int id = getId(req);
 
         int time = Integer.parseInt(getJsonParameter("time", jsonString));
         int task_id = Integer.parseInt(getJsonParameter("taskId", jsonString));
         int day_id = Integer.parseInt(getJsonParameter("dayId", jsonString));
         boolean isChecked = Boolean.parseBoolean(getJsonParameter("isChecked", jsonString));
-
         try(Connection connection = getConnection(req.getServletContext())) {
             SlotDatabase sdb = new SlotDao(connection);
 
@@ -95,6 +94,7 @@ public class SingleSlotServlet extends AbstractServlet{
             sendMessage(resp, 200, "Slot updated succesfully");
 
         } catch (SQLException e) {
+            e.printStackTrace();
             sendMessage(resp, 400, "something went wrong");
         }
     }

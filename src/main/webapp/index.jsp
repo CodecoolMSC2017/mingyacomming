@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
         <script src="js/slots.js"> </script>
         <script src="js/days.js"> </script>
         <script src="js/schedules.js"> </script>
@@ -18,7 +18,8 @@
 
     <body>
         <div id="menu_bar">
-            <h1> BrainStorm </h1>
+            <h1>
+                <i class="fas fa-skull"> </i> BrainStorm </h1>
             <div id="user_tab">
                 <div id="user_profile">
                     <div id="user_data"> </div>

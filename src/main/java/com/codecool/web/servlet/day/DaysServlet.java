@@ -57,9 +57,13 @@ public class DaysServlet extends AbstractServlet {
             try(Connection connection = getConnection(req.getServletContext())) {
                 DayDatabase ddb = new DayDao(connection);
                 DayService ds = new SimpleDayService(ddb);
-                int dayId = ds.addDay(new Day(name, scheduleId));
-                String message = "days/" + dayId;
-                sendMessage(resp, 200, message);
+                if (ds.getDays().size() < 7) {
+                    int dayId = ds.addDay(new Day(name, scheduleId));
+                    String message = "days/" + dayId;
+                    sendMessage(resp, 200, message);
+                } else {
+                    sendMessage(resp, 500, "maximum 7 days allowed in a schedule");
+                }
 
             } catch (SQLException e) {
                 sendMessage(resp, 500, "sqlserver is down");
