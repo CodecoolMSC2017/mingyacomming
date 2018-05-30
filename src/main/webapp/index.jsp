@@ -11,6 +11,7 @@
         <script src="js/days.js"> </script>
         <script src="js/schedules.js"> </script>
         <script src="js/tasks.js"> </script>
+        <script src="js/searcher.js"> </script>
         <script src="js/scripts.js"> </script>
         <script src="js/zombies.js"> </script>
         <title> BrainStorm </title>
@@ -34,12 +35,14 @@
         </div>
 
         <div id="content">
+                <tab id="schedule_searcher"> Schedule Searcher </tab>
             <div id="tabs">
-                <label id="my_tasks">My Tasks</label>
-                <label id="my_schedules"> My Schedules</label>
-                <label id="current_schedule"> > Schedule </label>
-                <label id="current_day"> > Day </label>
+                <tab id="my_tasks">My Tasks</tab>
+                <tab id="my_schedules"> My Schedules</tab>
+                <tab id="current_schedule"> > Schedule </tab>
+                <tab id="current_day"> > Day </tab>
             </div>
+            <jsp:include page="schedule_searcher_page.jsp"></jsp:include>
             <jsp:include page="tasks_page.jsp"></jsp:include>
             <jsp:include page="schedules_page.jsp"></jsp:include>
             <jsp:include page="days_page.jsp"></jsp:include>
