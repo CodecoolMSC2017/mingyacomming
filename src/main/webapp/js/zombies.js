@@ -60,10 +60,18 @@ function Zombie() {
     }
     let i = gameData.zombies.indexOf(this);
     gameData.zombies.splice(i, 1);
+
+    new Request("POST", "/inventory",
+      JSON.stringify({
+        name: "coin",
+        quantity: 1
+      }),
+      null
+    );
   }
 
   this.draw = function () {
-    
+
     let rotatedImage = rotateImage(image, this.rotation);
     context.drawImage(rotatedImage, this.x, this.y);
     //context.drawImage(image, this.x, this.y, this.w, this.h);
@@ -80,7 +88,7 @@ function Particle(x, y) {
   this.life = 40;
 
   this.update = function () {
-    if(this.life-- < 0) {
+    if (this.life-- < 0) {
       this.destroy();
     }
     this.physics();
@@ -112,7 +120,7 @@ function Particle(x, y) {
 // Core
 function update() {
   requestAnimationFrame(update);
-  
+
   startTime = new Date();
 
   context.fillStyle = "#111";
@@ -132,11 +140,11 @@ function update() {
   endTime = new Date();
   let updateTime = endTime - startTime;
 
-  context.fillStyle = "#fff";
+  context.fillStyle = "#ddd";
   context.font = "30px Arial";
 
   fps.fps = Math.floor(1000 / updateTime);
-  context.fillText(fps.smoothFps, 5, 50);
+  context.fillText(`FPS: ${fps.smoothFps}`, 5, 50);
 
 }
 
@@ -163,10 +171,11 @@ function init() {
 
   context = canvas.getContext("2d");
 
-  // Dummy data
-  for (let i = 0; i < 5; i++) {
-    gameData.zombies.push(new Zombie());
-  }
+  setInterval(() => {
+    if (gameData.zombies.length < 5) {
+      gameData.zombies.push(new Zombie());
+    }
+  }, 5000);
 
   // Background
   for (let i = 0; i < 150; i++) {
@@ -178,7 +187,6 @@ function init() {
 
 
   fps = new FPS();
-  //setInterval(update, 33);
   update();
 }
 
