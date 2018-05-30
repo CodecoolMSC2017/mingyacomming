@@ -24,7 +24,7 @@ function loadUsers() {
 
 function init() {
   document.getElementById("user_selector").addEventListener("click", switchToUsersPage);
-  document.getElementById("users").addEventListener("change", (user) => switchToSchedulesPage(user.value));
+  document.getElementById("users").addEventListener("change", event => switchToSchedulesPage(event.target.value));
 }
 
 document.addEventListener("DOMContentLoaded", init);
