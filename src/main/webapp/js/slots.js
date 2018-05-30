@@ -115,6 +115,7 @@ function loadAvailableTasks() {
 }
 
 function switchToSlotsPage(dayId) {
+  document.getElementById("schedule_searcher_page").style.display = "none";
   document.getElementById("tasks_page").style.display = "none";
   document.getElementById("schedules_page").style.display = "none";
   document.getElementById("days_page").style.display = "none";
@@ -145,7 +146,7 @@ function Slot(id, time, is_checked, task_id, task_name, task_description) {
     slotE.appendChild(deleteE);
 
     let checkE = document.createElement("i");
-    checkE.className = this.is_checked ? "fa fa-check-circle-o" : "fa fa-circle-o";
+    checkE.className = this.is_checked ? "far fa-check-circle" : "far fa-circle";
     checkE.style.marginLeft = "5px";
     checkE.addEventListener("click", () => checkSlot(this));
     slotE.appendChild(checkE);
@@ -164,9 +165,15 @@ function Slot(id, time, is_checked, task_id, task_name, task_description) {
 
     slotE.addEventListener("dragleave", event => {
       if (event.target.className == "slot") {
-        slotE.style.backgroundColor = "#777";
-        slotE.style.transform = "perspective(1000px) translateZ(0px)";
+        slotE.style.backgroundColor = null;
+        slotE.style.transform = null;
       }
+    });
+
+    slotE.draggable = true;
+
+    slotE.addEventListener("dragstart", event => {
+      DragTask.currentlyDraggedTask = this.task;
     });
 
     slotE.addEventListener("drop", event => {
@@ -199,8 +206,8 @@ function PlaceHolder(time) {
 
     spaceHolderE.addEventListener("dragleave", event => {
       if (event.target.className == "slot") {
-        event.target.style.backgroundColor = "#777";
-        event.target.style.transform = "perspective(1000px) translateZ(0px)";
+        event.target.style.backgroundColor = null;
+        event.target.style.transform = null;
       }
     });
 

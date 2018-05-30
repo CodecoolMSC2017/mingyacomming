@@ -207,6 +207,7 @@ function init() {
   document.getElementById("reg_button").addEventListener("click", register);
   document.getElementById("logout_button").addEventListener("click", logout);
 
+  document.getElementById("schedule_searcher").addEventListener("click", switchToSearcher);;
   document.getElementById("my_tasks").addEventListener("click", switchToTasksPage);
   document.getElementById("my_schedules").addEventListener("click", switchToSchedulesPage);
   document.getElementById("current_schedule").addEventListener("click", () => {
