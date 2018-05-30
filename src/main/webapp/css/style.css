@@ -212,11 +212,15 @@ textarea
         0 0 0 9px var(--color_dark),
         0 0 0 12px var(--color_normal);
 }
+.day
+{
+    border-radius: 10px 40px;
+}
 .task
 {
     padding-bottom: 40px;
-    border-bottom-left-radius: 100px;
-    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px 40px;
+    border-bottom-right-radius: 100px 40px;
 }
 
 .task:hover, .schedule:hover, .day:hover
@@ -328,7 +332,7 @@ textarea
 {
     transform: scale(3);
 }
-.fa-remove:hover {
+.fa-trash-alt:hover {
     color: red;
 }
 .fa-cog:hover {
