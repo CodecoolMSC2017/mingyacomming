@@ -73,7 +73,6 @@ function changeUserTab() {
   }
 
   getUserData();
-  switchToTasksPage();
 }
 
 
@@ -91,10 +90,11 @@ function loadUserData() {
   }
 
   visibilityOfCreateForms(userData.role == "admin" ? "none" : "block");
+  document.getElementById("user_selector").style.display = userData.role == "admin" ? "inline-block" : "none";
   hideUserData();
-  switchToSchedulesPage();
 
   const userDataE = document.getElementById("user_data");
+  userDataE.setAttribute("userId", userData.id);
 
   let roleE = document.createElement("label");
   roleE.className = "role";
@@ -143,6 +143,8 @@ function getUserData() {
 }
 
 function visibilityOfPages(visibility) {
+  document.getElementById("user_selector_page").style.display = visibility;
+  document.getElementById("schedule_searcher_page").style.display = visibility;
   document.getElementById("tasks_page").style.display = visibility;
   document.getElementById("schedules_page").style.display = visibility;
   document.getElementById("days_page").style.display = visibility;
@@ -207,6 +209,7 @@ function init() {
   document.getElementById("reg_button").addEventListener("click", register);
   document.getElementById("logout_button").addEventListener("click", logout);
 
+  document.getElementById("user_selector").addEventListener("click", () => { });
   document.getElementById("schedule_searcher").addEventListener("click", switchToSearcher);;
   document.getElementById("my_tasks").addEventListener("click", switchToTasksPage);
   document.getElementById("my_schedules").addEventListener("click", switchToSchedulesPage);
