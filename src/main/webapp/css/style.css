@@ -180,16 +180,13 @@ textarea
     display: none;
 }
 
-#tasks, #schedules, #days
+#tasks, #schedules, #days, #search_days
 {
     margin: 25px 100px 25px 100px;
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-}
-#tasks
-{
     grid-template-columns: 20% 20% 20% 20% 20%;
 }
+
 .task, .schedule, .day
 {
     background-color: var(--color_normal);
@@ -247,7 +244,7 @@ textarea
     border: 1px solid var(--color_light);
 }
 
-#slots
+#slots, #search_slots
 {
     margin: 25px 10px 25px 100px;
     float: left;
@@ -305,7 +302,7 @@ textarea
     cursor: pointer;
 }
 
-#tabs label
+tab
 {
     display: inline-block;
     border: 3px solid var(--color_normal);
@@ -315,20 +312,20 @@ textarea
     margin: 20px; padding: 5px;
     transition-duration: 300ms;
 }
-#tabs label:hover
+tab:hover
 {
     text-shadow: 0 0 5px black;
     transform: perspective(1000px) translateZ(300px);
     cursor: pointer;
 }
 /* Font icon colors */
-.fa
+.fa, .far
 {
     transform: scale(2);
     margin: auto 1em;
     transition-duration: 200ms;
 }
-.fa:hover
+.fa:hover, .far:hover
 {
     transform: scale(3);
 }
@@ -341,10 +338,10 @@ textarea
 .fa-check:hover {
     color: green;
 }
-.fa-circle-o:hover {
+.fa-circle:hover {
     color: cyan;
 }
-.fa-check-circle-o:hover {
+.fa-check-circle:hover {
     color: green;
 }
 
