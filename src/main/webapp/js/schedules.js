@@ -36,14 +36,20 @@ function clearScheduleFields() {
 }
 
 function getSchedules(userId) {
-  if (userId == undefined) {
-    userId = document.getElementById("user_data").getAttribute("userId");
-  }
+  userId = parseInt(userId);
 
-  new Request("GET", "/schedules",
-    null,
-    loadSchedules
-  );
+  if (isNaN(userId)) {
+    userId = document.getElementById("user_data").getAttribute("userId");
+    new Request("GET", `/schedules`,
+      null,
+      loadSchedules
+    );
+  } else {
+    new Request("GET", `/schedules?userId=${userId}`,
+      null,
+      loadSchedules
+    );
+  }
 }
 
 function loadSchedules() {
