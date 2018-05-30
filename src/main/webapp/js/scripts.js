@@ -8,6 +8,7 @@ function Request(type, url, data, after) {
 }
 
 
+
 /* _________________
   |                 |
   | Login method(s) |
@@ -21,15 +22,10 @@ function login() {
 }
 
 function getLogFields() {
-  let logData = {};
-
-  let usernameE = document.getElementById("log_username_field");
-  logData.username = usernameE.value;
-
-  let passwordE = document.getElementById("log_password_field");
-  logData.password = passwordE.value;
-
-  return logData;
+  return {
+    username: document.getElementById("log_username_field").value,
+    password: document.getElementById("log_password_field").value
+  };
 }
 
 
@@ -47,15 +43,10 @@ function register() {
 }
 
 function getRegFields() {
-  let regData = {};
-
-  let usernameE = document.getElementById("reg_username_field");
-  regData.username = usernameE.value;
-
-  let passwordE = document.getElementById("reg_password_field");
-  regData.password = passwordE.value;
-
-  return regData;
+  return {
+    username: document.getElementById("reg_username_field").value,
+    password: document.getElementById("reg_password_field").value
+  };
 }
 
 
@@ -99,17 +90,20 @@ function loadUserData() {
     return;
   }
 
+  visibilityOfCreateForms(userData.role == "admin" ? "none" : "block");
   hideUserData();
   switchToSchedulesPage();
 
   const userDataE = document.getElementById("user_data");
 
   let roleE = document.createElement("label");
+  roleE.className = "role";
   roleE.style.display = "block";
   roleE.textContent = userData.role;
   userDataE.appendChild(roleE);
 
   let usernameE = document.createElement("label");
+  usernameE.className = "username";
   usernameE.style.display = "block";
   usernameE.textContent = userData.name;
   userDataE.appendChild(usernameE);
@@ -143,6 +137,12 @@ function getUserData() {
     null,
     loadUserData
   );
+}
+
+function visibilityOfCreateForms(visibility) {
+  document.getElementById("task_form").style.display = visibility;
+  document.getElementById("schedule_form").style.display = visibility;
+  document.getElementById("day_form").style.display = visibility;
 }
 
 
