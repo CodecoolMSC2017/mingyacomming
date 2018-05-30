@@ -27,7 +27,7 @@ public class SchedulesServlet extends AbstractServlet{
             ScheduleDatabase sdb = new ScheduleDao(connection);
             ScheduleService ss = new SimpleScheduleService(sdb);
 
-            sendMessage(resp, 200, ss.getSchedules(user));
+            sendMessage(resp, 200, ss.getUserSchedules(user));
 
         } catch (SQLException e) {
             sendMessage(resp, 500, "error");
