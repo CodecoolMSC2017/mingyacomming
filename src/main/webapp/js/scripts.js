@@ -107,6 +107,13 @@ function loadUserData() {
   usernameE.style.display = "block";
   usernameE.textContent = userData.name;
   userDataE.appendChild(usernameE);
+
+  let coinsE = document.createElement("i");
+  coinsE.className = "fas fa-coins";
+  coinsE.style.color = "#ffd800"
+  coinsE.style.display = "block";
+  coinsE.textContent = " 0";
+  userDataE.appendChild(coinsE);
 }
 
 function hideUserData() {
