@@ -17,13 +17,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet("/schedules")
-public class SchedulesServlet extends AbstractServlet{
+public class SchedulesServlet extends AbstractServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = getUser(req);
+        User user;
+        String userId = req.getParameter("userId");
+        if (userId == null) {
+            user = getUser(req);
+        } else {
+            user = new User(Integer.parseInt(userId), "", "", "");
+        }
 
-        try(Connection connection = getConnection(req.getServletContext())) {
+        try (Connection connection = getConnection(req.getServletContext())) {
             ScheduleDatabase sdb = new ScheduleDao(connection);
             ScheduleService ss = new SimpleScheduleService(sdb);
 
@@ -42,7 +48,7 @@ public class SchedulesServlet extends AbstractServlet{
 
         String name = getJsonParameter("name", jsonString);
 
-        try(Connection connection = getConnection(req.getServletContext())) {
+        try (Connection connection = getConnection(req.getServletContext())) {
             ScheduleDatabase sdb = new ScheduleDao(connection);
 
             ScheduleService ss = new SimpleScheduleService(sdb);
