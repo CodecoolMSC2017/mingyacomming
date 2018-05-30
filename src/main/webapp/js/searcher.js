@@ -26,12 +26,13 @@ function getPublicSchedule() {
 function loadAllData() {
   currentSchedule = JSON.parse(this.responseText);
   loadInspectDays();
-  console.log(currentSchedule);
 }
 
 function loadInspectDays() {
   let searchContent = document.getElementById("search_days");
   searchContent.innerHTML = "";
+
+  document.getElementById("search_slots").innerHTML = "";
 
   currentSchedule.days.forEach(day => {
     searchContent.appendChild(new InspectDay(day.id, day.name).getElement());
