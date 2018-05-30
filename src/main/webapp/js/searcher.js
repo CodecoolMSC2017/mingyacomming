@@ -6,11 +6,8 @@
 var currentSchedule;
 
 function switchToSearcher() {
+  visibilityOfPages("none");
   document.getElementById("schedule_searcher_page").style.display = "block";
-  document.getElementById("tasks_page").style.display = "none";
-  document.getElementById("schedules_page").style.display = "none";
-  document.getElementById("days_page").style.display = "none";
-  document.getElementById("slots_page").style.display = "none";
 
   document.getElementById("current_schedule").style.display = "none";
   document.getElementById("current_day").style.display = "none";

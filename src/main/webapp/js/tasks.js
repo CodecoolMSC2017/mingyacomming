@@ -63,11 +63,8 @@ function loadTasks() {
 }
 
 function switchToTasksPage() {
-  document.getElementById("schedule_searcher_page").style.display = "none";
+  visibilityOfPages("none");
   document.getElementById("tasks_page").style.display = "block";
-  document.getElementById("schedules_page").style.display = "none";
-  document.getElementById("days_page").style.display = "none";
-  document.getElementById("slots_page").style.display = "none";
 
   document.getElementById("current_schedule").style.display = "none";
   document.getElementById("current_day").style.display = "none";

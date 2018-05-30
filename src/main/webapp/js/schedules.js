@@ -35,7 +35,11 @@ function clearScheduleFields() {
   nameE.value = "";
 }
 
-function getSchedules() {
+function getSchedules(userId) {
+  if (userId == undefined) {
+    userId = document.getElementById("user_data").getAttribute("userId");
+  }
+
   new Request("GET", "/schedules",
     null,
     loadSchedules
@@ -60,17 +64,14 @@ function loadSchedules() {
   clearScheduleFields();
 }
 
-function switchToSchedulesPage() {
-  document.getElementById("schedule_searcher_page").style.display = "none";
-  document.getElementById("tasks_page").style.display = "none";
+function switchToSchedulesPage(userId) {
+  visibilityOfPages("none");
   document.getElementById("schedules_page").style.display = "block";
-  document.getElementById("days_page").style.display = "none";
-  document.getElementById("slots_page").style.display = "none";
 
   document.getElementById("current_schedule").style.display = "none";
   document.getElementById("current_day").style.display = "none";
 
-  getSchedules(loadSchedules);
+  getSchedules(userId);
 }
 
 function Schedule(id, name, isPublic) {
