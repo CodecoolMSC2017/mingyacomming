@@ -89,7 +89,7 @@ function loadUserData() {
     return;
   }
 
-  visibilityOfCreateForms(userData.role == "admin" ? "none" : "block");
+  //visibilityOfCreateForms(userData.role == "admin" ? "none" : "block");
   document.getElementById("user_selector").style.display = userData.role == "admin" ? "inline-block" : "none";
   hideUserData();
 
