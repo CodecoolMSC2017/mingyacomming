@@ -121,15 +121,11 @@ function deleteUserData() {
   document.getElementById("buttons").style.display = "block";
   document.getElementById("login_form").style.display = "block";
   document.getElementById("user_data").style.display = "none";
+  document.getElementById("user_data").innerHTML = "";
   document.getElementById("user_profile_buttons").style.display = "none";
   document.getElementById("tabs").style.display = "none";
 
-  document.getElementById("tasks_page").style.display = "none";
-  document.getElementById("schedules_page").style.display = "none";
-  document.getElementById("days_page").style.display = "none";
-  document.getElementById("slots_page").style.display = "none";
-
-  document.getElementById("user_data").innerHTML = "";
+  visibilityOfPages("none");
 }
 
 function getUserData() {
@@ -137,6 +133,13 @@ function getUserData() {
     null,
     loadUserData
   );
+}
+
+function visibilityOfPages(visibility) {
+  document.getElementById("tasks_page").style.display = visibility;
+  document.getElementById("schedules_page").style.display = visibility;
+  document.getElementById("days_page").style.display = visibility;
+  document.getElementById("slots_page").style.display = visibility;
 }
 
 function visibilityOfCreateForms(visibility) {
