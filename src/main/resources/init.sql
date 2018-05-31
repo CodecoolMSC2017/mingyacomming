@@ -1,3 +1,6 @@
+--
+-- T a b l e s
+--
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users
 (
@@ -60,7 +63,41 @@ Create Table results
     Foreign Key(task_id) References tasks(id)
 );
 
+DROP TABLE IF EXISTS inventories CASCADE;
+CREATE TABLE inventories
+(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
 
+
+
+--
+-- F u n c t i o n s
+--
+CREATE OR REPLACE FUNCTION createInventory() RETURNS TRIGGER AS '
+BEGIN
+    INSERT INTO inventories (user_id) VALUES (NEW.id);
+    RETURN null;
+END;
+' LANGUAGE plpgsql;
+
+
+
+--
+-- T r i g g e r s
+--
+CREATE TRIGGER onRegister
+    AFTER INSERT ON users
+        FOR EACH ROW
+            EXECUTE PROCEDURE createInventory();
+
+
+
+--
+-- D u m m y   d a t a
+--
 INSERT INTO users (name, password, role) VALUES
 	('a', 'a', 'admin'),
     ('u', 'u', 'user'),

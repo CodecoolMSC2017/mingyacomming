@@ -37,12 +37,14 @@ public class GuestServlet extends AbstractServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Guest session started");
         try {
             String uri = req.getRequestURI();
             int idx = uri.lastIndexOf('/');
             int id = Integer.valueOf(uri.substring(idx + 1));
-
+            logger.debug("Guest uri {}", uri);
             try(Connection connection = getConnection(req.getServletContext())) {
+                logger.info("Guest connection in succesfully");
                 ScheduleDatabase db = new ScheduleDao(connection);
                 DayDatabase ddb = new DayDao(connection);
                 SlotDatabase sdb = new SlotDao(connection);
@@ -66,11 +68,13 @@ public class GuestServlet extends AbstractServlet {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                logger.error("Guest connection error", e);
             }
 
         }
         catch (NumberFormatException o) {
             sendMessage(resp, 400, o.getMessage());
+            logger.error("Guest get uri eror", o);
         }
 
     }

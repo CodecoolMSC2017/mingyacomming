@@ -30,21 +30,25 @@ public class SingleDayServlet extends AbstractServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        logger.trace("Get Single day started");
         try {
             int id = getId(req);
-
+            logger.debug("day  {}", id);
             try(Connection connection = getConnection(req.getServletContext())) {
                 DayDatabase ddb = new DayDao(connection);
 
                 DayService ds = new SimpleDayService(ddb);
 
                 sendMessage(resp, 200, ds.getScheduleDays(id));
-
+                logger.info("Single day connection succesfully");
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");
+                logger.error("Single day connection error", e);
             }
             } catch (NumberFormatException e) {
             sendMessage(resp, 400, e.getMessage());
+            logger.error("Single day get id error", e);
         }
     }
 
