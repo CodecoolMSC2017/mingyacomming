@@ -12,7 +12,7 @@ function createTask() {
 }
 
 function deleteTask(taskId) {
-  new Reguest("DELETE", `/tasks/${taskID}`,
+  new Request("DELETE", `/tasks/${taskId}`,
     null,
     getTasks
   );

@@ -26,8 +26,10 @@ public class DaysServlet extends AbstractServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        logger.trace("Day choose");
         String id = req.getParameter("scheduleId");
+
+        logger.debug("schedule id {}", id);
 
         try {
             int scheduleId = Integer.parseInt(id);
@@ -39,12 +41,14 @@ public class DaysServlet extends AbstractServlet {
                 int newid = Integer.parseInt(id);
 
                 sendMessage(resp, 200, ds.getScheduleDays(newid));
-
+                logger.info("Get days succesfully");
             } catch (SQLException e) {
                 sendMessage(resp, 500, "sqlserver is down");
+                logger.error("Error in connection", e);
             }
         } catch (NumberFormatException e) {
             sendMessage(resp, 400, "error in scheduleID");
+            logger.error("Error in get schedulr id", e);
         }
     }
 
