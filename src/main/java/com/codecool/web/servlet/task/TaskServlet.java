@@ -21,7 +21,13 @@ import java.sql.SQLException;
 public class TaskServlet extends AbstractServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = getUser(req);
+        User user;
+        String userId = req.getParameter("userId");
+        if (userId == null) {
+            user = getUser(req);
+        } else {
+            user = new User(Integer.parseInt(userId), "", "", "");
+        }
 
         try(Connection connection = getConnection(req.getServletContext())) {
             TaskDatabase tdb = new TaskDao(connection);
