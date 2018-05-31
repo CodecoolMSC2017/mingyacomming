@@ -25,6 +25,7 @@ public class SchedulesServlet extends AbstractServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Schedule started");
         User user;
         String userId = req.getParameter("userId");
         if (userId == null) {
@@ -32,26 +33,28 @@ public class SchedulesServlet extends AbstractServlet {
         } else {
             user = new User(Integer.parseInt(userId), "", "", "");
         }
-
+        logger.debug("Schedule user {}", user.getName());
         try (Connection connection = getConnection(req.getServletContext())) {
             ScheduleDatabase sdb = new ScheduleDao(connection);
             ScheduleService ss = new SimpleScheduleService(sdb);
 
             sendMessage(resp, 200, ss.getUserSchedules(user));
-
+            logger.info("Schedule connection succesfully");
         } catch (SQLException e) {
             sendMessage(resp, 500, "error");
+            logger.error("Schedule connection error", e);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Schedule started");
         User user = getUser(req);
 
         String jsonString = req.getReader().readLine();
 
         String name = getJsonParameter("name", jsonString);
-
+        logger.debug("Schedule user nema {}",name);
         try (Connection connection = getConnection(req.getServletContext())) {
             ScheduleDatabase sdb = new ScheduleDao(connection);
 
@@ -60,9 +63,10 @@ public class SchedulesServlet extends AbstractServlet {
             String message = "schedules/" + ss.addSchedule(new Schedule(name, user.getId(), false));
 
             sendMessage(resp, HttpServletResponse.SC_OK, message);
-
+            logger.info("Schedule connection succesfully");
         } catch (SQLException e) {
             sendMessage(resp, 400, "something went wrong");
+            logger.error("Schedule connection error", e);
         }
 
     }

@@ -30,31 +30,35 @@ public class SingleScheduleServlet extends AbstractServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Single Schedule started");
         try {
             int id = getId(req);
-
+            logger.debug("Single Schedule id {}", id);
             try(Connection connection = getConnection(req.getServletContext())) {
                 ScheduleDatabase sd = new ScheduleDao(connection);
 
                 ScheduleService ss = new SimpleScheduleService(sd);
 
                 sendMessage(resp, 200, ss.getSchedule(id));
-
+                logger.info("Single Schedule connection succesfully");
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");
+                logger.error("Single Schedule conection error", e);
             }
         }
 
         catch (NumberFormatException e) {
             sendMessage(resp, 400, e.getMessage());
+            logger.error("Single Schedule id error", e);
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Single Schedule started");
         try {
             int id = getId(req);
-
+            logger.debug("Single Schedule id {}", id);
             try(Connection connection = getConnection(req.getServletContext())) {
                 ScheduleDatabase sd = new ScheduleDao(connection);
 
@@ -63,7 +67,7 @@ public class SingleScheduleServlet extends AbstractServlet{
                 ss.removeSchedule(id);
 
                 sendMessage(resp, 200, "deleted");
-
+                logger.info("Single Schedule connection succesfully");
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");
             }
@@ -95,6 +99,7 @@ public class SingleScheduleServlet extends AbstractServlet{
 
         } catch (SQLException e) {
             sendMessage(resp, 400, "something went wrong");
+            logger.error("Single Schedule conection error", e);
         }
     }
 }
