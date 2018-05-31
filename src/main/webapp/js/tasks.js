@@ -157,7 +157,7 @@ function sendEditTask(taskId) {
     task.description = editDescriptionEl.placeholder;
   }
 
-  new Reguest("PUT", `/tasks/${taskId}`,
+  new Request("PUT", `/tasks/${taskId}`,
     JSON.stringify(task),
     getTasks
   );
