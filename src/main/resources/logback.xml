@@ -10,7 +10,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>log-file.log</file>
+        <file>/home/prokaj/Documents/develop/JavaScript/mingyacomming/log-file.log</file>
         <append>true</append>
 
         <!-- set immediateFlush to false for much higher logging throughput -->
@@ -23,7 +23,7 @@
     </appender>
 
     <appender name="ROLLED_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>rolled-log-file.log</file>
+        <file>/home/prokaj/Documents/develop/JavaScript/mingyacomming/rolled-log-file.log</file>
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
         </encoder>

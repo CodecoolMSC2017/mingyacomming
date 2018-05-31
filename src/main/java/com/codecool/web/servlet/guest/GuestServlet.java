@@ -17,6 +17,8 @@ import com.codecool.web.service.impl.SimpleDayService;
 import com.codecool.web.service.impl.SimpleScheduleService;
 import com.codecool.web.service.impl.SimpleSlotService;
 import com.codecool.web.servlet.AbstractServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,6 +32,9 @@ import java.util.List;
 
 @WebServlet("/guest/*")
 public class GuestServlet extends AbstractServlet {
+
+    private static final Logger logger = LoggerFactory.getLogger(GuestServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
