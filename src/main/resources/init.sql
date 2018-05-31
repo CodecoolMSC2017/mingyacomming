@@ -70,18 +70,31 @@ INSERT INTO users (name, password, role) VALUES
 
 INSERT INTO tasks (name, description, user_id) VALUES
     ('kisfrocs', 'alap dolog', 1),
-    ('nagyfrocs', 'csak ugy pls ne szolj be', 1);
+    ('nagyfrocs', 'csak ugy pls ne szolj be', 1),
+    ('March in Place','Bring alternate knees up as high as you are comfortable in order to march', 3),
+    ('Butt Kicker Rows', 'Bend at the knee to pull one foot up to your glutes as if you were trying to kick yourself in the butt, while pulling your arms in towards your chest', 3),
+    ('Torso Twist + Side Reach + Arms & Knee Up', 'Twist at the torso while opening up your arms for a chest stretch. Come back to your starting position and lift arms overhead whil raising one knee', 3),
+    ('Arm Swing Steps', 'Step side to side, arms out & back at small increments, moving arms up until overhead & back down (1 arm movement per step)', 3),
+    ('Bow & Arrow Twists', ' Extend arms straight out to sides. Twist at the torso to cross one arm over to the other, then pull back like you would if you were using a bow & arrow. Reach back to that hand & return to the center to repeat on opposite side', 3);
 
 INSERT INTO schedules (name, user_id, is_public) VALUES
-    ('alap', '1', false),
-    ('hard', '1', false);
+    ('alap', 1, false),
+    ('hard', 1, false),
+    ('Low Impact Beginner Cardio Workout', 3, true);
 
 INSERT INTO days (name, schedule_id) VALUES
     ('hetfu', '1'),
-    ('ketto', '1');
+    ('ketto', '1'),
+    ('First Day', 3),
+    ('Second Day', 3);
 
 INSERT INTO slots (time, day_id, task_id, is_checked ) VALUES
     (6, 1, 1, false),
-    (7, 1, 2, false);
+    (7, 1, 2, false),
+    (9, 3, 3, false),
+    (10, 3, 4, false),
+    (9, 4, 5, false),
+    (10, 4, 6, false),
+    (11, 4, 7, false);
 
 
