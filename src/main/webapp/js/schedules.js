@@ -142,6 +142,11 @@ function editSchedule(scheduleId) {
   inputNameEl.setAttribute("size", "10");
   inputNameEl.setAttribute("id", "editElement");
 
+  
+  const editE = document.createElement("i");
+  editE.className = "fa fa-check";
+  formEl.appendChild(editE);
+  
   const checkPublicEl = document.createElement("input");
   checkPublicEl.setAttribute("type", "checkbox");
   checkPublicEl.setAttribute("id", "checkpublic");
@@ -152,9 +157,9 @@ function editSchedule(scheduleId) {
 
   formEl.appendChild(checkPublicEl);
 
-  const editE = document.createElement("i");
-  editE.className = "fa fa-check";
-  formEl.appendChild(editE);
+  const labelE = document.createElement("label");
+  labelE.setAttribute("for", "checkpublic");
+  formEl.appendChild(labelE);
 
   editE.addEventListener("click", () => sendEditSchedule(scheduleId));
 
