@@ -6,6 +6,8 @@ import com.codecool.web.model.Day;
 import com.codecool.web.service.DayService;
 import com.codecool.web.service.impl.SimpleDayService;
 import com.codecool.web.servlet.AbstractServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +18,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 
+
 @WebServlet("/days")
 public class DaysServlet extends AbstractServlet {
+
+    private static final Logger logger = LoggerFactory.getLogger(DaysServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

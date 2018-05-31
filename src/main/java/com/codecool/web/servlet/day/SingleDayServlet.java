@@ -6,6 +6,8 @@ import com.codecool.web.dao.database.impl.DayDao;
 import com.codecool.web.service.DayService;
 import com.codecool.web.service.impl.SimpleDayService;
 import com.codecool.web.servlet.AbstractServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,8 @@ import java.sql.SQLException;
 
 @WebServlet("/days/*")
 public class SingleDayServlet extends AbstractServlet{
+
+    private static final Logger logger = LoggerFactory.getLogger(SingleDayServlet.class);
 
     private static int getId(HttpServletRequest req) {
         String uri = req.getRequestURI();
