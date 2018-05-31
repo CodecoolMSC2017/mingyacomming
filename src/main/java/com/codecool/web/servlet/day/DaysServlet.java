@@ -29,6 +29,8 @@ public class DaysServlet extends AbstractServlet {
 
         String id = req.getParameter("scheduleId");
 
+        logger.debug("schedule id {}", id);
+
         try {
             int scheduleId = Integer.parseInt(id);
 
