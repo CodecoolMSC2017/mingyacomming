@@ -6,6 +6,8 @@ import com.codecool.web.model.Slot;
 import com.codecool.web.service.SlotService;
 import com.codecool.web.service.impl.SimpleSlotService;
 import com.codecool.web.servlet.AbstractServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,8 @@ import java.sql.SQLException;
 @WebServlet("/slots/*")
 public class SingleSlotServlet extends AbstractServlet{
 
+    private static final Logger logger = LoggerFactory.getLogger(SingleSlotServlet.class);
+
     private static int getId(HttpServletRequest req) {
         String uri = req.getRequestURI();
         int idx = uri.lastIndexOf('/');
@@ -27,6 +31,7 @@ public class SingleSlotServlet extends AbstractServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Started to get slot");
         try {
             int id = getId(req);
 
@@ -36,19 +41,23 @@ public class SingleSlotServlet extends AbstractServlet{
                 SlotService ts = new SimpleSlotService(sdb);
 
                 sendMessage(resp, 200, ts.getDaySlots(id));
+                logger.info("Slot got succesfully");
 
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");
+                logger.error("Error in getting slot", e);
             }
         }
 
         catch (NumberFormatException e) {
             sendMessage(resp, 400, e.getMessage());
+            logger.error("Error in getting slot", e);
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Started to delete slot");
         try {
             int id = getId(req);
 
@@ -60,18 +69,22 @@ public class SingleSlotServlet extends AbstractServlet{
                 slotService.removeSlot(slotService.getSlot(id));
 
                 sendMessage(resp, 200, "deleted");
+                logger.info("Slot deleted succesfully");
 
             } catch (SQLException e) {
                 sendMessage(resp, 400, "bad id");
+                logger.error("Error in deleting slot", e);
             }
         }
         catch (NumberFormatException e) {
             sendMessage(resp, 400, e.getMessage());
+            logger.error("Error in deleting slot", e);
         }
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.trace("Started editing slot");
         String jsonString = req.getReader().readLine();
         int id = getId(req);
 
@@ -92,10 +105,12 @@ public class SingleSlotServlet extends AbstractServlet{
             slotService.updateSlot(slot);
 
             sendMessage(resp, 200, "Slot updated succesfully");
+            logger.info("Slot edited succesfully");
 
         } catch (SQLException e) {
             e.printStackTrace();
             sendMessage(resp, 400, "something went wrong");
+            logger.error("Error in editing slot", e);
         }
     }
 }
