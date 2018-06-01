@@ -7,21 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
-    <script src="js/slots.js"> </script>
-    <script src="js/days.js"> </script>
+    <script src="js/slots.js">     </script>
+    <script src="js/days.js">      </script>
     <script src="js/schedules.js"> </script>
-    <script src="js/tasks.js"> </script>
-    <script src="js/searcher.js"> </script>
-    <script src="js/users.js"> </script>
-    <script src="js/scripts.js"> </script>
-    <script src="js/zombies.js"> </script>
+    <script src="js/tasks.js">     </script>
+    <script src="js/searcher.js">  </script>
+    <script src="js/users.js">     </script>
+    <script src="js/scripts.js">   </script>
+    <script src="js/zombies.js">   </script>
+    <script src="js/ee.js">        </script>
     <title> BrainStorm </title>
 </head>
 
 <body>
+    <div id="spaceship"> </div>
     <div id="menu_bar">
         <h1>
-            <i class="fas fa-skull"> </i> BrainStorm </h1>
+            <i class="fas fa-skull" id="ee"> </i> BrainStorm </h1>
         <div id="user_tab">
             <div id="user_profile">
                 <div id="user_data"> </div>
