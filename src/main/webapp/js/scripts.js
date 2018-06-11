@@ -197,12 +197,6 @@ function addMessage(status, content) {
 }
 
 
-data = {
-  time: 0,
-  taskId: 0,
-  dayId: 0
-}
-
 
 /* _________
   |         |
