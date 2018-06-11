@@ -40,5 +40,10 @@ public class SimpleDayService implements DayService{
         return db.getScheduleDays(id);
     }
 
+    @Override
+    public void updateDay(Day day) throws SQLException {
+        db.updateDays(day);
+    }
+
 
 }

@@ -102,7 +102,7 @@ function sendEditDay(dayId) {
     day.name = editNameEl.placeholder;
   }
 
-  new Request("PUT", `/day/${dayId}`,
+  new Request("PUT", `/days/${dayId}`,
     JSON.stringify(day),
     getDays
   );

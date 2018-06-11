@@ -16,4 +16,6 @@ public interface DayService {
     List<Day> getDays() throws SQLException;
 
     List<Day> getScheduleDays(int id) throws SQLException;
+
+    void updateDay(Day day) throws SQLException;
 }
