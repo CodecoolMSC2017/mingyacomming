@@ -7,6 +7,14 @@ function Request(type, url, data, after) {
   xhr.send(data);
 }
 
+function GetElement(selector) {
+  return document.querySelector(selector);
+}
+
+function CreateElement(elementName) {
+  return document.createElement(elementName);
+}
+
 
 
 /* _________________
@@ -23,8 +31,8 @@ function login() {
 
 function getLogFields() {
   return {
-    username: document.getElementById("log_username_field").value,
-    password: document.getElementById("log_password_field").value
+    username: GetElement("#log_username_field").value,
+    password: GetElement("#log_password_field").value
   };
 }
 
@@ -44,8 +52,8 @@ function register() {
 
 function getRegFields() {
   return {
-    username: document.getElementById("reg_username_field").value,
-    password: document.getElementById("reg_password_field").value
+    username: GetElement("#reg_username_field").value,
+    password: GetElement("#reg_password_field").value
   };
 }
 
@@ -90,25 +98,25 @@ function loadUserData() {
   }
 
   //visibilityOfCreateForms(userData.role == "admin" ? "none" : "block");
-  document.getElementById("user_selector").style.display = userData.role == "admin" ? "inline-block" : "none";
+  GetElement("#user_selector").style.display = userData.role == "admin" ? "inline-block" : "none";
   hideUserData();
 
-  const userDataE = document.getElementById("user_data");
+  const userDataE = GetElement("#user_data");
   userDataE.setAttribute("userId", userData.id);
 
-  let roleE = document.createElement("label");
+  let roleE = CreateElement("label");
   roleE.className = "role";
   roleE.style.display = "block";
   roleE.textContent = userData.role;
   userDataE.appendChild(roleE);
 
-  let usernameE = document.createElement("label");
+  let usernameE = CreateElement("label");
   usernameE.className = "username";
   usernameE.style.display = "block";
   usernameE.textContent = userData.name;
   userDataE.appendChild(usernameE);
 
-  let coinsE = document.createElement("i");
+  let coinsE = CreateElement("i");
   coinsE.className = "fas fa-coins";
   coinsE.style.color = "#ffd800"
   coinsE.style.display = "block";
@@ -117,20 +125,20 @@ function loadUserData() {
 }
 
 function hideUserData() {
-  document.getElementById("buttons").style.display = "none";
-  document.getElementById("login_form").style.display = "none";
-  document.getElementById("user_data").style.display = "block";
-  document.getElementById("user_profile_buttons").style.display = "block";
-  document.getElementById("tabs").style.display = "block";
+  GetElement("#buttons").style.display = "none";
+  GetElement("#login_form").style.display = "none";
+  GetElement("#user_data").style.display = "block";
+  GetElement("#user_profile_buttons").style.display = "block";
+  GetElement("#tabs").style.display = "block";
 }
 
 function deleteUserData() {
-  document.getElementById("buttons").style.display = "block";
-  document.getElementById("login_form").style.display = "block";
-  document.getElementById("user_data").style.display = "none";
-  document.getElementById("user_data").innerHTML = "";
-  document.getElementById("user_profile_buttons").style.display = "none";
-  document.getElementById("tabs").style.display = "none";
+  GetElement("#buttons").style.display = "block";
+  GetElement("#login_form").style.display = "block";
+  GetElement("#user_data").style.display = "none";
+  GetElement("#user_data").innerHTML = "";
+  GetElement("#user_profile_buttons").style.display = "none";
+  GetElement("#tabs").style.display = "none";
 
   visibilityOfPages("none");
 }
@@ -143,18 +151,18 @@ function getUserData() {
 }
 
 function visibilityOfPages(visibility) {
-  document.getElementById("user_selector_page").style.display = visibility;
-  document.getElementById("schedule_searcher_page").style.display = visibility;
-  document.getElementById("tasks_page").style.display = visibility;
-  document.getElementById("schedules_page").style.display = visibility;
-  document.getElementById("days_page").style.display = visibility;
-  document.getElementById("slots_page").style.display = visibility;
+  GetElement("#user_selector_page").style.display = visibility;
+  GetElement("#schedule_searcher_page").style.display = visibility;
+  GetElement("#tasks_page").style.display = visibility;
+  GetElement("#schedules_page").style.display = visibility;
+  GetElement("#days_page").style.display = visibility;
+  GetElement("#slots_page").style.display = visibility;
 }
 
 function visibilityOfCreateForms(visibility) {
-  document.getElementById("task_form").style.display = visibility;
-  document.getElementById("schedule_form").style.display = visibility;
-  document.getElementById("day_form").style.display = visibility;
+  GetElement("#task_form").style.display = visibility;
+  GetElement("#schedule_form").style.display = visibility;
+  GetElement("#day_form").style.display = visibility;
 }
 
 
@@ -170,7 +178,7 @@ function checkResp() {
 }
 
 function addMessage(status, content) {
-  let messageE = document.createElement("div");
+  let messageE = CreateElement("div");
 
   if (status >= 200 && status < 300) {
     messageE.className = "message";
@@ -182,7 +190,7 @@ function addMessage(status, content) {
 
   messageE.textContent = `${status} : ${content}`;
 
-  let messagesE = document.getElementById("messages");
+  let messagesE = GetElement("#messages");
   messagesE.appendChild(messageE);
 
   setTimeout(messageE.remove(), 5000);
@@ -205,32 +213,32 @@ function init() {
   getUserData();
 
   // Setup event listeners
-  document.getElementById("log_button").addEventListener("click", login);
-  document.getElementById("reg_button").addEventListener("click", register);
-  document.getElementById("logout_button").addEventListener("click", logout);
+  GetElement("#log_button").addEventListener("click", login);
+  GetElement("#reg_button").addEventListener("click", register);
+  GetElement("#logout_button").addEventListener("click", logout);
 
-  document.getElementById("user_selector").addEventListener("click", () => { });
-  document.getElementById("schedule_searcher").addEventListener("click", switchToSearcher);;
-  document.getElementById("my_tasks").addEventListener("click", switchToTasksPage);
-  document.getElementById("my_schedules").addEventListener("click", switchToSchedulesPage);
-  document.getElementById("current_schedule").addEventListener("click", () => {
-    switchToDaysPage(document.getElementById("current_schedule").getAttribute("value"));
+  GetElement("#user_selector").addEventListener("click", () => { });
+  GetElement("#schedule_searcher").addEventListener("click", switchToSearcher);;
+  GetElement("#my_tasks").addEventListener("click", switchToTasksPage);
+  GetElement("#my_schedules").addEventListener("click", switchToSchedulesPage);
+  GetElement("#current_schedule").addEventListener("click", () => {
+    switchToDaysPage(GetElement("#current_schedule").getAttribute("value"));
   });
-  document.getElementById("current_day").addEventListener("click", () => {
-    switchToSlotsPage(document.getElementById("current_day").getAttribute("value"));
-  });
-
-  document.getElementById("log_tab").addEventListener("click", () => {
-    document.getElementById("login_form").style.display = "block";
-    document.getElementById("register_form").style.display = "none";
-  });
-  document.getElementById("reg_tab").addEventListener("click", () => {
-    document.getElementById("register_form").style.display = "block";
-    document.getElementById("login_form").style.display = "none";
+  GetElement("#current_day").addEventListener("click", () => {
+    switchToSlotsPage(GetElement("#current_day").getAttribute("value"));
   });
 
-  document.getElementById("game_button").addEventListener("click", () => {
-    let content = document.getElementById("content");
+  GetElement("#log_tab").addEventListener("click", () => {
+    GetElement("#login_form").style.display = "block";
+    GetElement("#register_form").style.display = "none";
+  });
+  GetElement("#reg_tab").addEventListener("click", () => {
+    GetElement("#register_form").style.display = "block";
+    GetElement("#login_form").style.display = "none";
+  });
+
+  GetElement("#game_button").addEventListener("click", () => {
+    let content = GetElement("#content");
     if (content.style.display == "none") {
       content.style.display = "block";
     } else {

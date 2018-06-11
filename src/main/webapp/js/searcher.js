@@ -7,14 +7,14 @@ var currentSchedule;
 
 function switchToSearcher() {
   visibilityOfPages("none");
-  document.getElementById("schedule_searcher_page").style.display = "block";
+  GetElement("#schedule_searcher_page").style.display = "block";
 
-  document.getElementById("current_schedule").style.display = "none";
-  document.getElementById("current_day").style.display = "none";
+  GetElement("#current_schedule").style.display = "none";
+  GetElement("#current_day").style.display = "none";
 }
 
 function getPublicSchedule() {
-  const scheduleId = document.getElementById("search_schedule_id_field").value;
+  const scheduleId = GetElement("#search_schedule_id_field").value;
   new Request("GET", `/guest/${scheduleId}`,
     null,
     loadAllData);
@@ -26,10 +26,10 @@ function loadAllData() {
 }
 
 function loadInspectDays() {
-  let searchContent = document.getElementById("search_days");
+  let searchContent = GetElement("#search_days");
   searchContent.innerHTML = "";
 
-  document.getElementById("search_slots").innerHTML = "";
+  GetElement("#search_slots").innerHTML = "";
 
   currentSchedule.days.forEach(day => {
     searchContent.appendChild(new InspectDay(day.id, day.name).getElement());
@@ -39,10 +39,10 @@ function loadInspectDays() {
 function loadInspectSlots(name, dayId) {
   let slotTasksData = currentSchedule.slotTasks.filter(slotTask => slotTask.slot.day_id == dayId);
   
-  let slotsE = document.getElementById("search_slots");
+  let slotsE = GetElement("#search_slots");
   slotsE.innerHTML = "";
 
-  let headerE = document.createElement("h1");
+  let headerE = CreateElement("h1");
   headerE.textContent = name;
   slotsE.appendChild(headerE);
 
@@ -72,11 +72,11 @@ function InspectDay(id, name) {
   this.name = name;
 
   this.getElement = function () {
-    let dayE = document.createElement("div");
+    let dayE = CreateElement("div");
     dayE.setAttribute("id", this.id);
     dayE.className = "day";
 
-    let nameE = document.createElement("h2");
+    let nameE = CreateElement("h2");
     nameE.textContent = this.name;
     dayE.appendChild(nameE);
 
@@ -96,12 +96,12 @@ function InspectSlot(id, time, is_checked, task_id, task_name, task_description)
   this.task = new Task(task_id, task_name, task_description);
 
   this.getElement = function () {
-    let slotE = document.createElement("div");
+    let slotE = CreateElement("div");
     slotE.className = "slot";
     slotE.setAttribute("time", this.time);
     slotE.setAttribute("data", ` - ${this.task.name} - ${this.task.description}`);
 
-    let checkE = document.createElement("i");
+    let checkE = CreateElement("i");
     checkE.className = this.is_checked ? "far fa-check-circle" : "far fa-circle";
     checkE.style.marginLeft = "5px";
     slotE.appendChild(checkE);
@@ -111,7 +111,7 @@ function InspectSlot(id, time, is_checked, task_id, task_name, task_description)
 }
 
 function init() {
-  document.getElementById("search_schedule_button").addEventListener("click", getPublicSchedule);
+  GetElement("#search_schedule_button").addEventListener("click", getPublicSchedule);
 }
 
 document.addEventListener("DOMContentLoaded", init);

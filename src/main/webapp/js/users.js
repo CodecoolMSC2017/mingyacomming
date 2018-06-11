@@ -1,6 +1,6 @@
 function switchToUsersPage() {
   visibilityOfPages("none");
-  document.getElementById("user_selector_page").style.display = "block";
+  GetElement("#user_selector_page").style.display = "block";
 
   new Request("GET", "/users",
     null,
@@ -10,16 +10,16 @@ function switchToUsersPage() {
 
 function loadUsers() {
   const users = JSON.parse(this.responseText);
-  const usersE = document.getElementById("users");
+  const usersE = GetElement("#users");
   usersE.innerHTML = "";
 
-  const tempE = document.createElement("option");
+  const tempE = CreateElement("option");
   tempE.value = "temp";
   tempE.textContent = "Select user...";
   usersE.appendChild(tempE);
 
   users.forEach(user => {
-    const userE = document.createElement("option");
+    const userE = CreateElement("option");
     userE.value = user.id;
     userE.textContent = user.name;
 
@@ -28,8 +28,8 @@ function loadUsers() {
 }
 
 function init() {
-  document.getElementById("user_selector").addEventListener("click", switchToUsersPage);
-  document.getElementById("users").addEventListener("change", event => {
+  GetElement("#user_selector").addEventListener("click", switchToUsersPage);
+  GetElement("#users").addEventListener("change", event => {
     if (event.target.value != "temp") {
       switchToSchedulesPage(event.target.value);
     }

@@ -1,7 +1,7 @@
 function createSlot(slot_time) {
   let slotData = {
     time: slot_time,
-    dayId: document.getElementById("current_day").getAttribute("value"),
+    dayId: GetElement("#current_day").getAttribute("value"),
     taskId: DragTask.currentlyDraggedTask.id,
   };
 
@@ -33,7 +33,7 @@ function changeSlot(time, slotId) {
 }
 
 function getSlots() {
-  const dayId = document.getElementById("current_day").getAttribute("value");
+  const dayId = GetElement("#current_day").getAttribute("value");
 
   new Request("GET", `/slots?dayId=${dayId}`,
     null,
@@ -45,7 +45,7 @@ function checkSlot(slot) {
   const newData = {
     time: slot.time,
     taskId: slot.task.id,
-    dayId: document.getElementById("current_day").getAttribute("value"),
+    dayId: GetElement("#current_day").getAttribute("value"),
     isChecked: !slot.is_checked
   };
 
@@ -58,10 +58,10 @@ function checkSlot(slot) {
 function loadSlots() {
   const slotTasksData = JSON.parse(this.responseText);
 
-  let slotsE = document.getElementById("slots");
+  let slotsE = GetElement("#slots");
   slotsE.innerHTML = "";
 
-  let headerE = document.createElement("h1");
+  let headerE = CreateElement("h1");
   headerE.textContent = "Tasks";
   slotsE.appendChild(headerE);
 
@@ -99,9 +99,9 @@ function getAvailableTasks() {
 function loadAvailableTasks() {
   const tasksData = JSON.parse(this.responseText);
 
-  let tasksE = document.getElementById("available_tasks");
+  let tasksE = GetElement("#available_tasks");
   tasksE.innerHTML = "";
-  let headerE = document.createElement("h1");
+  let headerE = CreateElement("h1");
   headerE.textContent = "Available Tasks";
   tasksE.appendChild(headerE);
 
@@ -116,9 +116,9 @@ function loadAvailableTasks() {
 
 function switchToSlotsPage(dayId) {
   visibilityOfPages("none");
-  document.getElementById("slots_page").style.display = "block";
+  GetElement("#slots_page").style.display = "block";
 
-  document.getElementById("current_day").style.display = "inline-block";
+  GetElement("#current_day").style.display = "inline-block";
 
   getSlots();
 }
@@ -131,18 +131,18 @@ function Slot(id, time, is_checked, task_id, task_name, task_description) {
   this.task = new Task(task_id, task_name, task_description);
 
   this.getElement = function () {
-    let slotE = document.createElement("div");
+    let slotE = CreateElement("div");
     slotE.className = "slot";
     slotE.setAttribute("time", this.time);
     slotE.setAttribute("data", ` - ${this.task.name} - ${this.task.description}`);
 
-    let deleteE = document.createElement("i");
+    let deleteE = CreateElement("i");
     deleteE.className = "fa fa-trash-alt";
     deleteE.style.marginLeft = "5px";
     deleteE.addEventListener("click", () => deleteSlot(this.id));
     slotE.appendChild(deleteE);
 
-    let checkE = document.createElement("i");
+    let checkE = CreateElement("i");
     checkE.className = this.is_checked ? "far fa-check-circle" : "far fa-circle";
     checkE.style.marginLeft = "5px";
     checkE.addEventListener("click", () => checkSlot(this));
@@ -185,7 +185,7 @@ function PlaceHolder(time) {
   this.time = time;
 
   this.getElement = function () {
-    let spaceHolderE = document.createElement("div");
+    let spaceHolderE = CreateElement("div");
     spaceHolderE.className = "slot";
     spaceHolderE.setAttribute("time", this.time);
 
@@ -223,7 +223,7 @@ function DragTask(id, name, description) {
   this.description = description;
 
   this.getElement = function () {
-    let taskE = document.createElement("div");
+    let taskE = CreateElement("div");
     taskE.className = "slot";
     taskE.setAttribute("id", this.id);
     taskE.setAttribute("data", `${this.name} - ${this.description}`);
