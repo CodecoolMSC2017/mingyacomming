@@ -14,7 +14,7 @@ import java.util.Collections;
 
 public class GoogleAuthorizeService {
 
-    String getEmail(String idTokenString) throws GeneralSecurityException, IOException {
+    public String getEmail(String idTokenString) throws GeneralSecurityException, IOException {
 
         HttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = new JacksonFactory();
