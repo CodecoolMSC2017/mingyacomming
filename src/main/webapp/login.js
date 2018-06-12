@@ -27,3 +27,13 @@ function onLoginButtonClicked() {
     xhr.open('POST', 'login');
     xhr.send(params);
 }
+
+function onGoogleSignIn(googleUser) {
+    const id_token = googleUser.getAuthResponse().id_token;
+    //console.log(id_token);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'glogin');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = onLoginResponse;
+    xhr.send('idtoken=' + id_token);
+}
