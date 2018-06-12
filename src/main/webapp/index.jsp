@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="32266961436-e2umgtfhmqp639r5q2ob87vd7jk9f3mn.apps.googleusercontent.com">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
     <script src="js/slots.js">     </script>
@@ -16,6 +17,7 @@
     <script src="js/scripts.js">   </script>
     <script src="js/zombies.js">   </script>
     <script src="js/ee.js">        </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <title> BrainStorm </title>
 </head>
 
