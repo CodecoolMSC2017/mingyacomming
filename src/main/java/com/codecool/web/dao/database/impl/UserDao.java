@@ -25,6 +25,19 @@ public class UserDao extends AbstractDao implements UserDatabase {
         }
     }
 
+    public User getUserByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                }
+                return null;
+            }
+        }
+    }
+
     @Override
     public User getUser(int id) throws SQLException {
         String sql = "SELECT * FROM users WHERE id = ?";

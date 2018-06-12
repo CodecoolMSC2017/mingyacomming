@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface UserDatabase {
 
-    public List<User> getAllUser() throws SQLException;
+    List<User> getAllUser() throws SQLException;
 
     User getUser(int id) throws SQLException;
+
+    User getUserByEmail(String email) throws SQLException;
 
     User getUser(String name, String password) throws SQLException;
 

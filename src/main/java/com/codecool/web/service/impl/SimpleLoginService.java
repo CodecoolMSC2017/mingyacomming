@@ -18,4 +18,8 @@ public class SimpleLoginService implements LoginService {
     public User loginUser(String user, String password) throws SQLException {
         return db.getUser(user, password);
     }
+
+    public User getUserByEmail(String email) throws SQLException {
+        return db.getUserByEmail(email);
+    }
 }
