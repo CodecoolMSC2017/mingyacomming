@@ -30,7 +30,7 @@ public class GoogleLoginServlet extends AbstractServlet {
 
             User user = ud.getUserByEmail(email);
             if (user == null) {
-                ud.addUser(null,null, null, email);
+                ud.addUser(email,null, "user", email);
                 user = ud.getUserByEmail(email);
             }
             req.getSession().setAttribute("user", user);
