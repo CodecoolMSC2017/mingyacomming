@@ -3,6 +3,7 @@ package com.codecool.web.servlet.day;
 import com.codecool.web.dao.database.DayDatabase;
 import com.codecool.web.dao.database.SlotDatabase;
 import com.codecool.web.dao.database.impl.DayDao;
+import com.codecool.web.model.Day;
 import com.codecool.web.service.DayService;
 import com.codecool.web.service.impl.SimpleDayService;
 import com.codecool.web.servlet.AbstractServlet;
@@ -78,16 +79,18 @@ public class SingleDayServlet extends AbstractServlet{
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("name");
-        String id = req.getParameter("id");
-        int parseID = Integer.parseInt(id);
-        int parseName = Integer.parseInt(name);
+        String jsonString = req.getReader().readLine();
+        String name = getJsonParameter("name", jsonString);
+        int id = getId(req);
+
 
         try(Connection connection = getConnection(req.getServletContext())) {
             DayDatabase ddb = new DayDao(connection);
 
-            DayService slotService = new SimpleDayService(ddb);
-
+            DayService dayService = new SimpleDayService(ddb);
+            Day day = dayService.getDay(id);
+            day.setName(name);
+            dayService.updateDay(day);
             sendMessage(resp, 200, "succesfully edited");
 
         } catch (SQLException e) {

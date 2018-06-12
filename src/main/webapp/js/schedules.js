@@ -24,14 +24,14 @@ function deleteSchedule(scheduleId) {
 function getScheduleFields() {
   let scheduleData = {};
 
-  let nameE = document.getElementById("create_schedule_name_field");
+  let nameE = GetElement("#create_schedule_name_field");
   scheduleData.name = nameE.value;
 
   return scheduleData;
 }
 
 function clearScheduleFields() {
-  let nameE = document.getElementById("create_schedule_name_field");
+  let nameE = GetElement("#create_schedule_name_field");
   nameE.value = "";
 }
 
@@ -39,7 +39,7 @@ function getSchedules(userId) {
   userId = parseInt(userId);
 
   if (isNaN(userId)) {
-    userId = document.getElementById("user_data").getAttribute("userId");
+    userId = GetElement("#user_data").getAttribute("userId");
     new Request("GET", `/schedules`,
       null,
       loadSchedules
@@ -55,7 +55,7 @@ function getSchedules(userId) {
 function loadSchedules() {
   const schedulesData = JSON.parse(this.responseText);
 
-  let schedulesE = document.getElementById("schedules");
+  let schedulesE = GetElement("#schedules");
   schedulesE.innerHTML = "";
 
   schedulesData.forEach(scheduleData => {
@@ -72,10 +72,10 @@ function loadSchedules() {
 
 function switchToSchedulesPage(userId) {
   visibilityOfPages("none");
-  document.getElementById("schedules_page").style.display = "block";
+  GetElement("#schedules_page").style.display = "block";
 
-  document.getElementById("current_schedule").style.display = "none";
-  document.getElementById("current_day").style.display = "none";
+  GetElement("#current_schedule").style.display = "none";
+  GetElement("#current_day").style.display = "none";
 
   getSchedules(userId);
 }
@@ -86,15 +86,15 @@ function Schedule(id, name, isPublic) {
   this.isPublic = isPublic;
 
   this.getElement = function () {
-    let scheduleE = document.createElement("div");
+    let scheduleE = CreateElement("div");
     scheduleE.setAttribute("id", this.id);
     scheduleE.className = "schedule";
 
-    let nameE = document.createElement("h2");
+    let nameE = CreateElement("h2");
     nameE.textContent = this.name;
     scheduleE.appendChild(nameE);
 
-    let publicEl = document.createElement("p");
+    let publicEl = CreateElement("p");
     publicEl.innerHTML = this.isPublic;
     publicEl.style.display = "none";
     scheduleE.appendChild(publicEl);
@@ -103,19 +103,19 @@ function Schedule(id, name, isPublic) {
 
     // Events
     nameE.addEventListener("click", () => {
-      let currentScheduleE = document.getElementById("current_schedule");
+      let currentScheduleE = GetElement("#current_schedule");
       currentScheduleE.setAttribute("value", this.id);
       currentScheduleE.textContent = "Schedule: " + this.name;
       switchToDaysPage(this.id);
     });
 
-    let editE = document.createElement("i");
+    let editE = CreateElement("i");
     editE.className = "fa fa-cog";
 
     editE.addEventListener("click", () => editSchedule(this.id));
     scheduleE.appendChild(editE);
 
-    let deleteE = document.createElement("i");
+    let deleteE = CreateElement("i");
     deleteE.className = "fa fa-trash-alt";
     deleteE.addEventListener("click", () => deleteSchedule(this.id));
     scheduleE.appendChild(deleteE);
@@ -125,16 +125,16 @@ function Schedule(id, name, isPublic) {
 }
 
 function editSchedule(scheduleId) {
-  const schedulesEl = document.getElementById("schedules");
+  const schedulesEl = GetElement("#schedules");
   const scheduleEl = schedulesEl.querySelector("div[id='" + scheduleId + "']");
   const name = scheduleEl.querySelector("h2").innerHTML;
   const isPublic = scheduleEl.querySelector("p").innerHTML;
   scheduleEl.textContent = "";
 
-  const formEl = document.createElement("form");
+  const formEl = CreateElement("form");
   scheduleEl.appendChild(formEl);
 
-  const inputNameEl = document.createElement("input");
+  const inputNameEl = CreateElement("input");
   formEl.appendChild(inputNameEl);
 
   inputNameEl.setAttribute("type", "text");
@@ -143,11 +143,11 @@ function editSchedule(scheduleId) {
   inputNameEl.setAttribute("id", "editElement");
 
   
-  const editE = document.createElement("i");
+  const editE = CreateElement("i");
   editE.className = "fa fa-check";
   formEl.appendChild(editE);
   
-  const checkPublicEl = document.createElement("input");
+  const checkPublicEl = CreateElement("input");
   checkPublicEl.setAttribute("type", "checkbox");
   checkPublicEl.setAttribute("id", "checkpublic");
   if (isPublic === "true") {
@@ -157,7 +157,7 @@ function editSchedule(scheduleId) {
 
   formEl.appendChild(checkPublicEl);
 
-  const labelE = document.createElement("label");
+  const labelE = CreateElement("label");
   labelE.setAttribute("for", "checkpublic");
   formEl.appendChild(labelE);
 
@@ -167,8 +167,8 @@ function editSchedule(scheduleId) {
 
 function sendEditSchedule(scheduleId) {
   const schedule = {};
-  const editEl = document.getElementById("editElement");
-  const ispublic = document.getElementById("checkpublic");
+  const editEl = GetElement("#editElement");
+  const ispublic = GetElement("#checkpublic");
   if ((editEl.value === "") && (schedule.isPublic === ispublic.checked)) {
     getSchedules();
     return;
@@ -190,7 +190,7 @@ function sendEditSchedule(scheduleId) {
 
 
 function init() {
-  document.getElementById("create_schedule_button").addEventListener("click", createSchedule);
+  GetElement("#create_schedule_button").addEventListener("click", createSchedule);
 }
 
 document.addEventListener("DOMContentLoaded", init);

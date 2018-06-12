@@ -5,7 +5,7 @@
 */
 // Sends the day creation request to the servlet
 function createDay() {
-  const id = document.getElementById("current_schedule").getAttribute("value");
+  const id = GetElement("#current_schedule").getAttribute("value");
   const dayData = getDayFields();
 
   new Request("POST", `/days?scheduleId=${id}`,
@@ -25,19 +25,19 @@ function deleteDay(dayId) {
 function getDayFields() {
   let dayData = {};
 
-  let nameE = document.getElementById("create_day_name_field");
+  let nameE = GetElement("#create_day_name_field");
   dayData.name = nameE.value;
 
   return dayData;
 }
 
 function clearDayFields() {
-  let nameE = document.getElementById("create_day_name_field");
+  let nameE = GetElement("#create_day_name_field");
   nameE.value = "";
 }
 
 function getDays() {
-  const id = document.getElementById("current_schedule").getAttribute("value");
+  const id = GetElement("#current_schedule").getAttribute("value");
 
   new Request("GET", `/days?scheduleId=${id}`,
     null,
@@ -48,7 +48,7 @@ function getDays() {
 function loadDays() {
   const daysData = JSON.parse(this.responseText);
 
-  let daysE = document.getElementById("days");
+  let daysE = GetElement("#days");
   daysE.innerHTML = "";
 
   daysData.forEach(dayData => {
@@ -64,15 +64,15 @@ function loadDays() {
 }
 
 function editDay(dayId) {
-  const daysEl = document.getElementById("days");
+  const daysEl = GetElement("#days");
   const dayEl = daysEl.querySelector("div[id='" + dayId + "']");
   const name = dayEl.querySelector("h2").innerHTML;
   dayEl.textContent = "";
 
-  const formEl = document.createElement("form");
+  const formEl = CreateElement("form");
   dayEl.appendChild(formEl);
 
-  const inputNameEl = document.createElement("input");
+  const inputNameEl = CreateElement("input");
   formEl.appendChild(inputNameEl);
 
   inputNameEl.setAttribute("type", "text");
@@ -80,7 +80,7 @@ function editDay(dayId) {
   inputNameEl.setAttribute("size", "10");
   inputNameEl.setAttribute("id", "editName");
 
-  const editE = document.createElement("i");
+  const editE = CreateElement("i");
   editE.className = "fa fa-check";
   formEl.appendChild(editE);
 
@@ -90,7 +90,7 @@ function editDay(dayId) {
 
 function sendEditDay(dayId) {
   const day = {};
-  const editNameEl = document.getElementById("editName");
+  const editNameEl = GetElement("#editName");
   day.name = editNameEl.value;
 
   if (day.name === "") {
@@ -102,7 +102,7 @@ function sendEditDay(dayId) {
     day.name = editNameEl.placeholder;
   }
 
-  new Request("PUT", `/day/${dayId}`,
+  new Request("PUT", `/days/${dayId}`,
     JSON.stringify(day),
     getDays
   );
@@ -110,10 +110,10 @@ function sendEditDay(dayId) {
 
 function switchToDaysPage(scheduleId) {
   visibilityOfPages("none");
-  document.getElementById("days_page").style.display = "block";
+  GetElement("#days_page").style.display = "block";
 
-  document.getElementById("current_schedule").style.display = "inline-block";
-  document.getElementById("current_day").style.display = "none";
+  GetElement("#current_schedule").style.display = "inline-block";
+  GetElement("#current_day").style.display = "none";
 
   getDays(scheduleId);
 }
@@ -123,28 +123,28 @@ function Day(id, name) {
   this.name = name;
 
   this.getElement = function () {
-    let dayE = document.createElement("div");
+    let dayE = CreateElement("div");
     dayE.setAttribute("id", this.id);
     dayE.className = "day";
 
-    let nameE = document.createElement("h2");
+    let nameE = CreateElement("h2");
     nameE.textContent = this.name;
     dayE.appendChild(nameE);
 
     // Events
     nameE.addEventListener("click", () => {
-      let currentDayE = document.getElementById("current_day");
+      let currentDayE = GetElement("#current_day");
       currentDayE.setAttribute("value", this.id);
       currentDayE.textContent = "Day: " + this.name;
       switchToSlotsPage(this.id);
     });
 
-    let editE = document.createElement("i");
+    let editE = CreateElement("i");
     editE.className = "fa fa-cog";
     editE.addEventListener("click", () => editDay(this.id));
     dayE.appendChild(editE);
 
-    let deleteE = document.createElement("i");
+    let deleteE = CreateElement("i");
     deleteE.className = "fa fa-trash-alt";
     deleteE.addEventListener("click", () => deleteDay(this.id));
     dayE.appendChild(deleteE);
@@ -156,7 +156,7 @@ function Day(id, name) {
 
 
 function init() {
-  document.getElementById("create_day_button").addEventListener("click", createDay);
+  GetElement("#create_day_button").addEventListener("click", createDay);
 }
 
 document.addEventListener("DOMContentLoaded", init);

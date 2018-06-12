@@ -37,6 +37,10 @@
       <input type="password" id="reg_password_field">
     </p>
     <p>
+          <label> email </label>
+          <input type="email" id="reg_email_field">
+        </p>
+    <p>
       <input type="button" id="reg_button" value="REGISTER">
     </p>
   </div>

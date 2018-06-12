@@ -17,7 +17,7 @@ public class SimpleRegisterService implements RegisterService{
     }
 
     @Override
-    public void register(String username, String password) throws SQLException, UserAlreadyExistException, UserNameException {
+    public void register(String username, String password, String email) throws SQLException, UserAlreadyExistException, UserNameException {
         if (username.equals("") | username.equals(null)) {
             throw new UserNameException();
         }
@@ -29,7 +29,7 @@ public class SimpleRegisterService implements RegisterService{
         catch (SQLException e) {
             String errorMessage = e.getMessage();
             if (errorMessage.equals("name or password is wrong")) {
-                db.addUser(username, password, "user");
+                db.addUser(username, password, "user", email);
             }
             else {
                 throw new SQLException(errorMessage);
