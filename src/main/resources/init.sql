@@ -6,7 +6,7 @@ CREATE TABLE users
 (
     id       SERIAL PRIMARY KEY,
     name     TEXT   UNIQUE NOT NULL,
-    password TEXT   NOT NULL,
+    password TEXT   ,
     role     TEXT   NOT NULL,
     email     TEXT   NOT NULL,
 	CONSTRAINT name_not_empty CHECK (name <> ''),
