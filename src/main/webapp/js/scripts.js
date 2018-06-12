@@ -80,6 +80,10 @@ function logout() {
     null,
     deleteUserData
   );
+
+   const auth2 = gapi.auth2.getAuthInstance();
+   auth2.signOut();
+   //auth2.disconnect();
 }
 
 // UserTab
