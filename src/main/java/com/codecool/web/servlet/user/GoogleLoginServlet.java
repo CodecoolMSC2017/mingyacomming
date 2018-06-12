@@ -29,7 +29,10 @@ public class GoogleLoginServlet extends AbstractServlet {
             String email = googleAuthorizeService.getEmail(idTokenString);
 
             User user = ud.getUserByEmail(email);
-
+            if (user == null) {
+                ud.addUser(null,null, null, email);
+                user = ud.getUserByEmail(email);
+            }
             req.getSession().setAttribute("user", user);
             sendMessage(resp, HttpServletResponse.SC_OK, "succesfull");
 
