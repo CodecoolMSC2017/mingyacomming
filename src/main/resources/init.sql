@@ -8,7 +8,9 @@ CREATE TABLE users
     name     TEXT   UNIQUE NOT NULL,
     password TEXT   NOT NULL,
     role     TEXT   NOT NULL,
-	CONSTRAINT email_not_empty CHECK (name <> ''),
+    email     TEXT   NOT NULL,
+	CONSTRAINT name_not_empty CHECK (name <> ''),
+	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT password_not_empty CHECK (password <> '')
 );
 
@@ -98,12 +100,12 @@ CREATE TRIGGER onRegister
 --
 -- D u m m y   d a t a
 --
-INSERT INTO users (name, password, role) VALUES
-	('a', 'a', 'admin'),
-    ('u', 'u', 'user'),
-	('user1@user1', 'user1', 'asd'),
-	('user2@user2', 'user2', 'sad'),
-	('user2@user3', 'user3', 'lul');
+INSERT INTO users (name, password, role, email) VALUES
+	('a', 'a', 'admin', 'admin@admin'),
+    ('u', 'u', 'user', 'user@user'),
+	('user1', 'user1', 'asd', 'user1@user1'),
+	('user2', 'user2', 'sad', 'user1@user2'),
+	('user3', 'user3', 'lul', 'user1@user3');
 
 INSERT INTO tasks (name, description, user_id) VALUES
     ('kisfrocs', 'alap dolog', 1),

@@ -53,7 +53,8 @@ function register() {
 function getRegFields() {
   return {
     username: GetElement("#reg_username_field").value,
-    password: GetElement("#reg_password_field").value
+    password: GetElement("#reg_password_field").value,
+    email: GetElement("#reg_email_field").value
   };
 }
 

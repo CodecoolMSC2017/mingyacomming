@@ -31,7 +31,7 @@ public class SchedulesServlet extends AbstractServlet {
         if (userId == null) {
             user = getUser(req);
         } else {
-            user = new User(Integer.parseInt(userId), "", "", "");
+            user = new User(Integer.parseInt(userId), "", "", "", "");
         }
         logger.debug("Schedule user {}", user.getName());
         try (Connection connection = getConnection(req.getServletContext())) {
