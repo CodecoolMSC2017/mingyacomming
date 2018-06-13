@@ -8,5 +8,5 @@ import java.sql.SQLException;
 
 public interface RegisterService {
 
-    void register(String username, String password) throws SQLException, UserAlreadyExistException, UserNameException;
+    void register(String username, String password, String email) throws SQLException, UserAlreadyExistException, UserNameException;
 }

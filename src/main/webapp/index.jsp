@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
     
     <c:url value="/css/style.css" var="styleCSS"/>
@@ -34,6 +35,8 @@
     <c:url value="/js/ee.js" var="eeJS"/>
     <script src="${eeJS}">        </script>
 
+    <meta name="google-signin-client_id" content="32266961436-e2umgtfhmqp639r5q2ob87vd7jk9f3mn.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <title> BrainStorm </title>
 </head>
 

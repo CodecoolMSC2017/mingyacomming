@@ -34,11 +34,12 @@ public class RegisterServlet extends AbstractServlet {
 
         String userName = getJsonParameter("username", jsonString);
         String password = getJsonParameter("password", jsonString);
+        String email = getJsonParameter("email", jsonString);
 
         try (Connection connection = getConnection(req.getServletContext())) {
             UserDatabase ud = new UserDao(connection);
             RegisterService rs = new SimpleRegisterService(ud);
-            rs.register(userName, password);
+            rs.register(userName, password, email);
             sendMessage(resp, 200, "user registered");
             logger.info("Registered succesfully");
 

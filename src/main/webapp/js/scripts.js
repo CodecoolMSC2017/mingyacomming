@@ -36,6 +36,16 @@ function getLogFields() {
   };
 }
 
+function onGoogleSignIn(googleUser) {
+    const id_token = googleUser.getAuthResponse().id_token;
+    //console.log(id_token);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'glogin');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.addEventListener('load', changeUserTab);
+    xhr.send('idtoken=' + id_token);
+}
+
 
 
 /* ____________________
@@ -53,7 +63,8 @@ function register() {
 function getRegFields() {
   return {
     username: GetElement("#reg_username_field").value,
-    password: GetElement("#reg_password_field").value
+    password: GetElement("#reg_password_field").value,
+    email: GetElement("#reg_email_field").value
   };
 }
 
@@ -69,6 +80,10 @@ function logout() {
     null,
     deleteUserData
   );
+
+   const auth2 = gapi.auth2.getAuthInstance();
+   auth2.signOut();
+   //auth2.disconnect();
 }
 
 // UserTab

@@ -25,6 +25,19 @@ public class UserDao extends AbstractDao implements UserDatabase {
         }
     }
 
+    public User getUserByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                }
+                return null;
+            }
+        }
+    }
+
     @Override
     public User getUser(int id) throws SQLException {
         String sql = "SELECT * FROM users WHERE id = ?";
@@ -32,7 +45,7 @@ public class UserDao extends AbstractDao implements UserDatabase {
             ps.setInt(1, id);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                   return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+                   return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                 }
                 return null;
             }
@@ -47,7 +60,7 @@ public class UserDao extends AbstractDao implements UserDatabase {
             ps.setString(2, password);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+                    return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                 }
                 throw new SQLException("name or password is wrong");
             }
@@ -55,12 +68,14 @@ public class UserDao extends AbstractDao implements UserDatabase {
     }
 
     @Override
-    public void addUser(String name, String password, String role) throws SQLException {
-        String sql = "INSERT into users (name, password, role) VALUES(?,?,?)";
+    public void addUser(String name, String password, String role, String email) throws SQLException {
+        String sql = "INSERT into users (name, password, role, email) VALUES(?,?,?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, name);
             ps.setString(2, password);
             ps.setString(3, role);
+            ps.setString(4, email);
+
             ps.executeUpdate();
         }
     }
@@ -70,6 +85,7 @@ public class UserDao extends AbstractDao implements UserDatabase {
         String name = resultSet.getString("name");
         String password = resultSet.getString("password");
         String permission = resultSet.getString("role");
-        return new User(id, name, password, permission);
+        String email = resultSet.getString("email");
+        return new User(id, name, password, permission, email);
     }
 }
