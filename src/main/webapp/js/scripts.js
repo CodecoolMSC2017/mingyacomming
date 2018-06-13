@@ -152,7 +152,6 @@ function getUserData() {
 
 function visibilityOfPages(visibility) {
   GetElement("#user_selector_page").style.display = visibility;
-  GetElement("#schedule_searcher_page").style.display = visibility;
   GetElement("#tasks_page").style.display = visibility;
   GetElement("#schedules_page").style.display = visibility;
   GetElement("#days_page").style.display = visibility;
@@ -212,7 +211,6 @@ function init() {
   GetElement("#logout_button").addEventListener("click", logout);
 
   GetElement("#user_selector").addEventListener("click", () => { });
-  GetElement("#schedule_searcher").addEventListener("click", switchToSearcher);;
   GetElement("#my_tasks").addEventListener("click", switchToTasksPage);
   GetElement("#my_schedules").addEventListener("click", switchToSchedulesPage);
   GetElement("#current_schedule").addEventListener("click", () => {
@@ -240,5 +238,7 @@ function init() {
     }
   });
 }
+
+console.log(this);
 
 document.addEventListener("DOMContentLoaded", init);

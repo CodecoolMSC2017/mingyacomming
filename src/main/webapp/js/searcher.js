@@ -5,31 +5,24 @@
 */
 var currentSchedule;
 
-function switchToSearcher() {
-  visibilityOfPages("none");
-  GetElement("#schedule_searcher_page").style.display = "block";
-
-  GetElement("#current_schedule").style.display = "none";
-  GetElement("#current_day").style.display = "none";
-}
-
-function getPublicSchedule() {
-  const scheduleId = GetElement("#search_schedule_id_field").value;
-  new Request("GET", `/guest/${scheduleId}`,
-    null,
-    loadAllData);
+function getPublicSchedule(scheduleId) {
+  console.log(scheduleId)
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", loadAllData);
+  xhr.open("GET", `http://localhost:8080/mingyacomming/guest/${scheduleId}`);
+  xhr.send();
 }
 
 function loadAllData() {
   currentSchedule = JSON.parse(this.responseText);
-  loadInspectDays();
+  loadInspectDays(currentSchedule);
 }
 
-function loadInspectDays() {
-  let searchContent = GetElement("#search_days");
+function loadInspectDays(currentSchedule) {
+  let searchContent = document.getElementById("search_days");
   searchContent.innerHTML = "";
 
-  GetElement("#search_slots").innerHTML = "";
+  document.getElementById("search_slots").innerHTML = "";
 
   currentSchedule.days.forEach(day => {
     searchContent.appendChild(new InspectDay(day.id, day.name).getElement());
@@ -39,19 +32,19 @@ function loadInspectDays() {
 function loadInspectSlots(name, dayId) {
   let slotTasksData = currentSchedule.slotTasks.filter(slotTask => slotTask.slot.day_id == dayId);
   
-  let slotsE = GetElement("#search_slots");
+  let slotsE = document.getElementById("search_slots");
   slotsE.innerHTML = "";
 
-  let headerE = CreateElement("h1");
+  let headerE = document.createElement("h1");
   headerE.textContent = name;
   slotsE.appendChild(headerE);
 
   for (let i = 0; i < 24; i++) {
     let slotData = slotTasksData.find(slotTask => slotTask.slot.time === i);
     if (slotData == undefined) {
-      let placeHolder = new PlaceHolder(i);
+      let InspectplaceHolder = new InspectPlaceHolder(i);
 
-      slotsE.appendChild(placeHolder.getElement());
+      slotsE.appendChild(InspectplaceHolder.getElement());
     } else {
       let slot = new InspectSlot(
         slotData.slot.id,
@@ -72,11 +65,11 @@ function InspectDay(id, name) {
   this.name = name;
 
   this.getElement = function () {
-    let dayE = CreateElement("div");
+    let dayE = document.createElement("div");
     dayE.setAttribute("id", this.id);
     dayE.className = "day";
 
-    let nameE = CreateElement("h2");
+    let nameE = document.createElement("h2");
     nameE.textContent = this.name;
     dayE.appendChild(nameE);
 
@@ -96,12 +89,12 @@ function InspectSlot(id, time, is_checked, task_id, task_name, task_description)
   this.task = new Task(task_id, task_name, task_description);
 
   this.getElement = function () {
-    let slotE = CreateElement("div");
+    let slotE = document.createElement("div");
     slotE.className = "slot";
     slotE.setAttribute("time", this.time);
     slotE.setAttribute("data", ` - ${this.task.name} - ${this.task.description}`);
 
-    let checkE = CreateElement("i");
+    let checkE = document.createElement("i");
     checkE.className = this.is_checked ? "far fa-check-circle" : "far fa-circle";
     checkE.style.marginLeft = "5px";
     slotE.appendChild(checkE);
@@ -110,8 +103,38 @@ function InspectSlot(id, time, is_checked, task_id, task_name, task_description)
   }
 }
 
+function InspectPlaceHolder(time) {
+  this.time = time;
+
+  this.getElement = function () {
+    let spaceHolderE = document.createElement("div");
+    spaceHolderE.className = "slot";
+    spaceHolderE.setAttribute("time", this.time);
+
+    return spaceHolderE;
+  }
+}
+
+function Task(id, name, description) {
+  this.id = id;
+  this.name = name;
+  this.description = description;
+
+  this.getElement = function () {
+    let taskE = CreateElement("div");
+    taskE.className = "task";
+    taskE.setAttribute("id", this.id);
+
+    let nameE = CreateElement("h2");
+    nameE.textContent = this.name;
+    taskE.appendChild(nameE);
+
+    return taskE;
+  }
+}
+
 function init() {
-  GetElement("#search_schedule_button").addEventListener("click", getPublicSchedule);
+  getPublicSchedule(location.pathname.split("/")[3]);
 }
 
 document.addEventListener("DOMContentLoaded", init);

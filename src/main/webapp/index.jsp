@@ -5,17 +5,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
-    <script src="js/slots.js">     </script>
-    <script src="js/days.js">      </script>
-    <script src="js/schedules.js"> </script>
-    <script src="js/tasks.js">     </script>
-    <script src="js/searcher.js">  </script>
-    <script src="js/users.js">     </script>
-    <script src="js/scripts.js">   </script>
-    <script src="js/zombies.js">   </script>
-    <script src="js/ee.js">        </script>
+    
+    <c:url value="/css/style.css" var="styleCSS"/>
+    <link rel="stylesheet" type="text/css" href="${styleCSS}">
+
+    <c:url value="/js/slots.js" var="slotsJS"/>
+    <script src="${slotsJS}">     </script>
+
+    <c:url value="/js/days.js" var="daysJS"/>
+    <script src="${daysJS}">      </script>
+
+    <c:url value="/js/schedules.js" var="schedulesJS"/>
+    <script src="${schedulesJS}"> </script>
+
+    <c:url value="/js/tasks.js" var="tasksJS"/>
+    <script src="${tasksJS}">     </script>
+
+    <c:url value="/js/users.js" var="usersJS"/>
+    <script src="${usersJS}">     </script>
+
+    <c:url value="/js/scripts.js" var="scriptsJS"/>
+    <script src="${scriptsJS}">   </script>
+
+    <c:url value="/js/zombies.js" var="zombiesJS"/>
+    <script src="${zombiesJS}">   </script>
+
+    <c:url value="/js/ee.js" var="eeJS"/>
+    <script src="${eeJS}">        </script>
+
     <title> BrainStorm </title>
 </head>
 
@@ -38,7 +56,6 @@
     </div>
 
     <div id="content">
-        <tab id="schedule_searcher"> Schedule Searcher </tab>
         <div id="tabs">
             <tab id="user_selector"> Users </tab>
             <tab id="my_tasks"> My Tasks </tab>
@@ -47,7 +64,6 @@
             <tab id="current_day"> Day </tab>
         </div>
         <jsp:include page="user_selector_page.jsp"></jsp:include>
-        <jsp:include page="schedule_searcher_page.jsp"></jsp:include>
         <jsp:include page="tasks_page.jsp"></jsp:include>
         <jsp:include page="schedules_page.jsp"></jsp:include>
         <jsp:include page="days_page.jsp"></jsp:include>
