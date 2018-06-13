@@ -63,23 +63,39 @@ Create Table results
     Foreign Key(task_id) References tasks(id)
 );
 
-DROP TABLE IF EXISTS inventories CASCADE;
-CREATE TABLE inventories
+DROP TABLE IF EXISTS items CASCADE;
+CREATE TABLE items
 (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER,
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    id        SERIAL PRIMARY KEY,
+    name      TEXT NOT null,
+    quantity  INTEGER NOT null,
+    image_url TEXT NOT null,
+    user_id INTEGER NOT null,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
 
 
 
 --
 -- F u n c t i o n s
 --
-CREATE OR REPLACE FUNCTION createInventory() RETURNS TRIGGER AS '
+CREATE OR REPLACE FUNCTION addStartingItems() RETURNS TRIGGER AS '
 BEGIN
-    INSERT INTO inventories (user_id) VALUES (NEW.id);
+    INSERT INTO items(name, quantity, image_url, user_id) VALUES
+      (''Gold'', 10, ''images/gold.png'', NEW.id),
+      (''Szuri'', 1, ''images/szuri.png'', NEW.id);
     RETURN null;
+END;
+' LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION addItem(userId INTEGER, itemName TEXT, itemQuantity INTEGER, itemImageUrl TEXT) RETURNS VOID AS '
+BEGIN
+    IF (Select COUNT(name)  From items  Where user_id = userId AND name = itemName) > 0 THEN
+        UPDATE items SET quantity = quantity + itemQuantity Where user_id = userId AND name = itemName;
+    ELSE
+        INSERT INTO items(name, quantity, image_url, user_id) VALUES (itemName, itemQuantity, itemImageUrl, userId);
+    END IF;
 END;
 ' LANGUAGE plpgsql;
 
@@ -91,7 +107,7 @@ END;
 CREATE TRIGGER onRegister
     AFTER INSERT ON users
         FOR EACH ROW
-            EXECUTE PROCEDURE createInventory();
+            EXECUTE PROCEDURE addStartingItems();
 
 
 
