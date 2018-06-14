@@ -84,6 +84,7 @@ function logout() {
    const auth2 = gapi.auth2.getAuthInstance();
    auth2.signOut();
    //auth2.disconnect();
+   addMessage("Warning", "Logged out!");
 }
 
 // UserTab
@@ -111,12 +112,14 @@ function loadUserData() {
   if (userData == null) {
     return;
   }
-
+  addMessage("Info", `Logged in as ${userData.name}`);
+  window.sessionStorage.setItem("userData", userData);
   //visibilityOfCreateForms(userData.role == "admin" ? "none" : "block");
   GetElement("#user_selector").style.display = userData.role == "admin" ? "inline-block" : "none";
   hideUserData();
 
   const userDataE = GetElement("#user_data");
+  userDataE.textContent = null;
   userDataE.setAttribute("userId", userData.id);
 
   let roleE = CreateElement("label");
@@ -132,11 +135,27 @@ function loadUserData() {
   userDataE.appendChild(usernameE);
 
   let coinsE = CreateElement("i");
+  coinsE.setAttribute("id", "gold_counter");
   coinsE.className = "fas fa-coins";
   coinsE.style.color = "#ffd800"
   coinsE.style.display = "block";
   coinsE.textContent = " 0";
   userDataE.appendChild(coinsE);
+
+  updateGoldCounter();
+}
+
+function updateGoldCounter() {
+  const goldCounterE = GetElement("#gold_counter");
+  new Request("GET", "/item?itemName=Gold",
+    null,
+    onUpdateGoldCounter
+  );
+}
+
+function onUpdateGoldCounter() {
+  const item = JSON.parse(this.responseText);
+  GetElement("#gold_counter").textContent = item.quantity;
 }
 
 function hideUserData() {
@@ -148,6 +167,8 @@ function hideUserData() {
 }
 
 function deleteUserData() {
+  window.sessionStorage.removeItem("userData");
+
   GetElement("#buttons").style.display = "block";
   GetElement("#login_form").style.display = "block";
   GetElement("#user_data").style.display = "none";
@@ -167,6 +188,7 @@ function getUserData() {
 
 function visibilityOfPages(visibility) {
   GetElement("#user_selector_page").style.display = visibility;
+  GetElement("#items_page").style.display = visibility;
   GetElement("#tasks_page").style.display = visibility;
   GetElement("#schedules_page").style.display = visibility;
   GetElement("#days_page").style.display = visibility;
@@ -186,28 +208,22 @@ function visibilityOfCreateForms(visibility) {
   | Message method(s) |
   |___________________|
 */
-function checkResp() {
-  const message = JSON.parse(this.responseText);
-  addMessage(message.messege, this.status);
-}
-
 function addMessage(status, content) {
-  let messageE = CreateElement("div");
+  const messageE = CreateElement("div");
 
-  if (status >= 200 && status < 300) {
+  if (status == "Info") {
     messageE.className = "message";
-  } else if (status >= 500) {
+  } else if (status == "Warning") {
     messageE.className = "message warning";
   } else {
     messageE.className = "message error";
   }
 
-  messageE.textContent = `${status} : ${content}`;
+  messageE.textContent = content;
 
-  let messagesE = GetElement("#messages");
+  const messagesE = GetElement("#messages");
   messagesE.appendChild(messageE);
-
-  setTimeout(messageE.remove(), 5000);
+  setTimeout(() => messageE.remove(), 5000);
 }
 
 
@@ -226,6 +242,7 @@ function init() {
   GetElement("#logout_button").addEventListener("click", logout);
 
   GetElement("#user_selector").addEventListener("click", () => { });
+  GetElement("#items").addEventListener("click", switchToItemsPage);
   GetElement("#my_tasks").addEventListener("click", switchToTasksPage);
   GetElement("#my_schedules").addEventListener("click", switchToSchedulesPage);
   GetElement("#current_schedule").addEventListener("click", () => {
