@@ -56,18 +56,18 @@ function Zombie() {
 
   this.death = function () {
     for (let i = 0; i < 20; i++) {
-      gameData.particles.push(new Particle(this.x + this.w / 2, this.y + this.h / 2));
+      gameData.particles.push(
+        new Particle(
+          this.x + this.w / 2,
+          this.y + this.h / 2,
+          random(-10, 10),
+          random(-10, 10)
+        )
+      );
     }
     let i = gameData.zombies.indexOf(this);
     gameData.zombies.splice(i, 1);
-
-    new Request("POST", "/inventory",
-      JSON.stringify({
-        name: "coin",
-        quantity: 1
-      }),
-      null
-    );
+    addItem("Gold", Math.floor(Math.random() * 2) + 1);
   }
 
   this.draw = function () {
@@ -78,13 +78,28 @@ function Zombie() {
   }
 }
 
+function addItem(name, quantity) {
+  let callback = name == "Gold" ? updateGoldCounter : null;
+  new Request("POST", "/item",
+    JSON.stringify({
+      name: name,
+      quantity: quantity,
+      imageUrl: `images/${name.toLowerCase}.png`
+    }),
+    callback
+  );
+  if (window.sessionStorage.getItem("userData") != null) {
+    addMessage("Info", `You got ${quantity} ${name}(s)!`);
+  }
+}
+
 /*
   Particle Class
 */
-function Particle(x, y) {
+function Particle(x, y, xV, yV) {
   this.size = 5;
   this.x = x, this.y = y;
-  this.xV = random(-10, 10), this.yV = random(-10, 10);
+  this.xV = xV, this.yV = yV;
   this.life = 40;
 
   this.update = function () {
