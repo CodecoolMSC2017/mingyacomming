@@ -86,17 +86,37 @@ CREATE OR REPLACE FUNCTION addStartingItems() RETURNS TRIGGER AS '
 BEGIN
     INSERT INTO items(name, quantity, image_url, user_id) VALUES
       (''Gold'', 10, ''images/gold.png'', NEW.id),
-      (''Szuri'', 1, ''images/szuri.png'', NEW.id);
+      (''Szuri'', 1, ''images/szuri.png'', NEW.id),
+      (''Doge'', 5, ''images/doge.png'', NEW.id),
+      (''SwagDoge'', 1, ''images/swagdoge.png'', NEW.id),
+      (''Galoca'', 69, ''images/galoca.png'', NEW.id);
     RETURN null;
 END;
 ' LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION addItem(userId INTEGER, itemName TEXT, itemQuantity INTEGER, itemImageUrl TEXT) RETURNS VOID AS '
+CREATE OR REPLACE FUNCTION addItem(
+    userId INTEGER,
+    itemName TEXT,
+    itemQuantity INTEGER,
+    itemImageUrl TEXT
+) RETURNS VOID AS '
 BEGIN
-    IF (Select COUNT(name)  From items  Where user_id = userId AND name = itemName) > 0 THEN
-        UPDATE items SET quantity = quantity + itemQuantity Where user_id = userId AND name = itemName;
+    IF (Select COUNT(name)
+        From items
+        Where
+            user_id = userId
+                AND
+            name = itemName
+        ) > 0
+    THEN
+        UPDATE items SET quantity = quantity + itemQuantity
+            Where
+                user_id = userId
+                    AND
+                name = itemName;
     ELSE
-        INSERT INTO items(name, quantity, image_url, user_id) VALUES (itemName, itemQuantity, itemImageUrl, userId);
+        INSERT INTO items(name, quantity, image_url, user_id) VALUES
+            (itemName, itemQuantity, itemImageUrl, userId);
     END IF;
 END;
 ' LANGUAGE plpgsql;
