@@ -42,6 +42,9 @@ function getSlots() {
 }
 
 function checkSlot(slot) {
+  if(!slot.is_checked) {
+    addItem("Gold", 10);
+  }
   const newData = {
     time: slot.time,
     taskId: slot.task.id,
