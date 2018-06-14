@@ -176,7 +176,7 @@ textarea
     position: absolute;
 }
 
-#tasks_page, #schedules_page, #days_page, #slots_page, #user_selector_page, #tabs, #current_schedule, #current_day
+#tasks_page, #schedules_page, #days_page, #slots_page, #user_selector_page, #tabs, #current_schedule, #current_day, #items_page
 {
     display: none;
 }
@@ -198,6 +198,13 @@ textarea
     margin: 20px; padding: 5px;
 
     transition-duration: 300ms;
+}
+
+.task p
+{
+    max-height: 100px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
 
 .schedule, .day
@@ -314,8 +321,8 @@ input[type="checkbox"] {
 
 input[type="checkbox"] + label
 {
-    display: inline-block;
-    width: 50px; height: 50px;
+    display: block;
+    width: 25px; height: 25px;
     background-image: url("../images/eye_closed.png");
     background-size: contain;
     transition-duration: 200ms;
@@ -386,22 +393,25 @@ tab:hover
 */
 #messages
 {
+    display: grid;
+    grid-template-columns: 1fr;
     z-index: 4;
     position: fixed;
     bottom: 0; right: 0;
-    margin-left: auto; margin-right: 0;
     width: fit-content;
 }
 .message
 {
+    z-index: 200;
     background-color: rgba(23, 98, 20, 0.75);
     display: block;
     margin: 5px; padding: 10px;
-    width: max-content;
+    text-align: right;
 
     transition-duration: 300ms;
-    animation-name: emerge;
+    animation-name: slideFromRight;
     animation-duration: 5000ms;
+    transform: translateX(100%);
 }
 .error
 {
@@ -413,13 +423,117 @@ tab:hover
     background-color: rgba(155, 130, 19, 0.75) !important;
 }
 
-@keyframes emerge
+@keyframes slideFromRight
 {
-    0% { transform: scale(0); }
-    20% { transform: scale(1); }
-    90% { transform: scale(1); }
-    100% { transform: scale(0); }
+    0%   { transform: translateX(100%); }
+    20%  { transform: translateX(0%); }
+    90%  { transform: translateX(0%); }
+    100% { transform: translateX(100%); }
 }
+
+
+
+/* _______
+  |       |
+  | Items |
+  |_______|
+*/
+items {
+    position: relative;
+    margin: 10px auto;
+    padding: 50px 20px 20px;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 10px;
+    border: 10px dashed rgba(0, 0, 0, 0.75);
+}
+items:before {
+    position: absolute;
+    content: "Inventory";
+    font-size: 2em;
+    left: 5px;
+    top: 5px;
+}
+item {
+    position: relative;
+    display: block;
+    border: 1px solid black;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
+    width: 100px;
+    height: 100px;
+
+    background-size: 80%;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+
+    transition-duration: 200ms;
+}
+item:hover {
+    transform: scale(1.1);
+}
+
+item::before {
+    content: attr(quantity);
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+item::after {
+    content: attr(name);
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+item[name="SwagDoge"] {
+    animation-name: swag;
+    animation-duration: 200ms;
+    animation-iteration-count: infinite;
+}
+
+item[name="Galoca"] {
+    animation-name: breathing;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes swag {
+    0% {
+        background-size: 100%;
+        background-color: hsl(0, 100%, 50%);
+    }
+    25% {
+        background-color: hsl(100, 100%, 50%);
+    }
+    50% {
+      background-size: 50%;
+        background-color: hsl(200, 100%, 50%);
+    }
+    75% {
+        background-color: hsl(300, 100%, 50%);
+    }
+    100% {
+        background-size: 100%;
+        background-color: hsl(400, 100%, 50%);
+    }
+}
+
+@keyframes breathing {
+    0% {
+        background-size: 90%;
+    }
+    100% {
+        background-size: 70%;
+    }
+}
+
 
 
 
