@@ -7,32 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
-    
-    <c:url value="/css/style.css" var="styleCSS"/>
+
+    <c:url value="/css/style.css" var="styleCSS" />
     <link rel="stylesheet" type="text/css" href="${styleCSS}">
 
-    <c:url value="/js/slots.js" var="slotsJS"/>
+    <c:url value="/js/slots.js" var="slotsJS" />
     <script src="${slotsJS}">     </script>
 
-    <c:url value="/js/days.js" var="daysJS"/>
+    <c:url value="/js/days.js" var="daysJS" />
     <script src="${daysJS}">      </script>
 
-    <c:url value="/js/schedules.js" var="schedulesJS"/>
+    <c:url value="/js/schedules.js" var="schedulesJS" />
     <script src="${schedulesJS}"> </script>
 
-    <c:url value="/js/tasks.js" var="tasksJS"/>
+    <c:url value="/js/tasks.js" var="tasksJS" />
     <script src="${tasksJS}">     </script>
 
-    <c:url value="/js/users.js" var="usersJS"/>
+    <c:url value="/js/users.js" var="usersJS" />
     <script src="${usersJS}">     </script>
 
-    <c:url value="/js/scripts.js" var="scriptsJS"/>
+    <c:url value="/js/items.js" var="itemsJS" />
+    <script src="${itemsJS}">     </script>
+
+    <c:url value="/js/scripts.js" var="scriptsJS" />
     <script src="${scriptsJS}">   </script>
 
-    <c:url value="/js/zombies.js" var="zombiesJS"/>
+    <c:url value="/js/zombies.js" var="zombiesJS" />
     <script src="${zombiesJS}">   </script>
 
-    <c:url value="/js/ee.js" var="eeJS"/>
+    <c:url value="/js/ee.js" var="eeJS" />
     <script src="${eeJS}">        </script>
 
     <meta name="google-signin-client_id" content="32266961436-e2umgtfhmqp639r5q2ob87vd7jk9f3mn.apps.googleusercontent.com">
@@ -61,10 +64,14 @@
     <div id="content">
         <div id="tabs">
             <tab id="user_selector"> Users </tab>
+            <tab id="items"> Items </tab>
             <tab id="my_tasks"> My Tasks </tab>
             <tab id="my_schedules"> My Schedules </tab>
             <tab id="current_schedule"> Schedule </tab>
             <tab id="current_day"> Day </tab>
+        </div>
+        <div id="items_page">
+            <items id="inventory"> </items>
         </div>
         <jsp:include page="user_selector_page.jsp"></jsp:include>
         <jsp:include page="tasks_page.jsp"></jsp:include>
